@@ -12,8 +12,8 @@
     }
   },
   "title": {
-    "text": "How Much of the Mapped Area Is Agricultural?",
-    "subtitle": "Total area across the 57 NRM regions; includes water",
+    "text": "How Much of Australia’s Mapped Area Is Used for Agriculture?",
+    "subtitle": "Agricultural versus Non-agricultural area across 57 Natural Resource Management (NRM) regions",
     "anchor": "middle",
     "align": "center",
     "fontSize": 18,
@@ -42,10 +42,15 @@
       "title": null,
       "scale": {
         "domain": ["Agriculture", "Non-agriculture"],
-        "range": ["#0000FF", "#dedede"]
+        "range": ["#08306B", "#dedede"]
       },
       "legend": {
-        "orient": "bottom"
+        "orient": "top-right",
+        "direction": "vertical",
+        "labelFontSize": 14,
+        "symbolSize": 180,
+        "rowPadding": 10,
+        "offset": 12
       }
     },
     "tooltip": [

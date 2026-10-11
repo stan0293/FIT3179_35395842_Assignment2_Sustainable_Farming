@@ -20,11 +20,35 @@
       <div class="agriculture-chart">
         <div class="chart" id="agriculture-pie"></div>
         <p class="chart-error" id="pie-error" role="status"></p>
+        <div class="pie-category-notes">
+          <p>
+            <strong>Agricultural uses:</strong>
+            Livestock production, cropping and horticulture.
+          </p>
+
+          <p>
+            <strong>Non-agricultural uses:</strong>
+            Nature conservation, forests and plantations,
+            urban and other intensive uses, and water.
+          </p>
+        </div>
       </div>
       <aside class="agriculture-insights">
-        <h3>Agriculture occupies more than half of the mapped area</h3>
-        <p>Agricultural uses account for <strong>55.5%</strong> of the total mapped area across the 57 NRM regions, approximately <strong>426.6 million hectares</strong>. Non-agricultural uses account for the remaining <strong>44.5%</strong>.</p>
-        <p>This provides context for the scale of farming. Land area alone does not measure sustainability.</p>
+        <h3>Farming’s extensive footprint makes sustainable practices important</h3>
+
+        <p>
+          Agriculture occupies <strong>over half of the total mapped area</strong>
+          across the 57 NRM regions, approximately
+          <strong>426.6 million hectares</strong>.
+          This extensive footprint makes the way farms manage land an important
+          part of Australia’s environmental sustainability.
+        </p>
+
+        <p>
+          The national total also hides regional differences.
+          The next map shows how agricultural land share varies across regions,
+          while the bar chart breaks down the broad land use categories.
+        </p>
       </aside>
     </div>
     <div class="agriculture-layout">
@@ -34,10 +58,19 @@
         <p class="map-label-key">WA: Western Australia; NT: Northern Territory; SA: South Australia; QLD: Queensland; NSW: New South Wales; VIC: Victoria; TAS: Tasmania; ACT: Australian Capital Territory. Dark outlines are derived from the mapped NRM regions grouped by state or territory.</p>
       </div>
       <aside class="agriculture-insights">
-        <h3>Farming occupies an uneven share of the landscape</h3>
-        <p>South West Queensland has the highest agricultural land share among the 57 mapped regions, at <strong>92.2%</strong>. Southern Gulf follows at <strong>90.3%</strong>, while Western, New South Wales, records <strong>90.0%</strong>.</p>
-        <p>Agriculture includes cropping, horticulture and livestock production, including grazing. A higher agricultural share does not necessarily mean more sustainable farming.</p>
-        <p><em>Hover over a region to see its percentage and area.</em></p>
+        <h3>Farming occupies different shares of regional landscapes</h3>
+
+        <p>
+          Agriculture accounts for a high share of the mapped area in many
+          inland Queensland and New South Wales regions, while Tasmania
+          and northern Cape York have lower shares.
+        </p>
+
+        <p>
+          A higher share means more of that region is used for agriculture.
+          It does not indicate more sustainable farming or greater
+          environmental impact.
+        </p>
       </aside>
     </div>
     <div class="agriculture-layout">
@@ -46,13 +79,25 @@
         <p class="chart-error" id="bar-error" role="status"></p>
       </div>
       <aside class="agriculture-insights">
-        <h3>Livestock production dominates agricultural land use</h3>
-        <p>Livestock production occupies <strong>49.8%</strong> of the total mapped area, followed by cropping at <strong>5.6%</strong> and horticulture at <strong>0.1%</strong>. Nature conservation is the largest non-agricultural category, at <strong>39.1%</strong>.</p>
-        <p>These are shares of all mapped area, not just agricultural land. A small land share does not imply a small water requirement or environmental impact.</p>
-        <p>The following sections examine water use, soil-management practices and emissions to understand sustainability more directly.</p>
+        <h3>Most agricultural land is used to raise animals</h3>
+
+        <p>
+          Livestock production occupies the largest share of agricultural
+          land, followed by cropping and horticulture.
+        </p>
+
+        <p>
+          <strong>Cropping</strong> refers to growing field crops such as
+          wheat, barley and canola. <strong>Horticulture</strong> includes
+          growing fruit, vegetables, nuts and ornamental plants.
+        </p>
+
+        <p>
+          These shares describe how agricultural land is used.
+          They do not tell us which farming activity is more sustainable.
+        </p>
       </aside>
     </div>
-    <p class="agriculture-source">Source: <a href="https://www.agriculture.gov.au/abares/aclump/land-use/catchment-scale-land-use-report" target="_blank" rel="noopener noreferrer">ABARES catchment-scale land-use profiles</a>, December 2023 compilation, version 2; DCCEEW NRM Regions 2023. Regional mapping dates vary from 2008 to 2023. All shares use total mapped area, including water. National summary shares are calculated from summed areas, not averaged regional percentages.</p>
   </section>
   <script>
     function displayChart(container, specification, errorContainer) {
@@ -61,9 +106,9 @@
         document.querySelector(errorContainer).textContent = "Chart could not load: " + error.message;
       });
     }
-    displayChart("#agriculture-pie", "js/agriculture_share.vl.json", "#pie-error");
-    displayChart("#agriculture-map", "js/agriculture_map.vl.json", "#map-error");
-    displayChart("#broad-use-chart", "js/broad_land_use.vl.json", "#bar-error");
+    displayChart("#agriculture-pie", "js/chart1_agriculture_share.vl.json", "#pie-error");
+    displayChart("#agriculture-map", "js/chart2_agriculture_map.vl.json", "#map-error");
+    displayChart("#broad-use-chart", "js/chart3_broad_land_use.vl.json", "#bar-error");
   </script>
 </body>
 </html>
