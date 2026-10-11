@@ -1,0 +1,70 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "white",
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "title": {
+      "color": "black",
+      "subtitleColor": "black"
+    }
+  },
+  "title": {
+    "text": "How Much of the Mapped Area Is Agricultural?",
+    "subtitle": "Total area across the 57 NRM regions; includes water",
+    "anchor": "middle",
+    "align": "center",
+    "fontSize": 18,
+    "subtitleFontSize": 12,
+    "offset": 16
+  },
+  "width": "container",
+  "height": 300,
+  "data": {
+    "url": "data/national_agricultural_share.csv"
+  },
+  "mark": {
+    "type": "arc",
+    "stroke": "white",
+    "strokeWidth": 2
+  },
+  "encoding": {
+    "theta": {
+      "field": "area_ha",
+      "type": "quantitative",
+      "stack": true
+    },
+    "color": {
+      "field": "land_use_group",
+      "type": "nominal",
+      "title": null,
+      "scale": {
+        "domain": ["Agriculture", "Non-agriculture"],
+        "range": ["#0000FF", "#dedede"]
+      },
+      "legend": {
+        "orient": "bottom"
+      }
+    },
+    "tooltip": [
+      {
+        "field": "land_use_group",
+        "title": "Land use"
+      },
+      {
+        "field": "share_percentage",
+        "type": "quantitative",
+        "title": "Share (%)",
+        "format": ".1f"
+      },
+      {
+        "field": "area_ha",
+        "type": "quantitative",
+        "title": "Area (ha)",
+        "format": ",.0f"
+      }
+    ]
+  }
+}

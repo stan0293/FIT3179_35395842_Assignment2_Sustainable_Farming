@@ -3,95 +3,67 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Growing Tomorrow: Sustainable Farming in Australia</title>
-
-  <!-- Shared webpage styles -->
   <link rel="stylesheet" href="styles.css">
-
-  <!-- Vega libraries -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 </head>
-
 <body>
-  <!-- Main title and subtitle -->
-  <div id="page-header">
+  <header id="page-header">
     <h1>Growing Tomorrow: Sustainable Farming in Australia</h1>
-
-    <p>
-      Explore how Australian farms use water, manage soil and address
-      greenhouse gas emissions, and how these practices are changing
-      over time.
-    </p>
-  </div>
-
-  <!-- Section 1 -->
+    <p>Explore how Australian farms use water, manage soil and address greenhouse gas emissions, and how these practices are changing over time.</p>
+  </header>
   <section class="agriculture-section">
-    <h2>Australia’s Farming Landscape</h2>
-
+    <h2>Section 1: Australia’s Farming Landscape</h2>
     <div class="agriculture-layout">
-
-      <!-- Left column: map -->
       <div class="agriculture-chart">
-        <div id="agriculture-map"></div>
-        <p id="map-error" role="status"></p>
+        <div class="chart" id="agriculture-pie"></div>
+        <p class="chart-error" id="pie-error" role="status"></p>
       </div>
-
-      <!-- Right column: explanation -->
+      <aside class="agriculture-insights">
+        <h3>Agriculture occupies more than half of the mapped area</h3>
+        <p>Agricultural uses account for <strong>55.5%</strong> of the total mapped area across the 57 NRM regions, approximately <strong>426.6 million hectares</strong>. Non-agricultural uses account for the remaining <strong>44.5%</strong>.</p>
+        <p>This provides context for the scale of farming. Land area alone does not measure sustainability.</p>
+      </aside>
+    </div>
+    <div class="agriculture-layout">
+      <div class="agriculture-chart">
+        <div class="chart" id="agriculture-map"></div>
+        <p class="chart-error" id="map-error" role="status"></p>
+        <p class="map-label-key">WA: Western Australia; NT: Northern Territory; SA: South Australia; QLD: Queensland; NSW: New South Wales; VIC: Victoria; TAS: Tasmania; ACT: Australian Capital Territory. Dark outlines are derived from the mapped NRM regions grouped by state or territory.</p>
+      </div>
       <aside class="agriculture-insights">
         <h3>Farming occupies an uneven share of the landscape</h3>
-
-        <p>
-          South West Queensland has the highest agricultural land share
-          among the 57 mapped regions, at <strong>92.2%</strong>.
-          Southern Gulf follows at <strong>90.3%</strong>, while
-          Western, New South Wales, records <strong>90.0%</strong>.
-        </p>
-
-        <p>
-          Agriculture includes cropping, horticulture and livestock
-          production, including grazing. A higher agricultural share
-          does not necessarily mean more sustainable farming.
-        </p>
-
-        <p>
-          <em>
-            Hover over a region to see its percentage and area.
-          </em>
-        </p>
+        <p>South West Queensland has the highest agricultural land share among the 57 mapped regions, at <strong>92.2%</strong>. Southern Gulf follows at <strong>90.3%</strong>, while Western, New South Wales, records <strong>90.0%</strong>.</p>
+        <p>Agriculture includes cropping, horticulture and livestock production, including grazing. A higher agricultural share does not necessarily mean more sustainable farming.</p>
+        <p><em>Hover over a region to see its percentage and area.</em></p>
       </aside>
-
     </div>
-
-    <!-- Sources and measurement notes -->
-    <p class="agriculture-source">
-      Source:
-      <a
-        href="https://www.agriculture.gov.au/abares/aclump/land-use/catchment-scale-land-use-report"
-        target="_blank"
-        rel="noopener noreferrer"
-      >ABARES catchment-scale land-use profiles</a>,
-      December 2023 compilation, version 2;
-      DCCEEW NRM Regions 2023.
-      Regional mapping dates vary from 2008 to 2023.
-      Percentages use total mapped regional area, including water.
-    </p>
+    <div class="agriculture-layout">
+      <div class="agriculture-chart">
+        <div class="chart" id="broad-use-chart"></div>
+        <p class="chart-error" id="bar-error" role="status"></p>
+      </div>
+      <aside class="agriculture-insights">
+        <h3>Livestock production dominates agricultural land use</h3>
+        <p>Livestock production occupies <strong>49.8%</strong> of the total mapped area, followed by cropping at <strong>5.6%</strong> and horticulture at <strong>0.1%</strong>. Nature conservation is the largest non-agricultural category, at <strong>39.1%</strong>.</p>
+        <p>These are shares of all mapped area, not just agricultural land. A small land share does not imply a small water requirement or environmental impact.</p>
+        <p>The following sections examine water use, soil-management practices and emissions to understand sustainability more directly.</p>
+      </aside>
+    </div>
+    <p class="agriculture-source">Source: <a href="https://www.agriculture.gov.au/abares/aclump/land-use/catchment-scale-land-use-report" target="_blank" rel="noopener noreferrer">ABARES catchment-scale land-use profiles</a>, December 2023 compilation, version 2; DCCEEW NRM Regions 2023. Regional mapping dates vary from 2008 to 2023. All shares use total mapped area, including water. National summary shares are calculated from summed areas, not averaged regional percentages.</p>
   </section>
-
-  <!-- Display the map -->
   <script>
-    var agricultureMap = "js/agriculture_map.vl.json";
-
-    vegaEmbed("#agriculture-map", agricultureMap, {
-      actions: false
-    }).catch(function(error) {
-      console.error(error);
-
-      document.getElementById("map-error").textContent =
-        "The map could not load. Check the browser Console for details.";
-    });
+    function displayChart(container, specification, errorContainer) {
+      vegaEmbed(container, specification, { actions: false }).catch(function(error) {
+        console.error(error);
+        document.querySelector(errorContainer).textContent = "Chart could not load: " + error.message;
+      });
+    }
+    displayChart("#agriculture-pie", "js/agriculture_share.vl.json", "#pie-error");
+    displayChart("#agriculture-map", "js/agriculture_map.vl.json", "#map-error");
+    displayChart("#broad-use-chart", "js/broad_land_use.vl.json", "#bar-error");
   </script>
 </body>
 </html>

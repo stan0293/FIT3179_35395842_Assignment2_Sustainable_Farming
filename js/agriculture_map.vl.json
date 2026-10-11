@@ -1,5 +1,16 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "white",
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "title": {
+      "color": "black",
+      "subtitleColor": "black"
+    }
+  },
   "title": {
     "text": "Where Does Australia Farm?",
     "subtitle": "Agricultural land share by NRM region",
@@ -11,105 +22,259 @@
   },
   "width": "container",
   "height": 550,
-  "background": "#f7f8f2",
   "autosize": {
     "type": "fit",
     "contains": "padding"
   },
   "projection": {
     "type": "conicEqualArea",
-    "parallels": [-18, -36],
-    "rotate": [-134, 0, 0]
-  },
-  "data": {
-    "url": "data/Natural_Resource_Management_(NRM)_Regions_2023.topojson",
-    "format": {
-      "type": "topojson",
-      "feature": "Natural_Resource_Management_(NRM)_Regions_2023"
-    }
-  },
-  "transform": [
-    {
-      "lookup": "properties.NRM_REGION",
-      "from": {
-        "data": {
-          "url": "data/agricultural_land_use_percentage_by_nrm.csv"
-        },
-        "key": "nrm_region_name",
-        "fields": [
-          "agricultural_land_area_ha",
-          "total_mapped_region_area_ha",
-          "agricultural_land_percentage"
-        ]
-      }
-    },
-    {
-      "filter": "isValid(datum.agricultural_land_percentage)"
-    }
-  ],
-  "mark": {
-    "type": "geoshape",
-    "stroke": "white",
-    "strokeWidth": 0.6
-  },
-  "encoding": {
-    "color": {
-      "field": "agricultural_land_percentage",
-      "type": "quantitative",
-      "title": "Agricultural area (%)",
-      "scale": {
-        "type": "threshold",
-        "domain": [20, 40, 60, 80],
-        "range": [
-          "#edf8e9",
-          "#bae4b3",
-          "#74c476",
-          "#31a354",
-          "#006d2c"
-        ]
-      },
-      "legend": {
-        "type": "symbol",
-        "orient": "top-right",
-        "direction": "vertical",
-        "symbolType": "square",
-        "symbolSize": 180,
-        "titleFontSize": 12,
-        "labelFontSize": 11,
-        "offset": 8,
-        "labelExpr": "datum.index === 0 ? 'Below 20%' : datum.index === 1 ? '20–<40%' : datum.index === 2 ? '40–<60%' : datum.index === 3 ? '60–<80%' : '80–100%'"
-      }
-    },
-    "tooltip": [
-      {
-        "field": "properties.NRM_REGION",
-        "type": "nominal",
-        "title": "NRM region"
-      },
-      {
-        "field": "agricultural_land_percentage",
-        "type": "quantitative",
-        "title": "Agricultural area (%)",
-        "format": ".1f"
-      },
-      {
-        "field": "agricultural_land_area_ha",
-        "type": "quantitative",
-        "title": "Agricultural area (ha)",
-        "format": ",.0f"
-      },
-      {
-        "field": "total_mapped_region_area_ha",
-        "type": "quantitative",
-        "title": "Total mapped area (ha)",
-        "format": ",.0f"
-      }
+    "parallels": [
+      -18,
+      -36
+    ],
+    "rotate": [
+      -134,
+      0,
+      0
     ]
   },
-  "config": {
-    "font": "Arial",
-    "view": {
-      "stroke": null
+  "layer": [
+    {
+      "data": {
+        "url": "data/Natural_Resource_Management_(NRM)_Regions_2023.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "Natural_Resource_Management_(NRM)_Regions_2023"
+        }
+      },
+      "transform": [
+        {
+          "lookup": "properties.NRM_REGION",
+          "from": {
+            "data": {
+              "url": "data/agricultural_land_use_percentage_by_nrm.csv",
+              "format": {
+                "type": "csv",
+                "parse": {
+                  "agricultural_land_percentage": "number",
+                  "agricultural_land_area_ha": "number",
+                  "total_mapped_region_area_ha": "number"
+                }
+              }
+            },
+            "key": "nrm_region_name",
+            "fields": [
+              "agricultural_land_area_ha",
+              "total_mapped_region_area_ha",
+              "agricultural_land_percentage"
+            ]
+          }
+        },
+        {
+          "filter": "isValid(datum.agricultural_land_percentage)"
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "stroke": "white",
+        "strokeWidth": 0.6
+      },
+      "encoding": {
+        "color": {
+          "field": "agricultural_land_percentage",
+          "type": "quantitative",
+          "title": "Agricultural area (%)",
+          "scale": {
+            "type": "threshold",
+            "domain": [
+              20,
+              40,
+              60,
+              80
+            ],
+            "range": [
+              "#edf8e9",
+              "#bae4b3",
+              "#74c476",
+              "#31a354",
+              "#006d2c"
+            ]
+          },
+          "legend": {
+            "type": "symbol",
+            "orient": "top-right",
+            "direction": "vertical",
+            "symbolType": "square",
+            "symbolSize": 180,
+            "labelExpr": "datum.index === 0 ? 'Below 20%' : datum.index === 1 ? '20\u2013<40%' : datum.index === 2 ? '40\u2013<60%' : datum.index === 3 ? '60\u2013<80%' : '80\u2013100%'"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "properties.NRM_REGION",
+            "title": "NRM region"
+          },
+          {
+            "field": "agricultural_land_percentage",
+            "type": "quantitative",
+            "title": "Agricultural area (%)",
+            "format": ".1f"
+          },
+          {
+            "field": "agricultural_land_area_ha",
+            "type": "quantitative",
+            "title": "Agricultural area (ha)",
+            "format": ",.0f"
+          },
+          {
+            "field": "total_mapped_region_area_ha",
+            "type": "quantitative",
+            "title": "Total mapped area (ha)",
+            "format": ",.0f"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/state_outlines.geojson",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "filled": false,
+        "stroke": "#333333",
+        "strokeWidth": 1.5
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "state": "WA",
+            "longitude": 121,
+            "latitude": -25
+          },
+          {
+            "state": "NT",
+            "longitude": 133,
+            "latitude": -20
+          },
+          {
+            "state": "SA",
+            "longitude": 135,
+            "latitude": -30
+          },
+          {
+            "state": "QLD",
+            "longitude": 145,
+            "latitude": -23
+          },
+          {
+            "state": "NSW",
+            "longitude": 147,
+            "latitude": -32
+          },
+          {
+            "state": "VIC",
+            "longitude": 144.5,
+            "latitude": -37
+          },
+          {
+            "state": "TAS",
+            "longitude": 146.5,
+            "latitude": -42
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 13,
+        "fontWeight": "bold",
+        "color": "black",
+        "stroke": "white",
+        "strokeWidth": 0.3
+      },
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "state"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "longitude": 149.13,
+            "latitude": -35.3,
+            "longitude2": 154,
+            "latitude2": -36.5
+          }
+        ]
+      },
+      "mark": {
+        "type": "rule",
+        "color": "#333",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        },
+        "longitude2": {
+          "field": "longitude2"
+        },
+        "latitude2": {
+          "field": "latitude2"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "longitude": 154,
+            "latitude": -36.5,
+            "state": "ACT"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 4,
+        "fontSize": 12,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "state"
+        }
+      }
     }
-  }
+  ]
 }
