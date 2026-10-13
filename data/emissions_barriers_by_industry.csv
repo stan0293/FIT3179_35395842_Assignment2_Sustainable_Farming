@@ -1,0 +1,19 @@
+industry,barrier,percentage_of_farms
+Wheat and other crops,Limited information,49
+Wheat and other crops,Lack of knowledge,37
+Wheat and other crops,Uncertainty,60
+Mixed livestock and cropping,Limited information,48
+Mixed livestock and cropping,Lack of knowledge,47
+Mixed livestock and cropping,Uncertainty,62
+Sheep,Limited information,44
+Sheep,Lack of knowledge,53
+Sheep,Uncertainty,58
+Beef,Limited information,46
+Beef,Lack of knowledge,47
+Beef,Uncertainty,58
+Sheep and beef,Limited information,51
+Sheep and beef,Lack of knowledge,45
+Sheep and beef,Uncertainty,57
+Dairy,Limited information,47
+Dairy,Lack of knowledge,52
+Dairy,Uncertainty,69

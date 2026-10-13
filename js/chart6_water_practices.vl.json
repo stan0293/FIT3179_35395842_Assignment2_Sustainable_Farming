@@ -1,0 +1,432 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "white",
+  "title": {
+    "text": "How Does Water Management Adoption Vary Across States?",
+    "subtitle": "Broadacre and dairy farms reporting practices, three years to 2023–24",
+    "anchor": "middle",
+    "align": "center",
+    "fontSize": 18,
+    "subtitleFontSize": 12,
+    "offset": 20
+  },
+  "spacing": 20,
+  "hconcat": [
+    {
+      "title": {
+        "text": "Water efficient varieties",
+        "anchor": "middle",
+        "fontSize": 14
+      },
+      "width": 380,
+      "height": 420,
+      "projection": {
+        "type": "conicEqualArea",
+        "parallels": [-18, -36],
+        "rotate": [-134, 0, 0]
+      },
+      "layer": [
+        {
+          "data": {
+            "url": "data/Natural_Resource_Management_(NRM)_Regions_2023.topojson",
+            "format": {
+              "type": "topojson",
+              "feature": "Natural_Resource_Management_(NRM)_Regions_2023"
+            }
+          },
+          "transform": [
+            {
+              "lookup": "properties.NRM_REGION",
+              "from": {
+                "data": {
+                  "url": "data/agricultural_land_use_percentage_by_nrm.csv"
+                },
+                "key": "nrm_region_name",
+                "fields": [
+                  "agricultural_land_percentage"
+                ]
+              }
+            },
+            {
+              "filter": "isValid(datum.agricultural_land_percentage)"
+            },
+            {
+              "lookup": "properties.STATE",
+              "from": {
+                "data": {
+                  "url": "data/water_practices_state_map.csv",
+                  "format": {
+                    "type": "csv",
+                    "parse": {
+                      "water_efficient_varieties_percentage": "number",
+                      "increased_water_storage_percentage": "number"
+                    }
+                  }
+                },
+                "key": "state_code",
+                "fields": [
+                  "water_efficient_varieties_percentage",
+                  "increased_water_storage_percentage"
+                ]
+              }
+            },
+            {
+              "calculate": "isValid(datum.water_efficient_varieties_percentage) ? format(datum.water_efficient_varieties_percentage, '.0f') + '%' : 'No data'",
+              "as": "adoption_label"
+            }
+          ],
+          "mark": {
+            "type": "geoshape",
+            "filled": true,
+            "stroke": null
+          },
+          "encoding": {
+            "color": {
+              "condition": {
+                "test": "isValid(datum.water_efficient_varieties_percentage)",
+                "field": "water_efficient_varieties_percentage",
+                "type": "quantitative",
+                "scale": {
+                  "type": "threshold",
+                  "domain": [20, 40, 60, 80],
+                  "range": [
+                    "#f2f0f7",
+                    "#cbc9e2",
+                    "#9e9ac8",
+                    "#756bb1",
+                    "#54278f"
+                  ]
+                },
+                "legend": {
+                  "type": "symbol",
+                  "title": "Farms reporting practice (%)",
+                  "orient": "right",
+                  "direction": "vertical",
+                  "columns": 1,
+                  "symbolType": "square",
+                  "symbolSize": 625,
+                  "symbolStrokeWidth": 0,
+                  "rowPadding": 0,
+                  "labelOffset": 8,
+                  "titleFontSize": 12,
+                  "labelFontSize": 11,
+                  "offset": 12,
+                  "labelExpr": "datum.index === 0 ? 'Below 20%' : datum.index === 1 ? '20–<40%' : datum.index === 2 ? '40–<60%' : datum.index === 3 ? '60–<80%' : '80–100%'"
+                }
+              },
+              "value": "#dddddd"
+            },
+            "tooltip": [
+              {
+                "field": "properties.STATE",
+                "type": "nominal",
+                "title": "State or territory"
+              },
+              {
+                "field": "adoption_label",
+                "type": "nominal",
+                "title": "Water efficient varieties"
+              }
+            ]
+          }
+        },
+        {
+          "data": {
+            "url": "data/state_outlines.geojson",
+            "format": {
+              "type": "json",
+              "property": "features"
+            }
+          },
+          "mark": {
+            "type": "geoshape",
+            "filled": false,
+            "stroke": "#555555",
+            "strokeWidth": 0.8
+          }
+        },
+        {
+          "data": {
+            "values": [
+              {
+                "state": "WA",
+                "longitude": 121,
+                "latitude": -25
+              },
+              {
+                "state": "NT",
+                "longitude": 133,
+                "latitude": -20
+              },
+              {
+                "state": "SA",
+                "longitude": 135,
+                "latitude": -30
+              },
+              {
+                "state": "QLD",
+                "longitude": 145,
+                "latitude": -23
+              },
+              {
+                "state": "NSW",
+                "longitude": 147,
+                "latitude": -32
+              },
+              {
+                "state": "VIC",
+                "longitude": 144.5,
+                "latitude": -37
+              },
+              {
+                "state": "TAS",
+                "longitude": 146.5,
+                "latitude": -42
+              }
+            ]
+          },
+          "mark": {
+            "type": "text",
+            "fontSize": 11,
+            "fontWeight": "bold",
+            "color": "black"
+          },
+          "encoding": {
+            "longitude": {
+              "field": "longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "latitude",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "state",
+              "type": "nominal"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "text": "Increased water storage",
+        "anchor": "middle",
+        "fontSize": 14
+      },
+      "width": 380,
+      "height": 420,
+      "projection": {
+        "type": "conicEqualArea",
+        "parallels": [-18, -36],
+        "rotate": [-134, 0, 0]
+      },
+      "layer": [
+        {
+          "data": {
+            "url": "data/Natural_Resource_Management_(NRM)_Regions_2023.topojson",
+            "format": {
+              "type": "topojson",
+              "feature": "Natural_Resource_Management_(NRM)_Regions_2023"
+            }
+          },
+          "transform": [
+            {
+              "lookup": "properties.NRM_REGION",
+              "from": {
+                "data": {
+                  "url": "data/agricultural_land_use_percentage_by_nrm.csv"
+                },
+                "key": "nrm_region_name",
+                "fields": [
+                  "agricultural_land_percentage"
+                ]
+              }
+            },
+            {
+              "filter": "isValid(datum.agricultural_land_percentage)"
+            },
+            {
+              "lookup": "properties.STATE",
+              "from": {
+                "data": {
+                  "url": "data/water_practices_state_map.csv",
+                  "format": {
+                    "type": "csv",
+                    "parse": {
+                      "water_efficient_varieties_percentage": "number",
+                      "increased_water_storage_percentage": "number"
+                    }
+                  }
+                },
+                "key": "state_code",
+                "fields": [
+                  "water_efficient_varieties_percentage",
+                  "increased_water_storage_percentage"
+                ]
+              }
+            },
+            {
+              "calculate": "isValid(datum.increased_water_storage_percentage) ? format(datum.increased_water_storage_percentage, '.0f') + '%' : 'No data'",
+              "as": "adoption_label"
+            }
+          ],
+          "mark": {
+            "type": "geoshape",
+            "filled": true,
+            "stroke": null
+          },
+          "encoding": {
+            "color": {
+              "condition": {
+                "test": "isValid(datum.increased_water_storage_percentage)",
+                "field": "increased_water_storage_percentage",
+                "type": "quantitative",
+                "scale": {
+                  "type": "threshold",
+                  "domain": [20, 40, 60, 80],
+                  "range": [
+                    "#f2f0f7",
+                    "#cbc9e2",
+                    "#9e9ac8",
+                    "#756bb1",
+                    "#54278f"
+                  ]
+                },
+                "legend": {
+                  "type": "symbol",
+                  "title": "Farms reporting practice (%)",
+                  "orient": "right",
+                  "direction": "vertical",
+                  "columns": 1,
+                  "symbolType": "square",
+                  "symbolSize": 625,
+                  "symbolStrokeWidth": 0,
+                  "rowPadding": 0,
+                  "labelOffset": 8,
+                  "titleFontSize": 12,
+                  "labelFontSize": 11,
+                  "offset": 12,
+                  "labelExpr": "datum.index === 0 ? 'Below 20%' : datum.index === 1 ? '20–<40%' : datum.index === 2 ? '40–<60%' : datum.index === 3 ? '60–<80%' : '80–100%'"
+                }
+              },
+              "value": "#dddddd"
+            },
+            "tooltip": [
+              {
+                "field": "properties.STATE",
+                "type": "nominal",
+                "title": "State or territory"
+              },
+              {
+                "field": "adoption_label",
+                "type": "nominal",
+                "title": "Increased water storage"
+              }
+            ]
+          }
+        },
+        {
+          "data": {
+            "url": "data/state_outlines.geojson",
+            "format": {
+              "type": "json",
+              "property": "features"
+            }
+          },
+          "mark": {
+            "type": "geoshape",
+            "filled": false,
+            "stroke": "#555555",
+            "strokeWidth": 0.8
+          }
+        },
+        {
+          "data": {
+            "values": [
+              {
+                "state": "WA",
+                "longitude": 121,
+                "latitude": -25
+              },
+              {
+                "state": "NT",
+                "longitude": 133,
+                "latitude": -20
+              },
+              {
+                "state": "SA",
+                "longitude": 135,
+                "latitude": -30
+              },
+              {
+                "state": "QLD",
+                "longitude": 145,
+                "latitude": -23
+              },
+              {
+                "state": "NSW",
+                "longitude": 147,
+                "latitude": -32
+              },
+              {
+                "state": "VIC",
+                "longitude": 144.5,
+                "latitude": -37
+              },
+              {
+                "state": "TAS",
+                "longitude": 146.5,
+                "latitude": -42
+              }
+            ]
+          },
+          "mark": {
+            "type": "text",
+            "fontSize": 11,
+            "fontWeight": "bold"
+          },
+          "encoding": {
+            "longitude": {
+              "field": "longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "latitude",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "state",
+              "type": "nominal"
+            },
+            "color": {
+              "condition": {
+                "test": "datum.state === 'WA' || datum.state === 'NT'",
+                "value": "white"
+              },
+              "value": "black"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "resolve": {
+    "scale": {
+      "color": "shared"
+    },
+    "legend": {
+      "color": "shared"
+    }
+  },
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "title": {
+      "color": "black",
+      "subtitleColor": "black"
+    }
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "What Prevents Farmers from Reducing Emissions?",
+    "subtitle": "Reported barriers by broadacre and dairy industry, 2023–24 survey",
+    "anchor": "middle",
+    "align": "center",
+    "fontSize": 18,
+    "subtitleFontSize": 12,
+    "offset": 20
+  },
+  "width": "container",
+  "height": 440,
+  "background": "white",
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "data": {
+    "url": "data/emissions_barriers_by_industry.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "percentage_of_farms": "number"
+      }
+    }
+  },
+  "mark": {
+    "type": "bar"
+  },
+  "encoding": {
+    "y": {
+      "field": "industry",
+      "type": "nominal",
+      "title": null,
+      "sort": [
+        "Wheat and other crops",
+        "Mixed livestock and cropping",
+        "Beef",
+        "Sheep",
+        "Sheep and beef",
+        "Dairy"
+      ],
+      "axis": {
+        "labelFontSize": 12,
+        "labelLimit": 210,
+        "ticks": false,
+        "domain": false
+      }
+    },
+    "yOffset": {
+      "field": "barrier",
+      "sort": [
+        "Limited information",
+        "Lack of knowledge",
+        "Uncertainty"
+      ]
+    },
+    "x": {
+      "field": "percentage_of_farms",
+      "type": "quantitative",
+      "title": "Farms reporting barrier (%)",
+      "scale": {
+        "domain": [0, 100]
+      },
+      "axis": {
+        "values": [0, 20, 40, 60, 80, 100],
+        "labelFontSize": 11,
+        "titleFontSize": 12,
+        "gridColor": "#eeeeee"
+      }
+    },
+    "color": {
+      "field": "barrier",
+      "type": "nominal",
+      "title": null,
+      "scale": {
+        "domain": [
+          "Limited information",
+          "Lack of knowledge",
+          "Uncertainty"
+        ],
+        "range": [
+          "#0072B2",
+          "#E69F00",
+          "#CC79A7"
+        ]
+      },
+      "legend": {
+        "orient": "bottom",
+        "direction": "horizontal",
+        "columns": 2,
+        "symbolType": "square",
+        "symbolSize": 140,
+        "labelFontSize": 12
+      }
+    },
+    "tooltip": [
+      {
+        "field": "industry",
+        "title": "Farming industry"
+      },
+      {
+        "field": "barrier",
+        "title": "Reported barrier"
+      },
+      {
+        "field": "percentage_of_farms",
+        "type": "quantitative",
+        "title": "Farms reporting barrier (%)",
+        "format": ".0f"
+      }
+    ]
+  },
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "title": {
+      "color": "black",
+      "subtitleColor": "black"
+    }
+  }
+}
