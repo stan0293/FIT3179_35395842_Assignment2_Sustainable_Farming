@@ -99,6 +99,51 @@
       </aside>
     </div>
   </section>
+  <section class="agriculture-section">
+  <h2>Section 2: Water Use and Conservation</h2>
+
+  <div class="agriculture-layout">
+    <div class="agriculture-chart">
+      <div class="chart" id="water-map"></div>
+      <p class="chart-error" id="water-map-error" role="status"></p>
+
+      <p class="map-label-key">
+        Circle area represents irrigation water applied to crops
+        and pastures. GL means gigalitres.
+        One gigalitre equals one billion litres.
+        Symbols are positioned approximately within each state or territory.
+        Values for the Northern Territory and ACT are not published.
+      </p>
+    </div>
+
+    <aside class="agriculture-insights">
+      <h3>Irrigation water supports crops and livestock pastures</h3>
+
+      <p>
+        New South Wales records the largest published volume of
+        irrigation water applied, followed by Queensland and Victoria.
+      </p>
+
+      <p>
+        Irrigation supplies water to crops, horticultural plants
+        and pastures grown for livestock. These figures exclude
+        rainfall and do not represent all water used on farms.
+      </p>
+
+      <p>
+        Higher volumes do not necessarily indicate inefficient water use.
+        They can reflect differences in irrigated area, crop types
+        and weather conditions.
+      </p>
+
+      <p>
+        <em>
+          Hover over a circle to see its irrigation volume.
+        </em>
+      </p>
+    </aside>
+  </div>
+</section>
   <script>
     function displayChart(container, specification, errorContainer) {
       vegaEmbed(container, specification, { actions: false }).catch(function(error) {
@@ -109,6 +154,7 @@
     displayChart("#agriculture-pie", "js/chart1_agriculture_share.vl.json", "#pie-error");
     displayChart("#agriculture-map", "js/chart2_agriculture_map.vl.json", "#map-error");
     displayChart("#broad-use-chart", "js/chart3_broad_land_use.vl.json", "#bar-error");
+    displayChart("#water-map", "js/chart4_water_map.vl.json", "#water-map-error");
   </script>
 </body>
 </html>
