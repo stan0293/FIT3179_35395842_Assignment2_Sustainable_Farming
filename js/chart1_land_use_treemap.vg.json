@@ -1,0 +1,460 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "width": 740,
+  "height": 580,
+  "padding": 8,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "background": "white",
+  "title": {
+    "text": "How Is Australia’s Mapped Area Used?",
+    "subtitle": [
+      "Percentage of total mapped area across 57",
+      "Natural Resource Management (NRM) regions"
+    ],
+    "anchor": "middle",
+    "font": "Arial",
+    "fontSize": 18,
+    "color": "#000000",
+    "subtitleFont": "Arial",
+    "subtitleFontSize": 12,
+    "subtitleColor": "#000000",
+    "offset": 18
+  },
+  "signals": [
+    {
+      "name": "legendColumns",
+      "update": "width >= 600 ? 2 : 1"
+    },
+    {
+      "name": "legendHeight",
+      "update": "legendColumns === 2 ? 120 : 200"
+    },
+    {
+      "name": "mapHeight",
+      "update": "max(180, height - legendHeight)"
+    }
+  ],
+  "data": [
+    {
+      "name": "raw",
+      "url": "data/land_use_hierarchy.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "area_ha": "number",
+          "share_total": "number",
+          "share_group": "number"
+        }
+      }
+    },
+    {
+      "name": "tree",
+      "source": "raw",
+      "transform": [
+        {
+          "type": "formula",
+          "expr": "datum.id === 'root' || datum.parent === 'root' ? 0 : datum.share_total",
+          "as": "layout_weight"
+        },
+        {
+          "type": "stratify",
+          "key": "id",
+          "parentKey": "parent"
+        },
+        {
+          "type": "treemap",
+          "field": "layout_weight",
+          "sort": {
+            "field": "value",
+            "order": "descending"
+          },
+          "method": "squarify",
+          "size": [
+            {
+              "signal": "width"
+            },
+            {
+              "signal": "mapHeight"
+            }
+          ],
+          "paddingTop": 30,
+          "paddingInner": 3,
+          "paddingOuter": 3,
+          "round": true
+        }
+      ]
+    },
+    {
+      "name": "groups",
+      "source": "tree",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.depth === 1"
+        }
+      ]
+    },
+    {
+      "name": "leaves",
+      "source": "tree",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.depth === 2"
+        }
+      ]
+    },
+    {
+      "name": "insideLabels",
+      "source": "leaves",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.x1 - datum.x0 >= 115 && datum.y1 - datum.y0 >= 55"
+        }
+      ]
+    },
+    {
+      "name": "legendItems",
+      "source": "leaves",
+      "transform": [
+        {
+          "type": "formula",
+          "expr": "indexof(['Livestock production', 'Cropping', 'Horticulture', 'Nature conservation', 'Forests and plantations', 'Intensive uses', 'Water'], datum.name)",
+          "as": "legend_order"
+        },
+        {
+          "type": "collect",
+          "sort": {
+            "field": "legend_order",
+            "order": "ascending"
+          }
+        },
+        {
+          "type": "window",
+          "ops": [
+            "row_number"
+          ],
+          "as": [
+            "row_index"
+          ]
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "groupColors",
+      "type": "ordinal",
+      "domain": [
+        "Agriculture",
+        "Non-agriculture"
+      ],
+      "range": [
+        "#B9530B",
+        "#F6C78E"
+      ]
+    },
+    {
+      "name": "tileColors",
+      "type": "ordinal",
+      "domain": [
+        "Livestock production",
+        "Cropping",
+        "Horticulture",
+        "Nature conservation",
+        "Forests and plantations",
+        "Intensive uses",
+        "Water"
+      ],
+      "range": [
+        "#0072B2",
+        "#E69F00",
+        "#CC79A7",
+        "#009E73",
+        "#8064A2",
+        "#777777",
+        "#56B4E9"
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "type": "text",
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "value": 0
+          },
+          "y": {
+            "value": 14
+          },
+          "text": {
+            "value": "All percentages are shares of total mapped area"
+          },
+          "font": {
+            "value": "Arial"
+          },
+          "fontSize": {
+            "value": 12
+          },
+          "fill": {
+            "value": "#555555"
+          }
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "from": {
+        "data": "groups"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "field": "x0"
+          },
+          "y": {
+            "field": "y0"
+          },
+          "x2": {
+            "field": "x1"
+          },
+          "y2": {
+            "field": "y1"
+          },
+          "fill": {
+            "value": "#ffffff"
+          },
+          "stroke": {
+            "value": "#555555"
+          },
+          "strokeWidth": {
+            "value": 1.5
+          }
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "from": {
+        "data": "groups"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "field": "x0"
+          },
+          "y": {
+            "field": "y0"
+          },
+          "x2": {
+            "field": "x1"
+          },
+          "height": {
+            "value": 28
+          },
+          "fill": {
+            "scale": "groupColors",
+            "field": "name"
+          },
+          "tooltip": {
+            "signal": "datum.name + ' (' + format(datum.share_total, '.1f') + '% of total mapped area)'"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "interactive": false,
+      "from": {
+        "data": "groups"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "datum.x0 + 8"
+          },
+          "y": {
+            "signal": "datum.y0 + 14"
+          },
+          "text": {
+            "signal": "datum.name + ' (' + format(datum.share_total, '.1f') + '%)'"
+          },
+          "font": {
+            "value": "Arial"
+          },
+          "fontSize": {
+            "value": 14
+          },
+          "fontWeight": {
+            "value": "bold"
+          },
+          "baseline": {
+            "value": "middle"
+          },
+          "fill": {
+            "signal": "datum.name === 'Agriculture' ? '#ffffff' : '#222222'"
+          },
+          "limit": {
+            "signal": "max(0, datum.x1 - datum.x0 - 16)"
+          }
+        }
+      }
+    },
+    {
+      "name": "tiles",
+      "type": "rect",
+      "from": {
+        "data": "leaves"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "field": "x0"
+          },
+          "y": {
+            "field": "y0"
+          },
+          "x2": {
+            "field": "x1"
+          },
+          "y2": {
+            "field": "y1"
+          },
+          "fill": {
+            "scale": "tileColors",
+            "field": "name"
+          },
+          "stroke": {
+            "value": "#ffffff"
+          },
+          "strokeWidth": {
+            "value": 1
+          },
+          "tooltip": {
+            "signal": "datum.name + ' (' + format(datum.share_total, '.1f') + '% of total mapped area)'"
+          }
+        },
+        "hover": {
+          "stroke": {
+            "value": "#222222"
+          },
+          "strokeWidth": {
+            "value": 2
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "interactive": false,
+      "from": {
+        "data": "insideLabels"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "(datum.x0 + datum.x1) / 2"
+          },
+          "y": {
+            "signal": "(datum.y0 + datum.y1) / 2 - 9"
+          },
+          "text": {
+            "signal": "[datum.name, '(' + format(datum.share_total, '.1f') + '%)']"
+          },
+          "font": {
+            "value": "Arial"
+          },
+          "fontSize": {
+            "value": 14
+          },
+          "fontWeight": {
+            "value": "bold"
+          },
+          "lineHeight": {
+            "value": 21
+          },
+          "align": {
+            "value": "center"
+          },
+          "baseline": {
+            "value": "middle"
+          },
+          "fill": {
+            "signal": "indexof(['Livestock production', 'Forests and plantations', 'Intensive uses'], datum.name) >= 0 ? '#ffffff' : '#111111'"
+          },
+          "limit": {
+            "signal": "max(0, datum.x1 - datum.x0 - 14)"
+          }
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "interactive": false,
+      "from": {
+        "data": "legendItems"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "((datum.row_index - 1) % legendColumns) * (width / legendColumns)"
+          },
+          "y": {
+            "signal": "mapHeight + 20 + floor((datum.row_index - 1) / legendColumns) * 24"
+          },
+          "width": {
+            "value": 12
+          },
+          "height": {
+            "value": 12
+          },
+          "fill": {
+            "scale": "tileColors",
+            "field": "name"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "interactive": false,
+      "from": {
+        "data": "legendItems"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "20 + ((datum.row_index - 1) % legendColumns) * (width / legendColumns)"
+          },
+          "y": {
+            "signal": "mapHeight + 26 + floor((datum.row_index - 1) / legendColumns) * 24"
+          },
+          "text": {
+            "signal": "datum.name + ' (' + format(datum.share_total, '.1f') + '%)'"
+          },
+          "font": {
+            "value": "Arial"
+          },
+          "fontSize": {
+            "value": 12
+          },
+          "baseline": {
+            "value": "middle"
+          },
+          "fill": {
+            "value": "#222222"
+          },
+          "limit": {
+            "signal": "max(0, width / legendColumns - 26)"
+          }
+        }
+      }
+    }
+  ]
+}

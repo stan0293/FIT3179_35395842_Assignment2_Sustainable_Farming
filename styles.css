@@ -51,3 +51,55 @@ body { margin: 0; font-family: Arial, sans-serif; background: white; color: blac
 }
 @media (max-width: 900px) { .agriculture-layout { grid-template-columns: 1fr; } }
 @media (max-width: 600px) { #page-header h1 { font-size: 28px; } #page-header p { font-size: 16px; } }
+
+
+/* Give only the paired purple maps a full-width row */
+.agriculture-layout:has(#water-practices) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* Place its explanation below the maps */
+.agriculture-layout:has(#water-practices) .agriculture-insights {
+  max-width: 900px;
+}
+
+/* Keep the rendered chart within the available width */
+#water-practices canvas,
+#water-practices svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Chart 6: maps left, explanation right */
+.agriculture-layout:has(#water-practices) {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+}
+
+#water-practices canvas,
+#water-practices svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Stack on smaller screens */
+@media (max-width: 900px) {
+  .agriculture-layout:has(#water-practices) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.barrier-definition-note {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background-color: #f3eef8;
+  color: #45404b;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.barrier-definition-note p {
+  margin: 6px 0 0;
+}
