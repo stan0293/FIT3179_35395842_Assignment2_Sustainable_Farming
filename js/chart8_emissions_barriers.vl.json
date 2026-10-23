@@ -2,9 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": [
-      "Uncertainty Is the Most Reported Barrier",
-      "Across Farming Industries"
-    ],
+      "Uncertainty Is the Most Reported Barrier Across Farming Industries"],
     "subtitle": [
       "Among the three barriers shown",
       "Percentage of broadacre and dairy farms, Australia, 2023–24"
