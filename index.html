@@ -46,11 +46,11 @@
     </p>
   </header>
 
-  <!-- Section 1 -->
+  <!-- SECTION 1: Australia's Farming Landscape -->
   <section class="agriculture-section">
     <h2>Section 1: Australia’s Farming Landscape</h2>
 
-    <!-- Interactive land use treemap -->
+    <!-- CHART 1: Treemap | Land-use composition -->
     <div class="agriculture-layout">
       <div class="agriculture-chart">
         <div class="chart" id="land-use-treemap"></div>
@@ -99,7 +99,7 @@
       </aside>
     </div>
 
-    <!-- Agricultural land share map -->
+    <!-- CHART 2: Choropleth map | Agricultural land share by NRM region -->
     <div class="agriculture-layout">
       <div class="agriculture-chart">
         <div class="chart" id="agriculture-map"></div>
@@ -140,11 +140,11 @@
     </div>
   </section>
 
-  <!-- Section 2 -->
+  <!-- SECTION 2: Water Use and Conservation -->
   <section class="agriculture-section">
     <h2>Section 2: Water Use and Conservation</h2>
 
-    <!-- Irrigation water map -->
+    <!-- CHART 3: Proportional symbol map | Irrigation water applied by state -->
     <div class="agriculture-layout">
       <div class="agriculture-chart">
         <div class="chart" id="water-map"></div>
@@ -181,7 +181,7 @@
       </aside>
     </div>
 
-    <!-- Parallel coordinates plot -->
+    <!-- CHART 4: Parallel coordinates plot | Irrigation profiles by activity -->
     <div class="agriculture-layout">
       <div class="agriculture-chart">
         <div class="chart" id="irrigation-parallel"></div>
@@ -230,7 +230,7 @@
       </aside>
     </div>
 
-    <!-- State water management adoption -->
+    <!-- CHART 5: Paired choropleth maps | Water management adoption by state -->
     <div class="agriculture-layout">
       <div class="agriculture-chart">
         <div class="chart" id="water-practices"></div>
@@ -273,10 +273,11 @@
     </div>
   </section>
 
-  <!-- Section 3 -->
+  <!-- SECTION 3: Soil Management -->
   <section class="agriculture-section">
     <h2>Section 3: Soil Management</h2>
 
+    <!-- CHART 6: Heatmap | Soil management practices by industry -->
     <div class="agriculture-layout">
       <div class="agriculture-chart">
         <div class="chart" id="soil-heatmap"></div>
@@ -319,11 +320,11 @@
     </div>
   </section>
 
-  <!-- Section 4 -->
+  <!-- SECTION 4: Emissions and Sustainability -->
   <section class="agriculture-section">
     <h2>Section 4: Emissions and Sustainability</h2>
 
-    <!-- Agricultural emissions trend -->
+    <!-- CHART 7: Line chart | Agricultural emissions over time -->
     <div class="agriculture-layout">
       <div class="agriculture-chart">
         <div class="chart" id="agricultural-emissions"></div>
@@ -380,7 +381,7 @@
       </aside>
     </div>
 
-    <!-- Emissions reduction barriers -->
+    <!-- CHART 8: Dot plot | Emissions reduction barriers by industry -->
     <div class="agriculture-layout">
       <div class="agriculture-chart">
         <div class="chart" id="emissions-barriers"></div>
@@ -443,7 +444,7 @@
     </div>
   </section>
 
-  <!-- Display all charts -->
+  <!-- CHART EMBEDDING: Load Charts 1-8 in webpage order -->
   <script>
     function displayChart(container, specification, errorContainer) {
       const element = document.querySelector(container);
@@ -482,48 +483,56 @@
       }).catch(showError);
     }
 
+    // Chart 1: Treemap - Land-use composition
     displayChart(
       "#land-use-treemap",
       "js/chart1_land_use_treemap.vg.json",
       "#treemap-error"
     );
 
+    // Chart 2: Choropleth map - Agricultural land share by NRM region
     displayChart(
       "#agriculture-map",
       "js/chart2_agriculture_map.vl.json",
       "#map-error"
     );
 
+    // Chart 3: Proportional symbol map - Irrigation water applied by state
     displayChart(
       "#water-map",
       "js/chart3_water_map.vl.json",
       "#water-map-error"
     );
 
+    // Chart 4: Parallel coordinates plot - Irrigation profiles by activity
     displayChart(
       "#irrigation-parallel",
       "js/chart4_irrigation_parallel.vl.json",
       "#irrigation-parallel-error"
     );
 
+    // Chart 5: Paired choropleth maps - Water management adoption by state
     displayChart(
       "#water-practices",
       "js/chart5_water_practices.vl.json",
       "#water-practices-error"
     );
 
+    // Chart 6: Heatmap - Soil management practices by industry
     displayChart(
       "#soil-heatmap",
       "js/chart6_soil_heatmap.vl.json",
       "#soil-heatmap-error"
     );
 
+    // Chart 7: Line chart - Agricultural emissions over time
     displayChart(
       "#agricultural-emissions",
       "js/chart7_agricultural_emissions.vl.json",
       "#agricultural-emissions-error"
     );
 
+    // Chart 8: Dot plot - Emissions reduction barriers by industry
     displayChart(
       "#emissions-barriers",
       "js/chart8_emissions_barriers.vl.json",
