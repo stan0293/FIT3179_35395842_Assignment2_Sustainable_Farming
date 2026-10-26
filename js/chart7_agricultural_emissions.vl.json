@@ -16,6 +16,7 @@
     "type": "fit",
     "contains": "padding"
   },
+
   "data": {
     "url": "data/agricultural_emissions_trend.csv",
     "format": {
@@ -26,18 +27,31 @@
       }
     }
   },
+
   "encoding": {
     "x": {
       "field": "year_end",
       "type": "quantitative",
       "title": "Financial year ending",
       "scale": {
-        "domain": [1990, 2024],
+        "domain": [
+          1990,
+          2024
+        ],
         "nice": false,
         "zero": false
       },
       "axis": {
-        "values": [1990, 1995, 2000, 2005, 2010, 2015, 2020, 2024],
+        "values": [
+          1990,
+          1995,
+          2000,
+          2005,
+          2010,
+          2015,
+          2020,
+          2024
+        ],
         "format": "d",
         "labelOverlap": true,
         "grid": false
@@ -48,10 +62,20 @@
       "type": "quantitative",
       "title": "Emissions (Mt CO₂-e)",
       "scale": {
-        "domain": [0, 100]
+        "domain": [
+          0,
+          100
+        ]
       },
       "axis": {
-        "values": [0, 20, 40, 60, 80, 100]
+        "values": [
+          0,
+          20,
+          40,
+          60,
+          80,
+          100
+        ]
       }
     },
     "tooltip": [
@@ -68,6 +92,7 @@
       }
     ]
   },
+
   "layer": [
     {
       "mark": {
@@ -112,6 +137,7 @@
       }
     }
   ],
+
   "config": {
     "font": "Arial",
     "view": {

@@ -22,6 +22,7 @@
     "top": 15,
     "bottom": 15
   },
+
   "data": {
     "url": "data/irrigation_by_activity.csv",
     "format": {
@@ -33,6 +34,7 @@
       }
     }
   },
+
   "params": [
     {
       "name": "selectedActivity",
@@ -56,6 +58,7 @@
       }
     }
   ],
+
   "transform": [
     {
       "fold": [
@@ -63,7 +66,10 @@
         "application_rate_ml_per_ha",
         "water_applied_gl"
       ],
-      "as": ["measure", "actual_value"]
+      "as": [
+        "measure",
+        "actual_value"
+      ]
     },
     {
       "calculate": "datum.measure === 'irrigated_area_ha' ? 1 : datum.measure === 'application_rate_ml_per_ha' ? 2 : 3",
@@ -77,13 +83,16 @@
           "as": "axis_maximum"
         }
       ],
-      "groupby": ["measure"]
+      "groupby": [
+        "measure"
+      ]
     },
     {
       "calculate": "datum.actual_value / datum.axis_maximum",
       "as": "scaled_value"
     }
   ],
+
   "encoding": {
     "x": {
       "field": "measure",
@@ -111,11 +120,15 @@
       "field": "scaled_value",
       "type": "quantitative",
       "scale": {
-        "domain": [0, 1]
+        "domain": [
+          0,
+          1
+        ]
       },
       "axis": null
     }
   },
+
   "layer": [
     {
       "transform": [
@@ -127,12 +140,14 @@
               "as": "axis_maximum"
             }
           ],
-          "groupby": ["measure"]
+          "groupby": [
+            "measure"
+          ]
         }
       ],
       "mark": {
         "type": "rule",
-        "color": "#cccccc",
+        "color": "#000000",
         "strokeWidth": 1
       },
       "encoding": {
@@ -155,15 +170,21 @@
               "as": "axis_maximum"
             }
           ],
-          "groupby": ["measure"]
+          "groupby": [
+            "measure"
+          ]
         },
         {
           "calculate": "[0, 0.25, 0.5, 0.75, 1]",
           "as": "tick_positions"
         },
         {
-          "flatten": ["tick_positions"],
-          "as": ["tick_position"]
+          "flatten": [
+            "tick_positions"
+          ],
+          "as": [
+            "tick_position"
+          ]
         },
         {
           "calculate": "datum.measure === 'application_rate_ml_per_ha' ? format(datum.tick_position * datum.axis_maximum, '.1f') : format(datum.tick_position * datum.axis_maximum, ',.0f')",
@@ -268,6 +289,7 @@
       }
     }
   ],
+
   "config": {
     "font": "Arial",
     "view": {

@@ -1,6 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "background": "white",
+
   "config": {
     "font": "Arial",
     "view": {
@@ -38,6 +39,7 @@
       0
     ]
   },
+
   "layer": [
     {
       "data": {
@@ -106,7 +108,7 @@
             "direction": "vertical",
             "symbolType": "square",
             "symbolSize": 180,
-            "labelExpr": "datum.index === 0 ? 'Below 20%' : datum.index === 1 ? '20\u2013<40%' : datum.index === 2 ? '40\u2013<60%' : datum.index === 3 ? '60\u2013<80%' : '80\u2013100%'"
+            "labelExpr": "datum.index === 0 ? 'Below 20%' : datum.index === 1 ? '20–<40%' : datum.index === 2 ? '40–<60%' : datum.index === 3 ? '60–<80%' : '80–100%'"
           }
         },
         "tooltip": [

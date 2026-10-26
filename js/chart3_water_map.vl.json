@@ -18,9 +18,17 @@
   },
   "projection": {
     "type": "conicEqualArea",
-    "parallels": [-18, -36],
-    "rotate": [-134, 0, 0]
+    "parallels": [
+      -18,
+      -36
+    ],
+    "rotate": [
+      -134,
+      0,
+      0
+    ]
   },
+
   "layer": [
     {
       "data": {
@@ -103,12 +111,22 @@
           "title": "Irrigation water applied (GL)",
           "scale": {
             "type": "linear",
-            "domain": [0, 3000],
-            "range": [0, 4000]
+            "domain": [
+              0,
+              3000
+            ],
+            "range": [
+              0,
+              4000
+            ]
           },
           "legend": {
             "orient": "top-right",
-            "values": [500, 1500, 2500],
+            "values": [
+              500,
+              1500,
+              2500
+            ],
             "labelFontSize": 12,
             "titleFontSize": 12,
             "format": ",.0f"
@@ -240,6 +258,7 @@
       }
     }
   ],
+
   "config": {
     "font": "Arial",
     "view": {

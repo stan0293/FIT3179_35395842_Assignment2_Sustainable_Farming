@@ -16,6 +16,7 @@
     "type": "fit",
     "contains": "padding"
   },
+
   "data": {
     "url": "data/soil_management_practices.csv",
     "format": {
@@ -25,6 +26,7 @@
       }
     }
   },
+
   "encoding": {
     "x": {
       "field": "practice",
@@ -70,6 +72,7 @@
       }
     }
   },
+
   "layer": [
     {
       "mark": {
@@ -83,14 +86,23 @@
           "type": "quantitative",
           "title": "Farms reporting practice (%)",
           "scale": {
-            "domain": [0, 100],
+            "domain": [
+              0,
+              100
+            ],
             "scheme": "yelloworangebrown"
           },
           "legend": {
             "orient": "bottom",
             "direction": "horizontal",
             "gradientLength": 250,
-            "values": [0, 25, 50, 75, 100],
+            "values": [
+              0,
+              25,
+              50,
+              75,
+              100
+            ],
             "titleFontSize": 12,
             "labelFontSize": 11
           }
@@ -162,6 +174,7 @@
       }
     }
   ],
+
   "config": {
     "font": "Arial",
     "view": {

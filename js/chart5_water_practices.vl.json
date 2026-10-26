@@ -11,6 +11,7 @@
     "offset": 20
   },
   "spacing": 20,
+
   "hconcat": [
     {
       "title": {
@@ -22,8 +23,15 @@
       "height": 420,
       "projection": {
         "type": "conicEqualArea",
-        "parallels": [-18, -36],
-        "rotate": [-134, 0, 0]
+        "parallels": [
+          -18,
+          -36
+        ],
+        "rotate": [
+          -134,
+          0,
+          0
+        ]
       },
       "layer": [
         {
@@ -88,7 +96,12 @@
                 "type": "quantitative",
                 "scale": {
                   "type": "threshold",
-                  "domain": [20, 40, 60, 80],
+                  "domain": [
+                    20,
+                    40,
+                    60,
+                    80
+                  ],
                   "range": [
                     "#f2f0f7",
                     "#cbc9e2",
@@ -218,8 +231,15 @@
       "height": 420,
       "projection": {
         "type": "conicEqualArea",
-        "parallels": [-18, -36],
-        "rotate": [-134, 0, 0]
+        "parallels": [
+          -18,
+          -36
+        ],
+        "rotate": [
+          -134,
+          0,
+          0
+        ]
       },
       "layer": [
         {
@@ -284,7 +304,12 @@
                 "type": "quantitative",
                 "scale": {
                   "type": "threshold",
-                  "domain": [20, 40, 60, 80],
+                  "domain": [
+                    20,
+                    40,
+                    60,
+                    80
+                  ],
                   "range": [
                     "#f2f0f7",
                     "#cbc9e2",
@@ -411,6 +436,7 @@
       ]
     }
   ],
+
   "resolve": {
     "scale": {
       "color": "shared"
@@ -419,6 +445,7 @@
       "color": "shared"
     }
   },
+
   "config": {
     "font": "Arial",
     "view": {

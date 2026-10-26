@@ -23,6 +23,7 @@
     "subtitleColor": "#000000",
     "offset": 18
   },
+
   "signals": [
     {
       "name": "legendColumns",
@@ -37,6 +38,7 @@
       "update": "max(180, height - legendHeight)"
     }
   ],
+
   "data": [
     {
       "name": "raw",
@@ -145,6 +147,7 @@
       ]
     }
   ],
+
   "scales": [
     {
       "name": "groupColors",
@@ -181,6 +184,7 @@
       ]
     }
   ],
+
   "marks": [
     {
       "type": "text",

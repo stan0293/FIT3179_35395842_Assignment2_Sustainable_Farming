@@ -2,7 +2,8 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": [
-      "Uncertainty Is the Most Reported Barrier Across Farming Industries"],
+      "Uncertainty Is the Most Reported Barrier Across Farming Industries"
+    ],
     "subtitle": [
       "Among the three barriers shown",
       "Percentage of broadacre and dairy farms, Australia, 2023–24"
@@ -22,6 +23,7 @@
     "type": "fit",
     "contains": "padding"
   },
+
   "data": {
     "url": "data/emissions_barriers_by_industry.csv",
     "format": {
@@ -31,6 +33,7 @@
       }
     }
   },
+
   "encoding": {
     "y": {
       "field": "industry",
@@ -63,12 +66,22 @@
       "type": "quantitative",
       "title": "Farms reporting the barrier (%)",
       "scale": {
-        "domain": [0, 100],
+        "domain": [
+          0,
+          100
+        ],
         "nice": false,
         "zero": true
       },
       "axis": {
-        "values": [0, 20, 40, 60, 80, 100],
+        "values": [
+          0,
+          20,
+          40,
+          60,
+          80,
+          100
+        ],
         "labelExpr": "datum.value + '%'",
         "grid": false,
         "domain": false,
@@ -78,6 +91,7 @@
       }
     }
   },
+
   "layer": [
     {
       "mark": {
@@ -198,6 +212,7 @@
       }
     }
   ],
+
   "config": {
     "font": "Arial",
     "view": {
