@@ -1,0 +1,502 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "white",
+  "padding": 8,
+  "title": {
+    "text": [
+      "What Challenges Do Australian Farmers",
+      "Face in Reducing Emissions?"
+    ],
+    "subtitle": [
+      "Reported barriers among Australian broadacre and dairy farms, 2023–24"
+    ],
+    "font": "Lato",
+    "fontSize": 28,
+    "fontWeight": 900,
+    "anchor": "middle",
+    "subtitleFont": "Lato",
+    "subtitleFontSize": 16,
+    "subtitleFontWeight": 400,
+    "subtitlePadding": 12,
+    "offset": 25
+  },
+  "data": {
+    "url": "data/chart12_emissions_barriers_by_industry_2023_24.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "percentage": "number"
+      }
+    }
+  },
+  "params": [
+    {
+      "name": "barrierIndustry",
+      "value": "All broadacre and dairy"
+    }
+  ],
+  "transform": [
+    {
+      "filter": "datum.industry === barrierIndustry"
+    },
+    {
+      "calculate": "isValid(datum.percentage) ? datum.percentage + '%' : 'No estimate'",
+      "as": "percentage_text"
+    }
+  ],
+  "hconcat": [
+    {
+      "title": {
+        "text": "Uncertainty",
+        "anchor": "middle",
+        "font": "Lato",
+        "fontSize": 16,
+        "fontWeight": 700,
+        "offset": 12
+      },
+      "transform": [
+        {
+          "filter": "datum.barrier === \"Uncertainty\""
+        }
+      ],
+      "spacing": 8,
+      "vconcat": [
+        {
+          "width": 210,
+          "height": 210,
+          "transform": [
+            {
+              "calculate": "sequence(0, 100)",
+              "as": "cells"
+            },
+            {
+              "flatten": [
+                "cells"
+              ],
+              "as": [
+                "cell"
+              ]
+            },
+            {
+              "calculate": "datum.cell % 10",
+              "as": "column"
+            },
+            {
+              "calculate": "floor(datum.cell / 10)",
+              "as": "row"
+            },
+            {
+              "calculate": "isValid(datum.percentage) && datum.cell < datum.percentage ? 'Reported barrier' : 'Remaining share'",
+              "as": "square_status"
+            }
+          ],
+          "mark": {
+            "type": "rect",
+            "stroke": "white",
+            "strokeWidth": 1.5
+          },
+          "encoding": {
+            "x": {
+              "field": "column",
+              "type": "ordinal",
+              "sort": "ascending",
+              "axis": null,
+              "scale": {
+                "paddingInner": 0.06,
+                "paddingOuter": 0
+              }
+            },
+            "y": {
+              "field": "row",
+              "type": "ordinal",
+              "sort": "ascending",
+              "axis": null,
+              "scale": {
+                "paddingInner": 0.06,
+                "paddingOuter": 0
+              }
+            },
+            "color": {
+              "field": "square_status",
+              "type": "nominal",
+              "scale": {
+                "domain": [
+                  "Reported barrier",
+                  "Remaining share"
+                ],
+                "range": [
+                  "#D978A0",
+                  "#B8BFBC"
+                ]
+              },
+              "legend": null
+            },
+            "tooltip": [
+              {
+                "field": "industry",
+                "title": "Farming industry"
+              },
+              {
+                "field": "barrier",
+                "title": "Reported barrier"
+              },
+              {
+                "field": "percentage_text",
+                "title": "Farms reporting the barrier"
+              },
+              {
+                "field": "year",
+                "title": "Survey year"
+              }
+            ]
+          }
+        },
+        {
+          "width": 210,
+          "height": 40,
+          "mark": {
+            "type": "text",
+            "fontSize": 27,
+            "fontWeight": 900,
+            "color": "#000000"
+          },
+          "encoding": {
+            "text": {
+              "field": "percentage_text"
+            },
+            "tooltip": [
+              {
+                "field": "industry",
+                "title": "Farming industry"
+              },
+              {
+                "field": "barrier",
+                "title": "Reported barrier"
+              },
+              {
+                "field": "percentage_text",
+                "title": "Farms reporting the barrier"
+              },
+              {
+                "field": "year",
+                "title": "Survey year"
+              }
+            ]
+          }
+        }
+      ],
+      "resolve": {
+        "scale": {
+          "color": "independent"
+        }
+      }
+    },
+    {
+      "title": {
+        "text": "Limited information",
+        "anchor": "middle",
+        "font": "Lato",
+        "fontSize": 16,
+        "fontWeight": 700,
+        "offset": 12
+      },
+      "transform": [
+        {
+          "filter": "datum.barrier === \"Limited information\""
+        }
+      ],
+      "spacing": 8,
+      "vconcat": [
+        {
+          "width": 210,
+          "height": 210,
+          "transform": [
+            {
+              "calculate": "sequence(0, 100)",
+              "as": "cells"
+            },
+            {
+              "flatten": [
+                "cells"
+              ],
+              "as": [
+                "cell"
+              ]
+            },
+            {
+              "calculate": "datum.cell % 10",
+              "as": "column"
+            },
+            {
+              "calculate": "floor(datum.cell / 10)",
+              "as": "row"
+            },
+            {
+              "calculate": "isValid(datum.percentage) && datum.cell < datum.percentage ? 'Reported barrier' : 'Remaining share'",
+              "as": "square_status"
+            }
+          ],
+          "mark": {
+            "type": "rect",
+            "stroke": "white",
+            "strokeWidth": 1.5
+          },
+          "encoding": {
+            "x": {
+              "field": "column",
+              "type": "ordinal",
+              "sort": "ascending",
+              "axis": null,
+              "scale": {
+                "paddingInner": 0.06,
+                "paddingOuter": 0
+              }
+            },
+            "y": {
+              "field": "row",
+              "type": "ordinal",
+              "sort": "ascending",
+              "axis": null,
+              "scale": {
+                "paddingInner": 0.06,
+                "paddingOuter": 0
+              }
+            },
+            "color": {
+              "field": "square_status",
+              "type": "nominal",
+              "scale": {
+                "domain": [
+                  "Reported barrier",
+                  "Remaining share"
+                ],
+                "range": [
+                  "#9B8BC7",
+                  "#B8BFBC"
+                ]
+              },
+              "legend": null
+            },
+            "tooltip": [
+              {
+                "field": "industry",
+                "title": "Farming industry"
+              },
+              {
+                "field": "barrier",
+                "title": "Reported barrier"
+              },
+              {
+                "field": "percentage_text",
+                "title": "Farms reporting the barrier"
+              },
+              {
+                "field": "year",
+                "title": "Survey year"
+              }
+            ]
+          }
+        },
+        {
+          "width": 210,
+          "height": 40,
+          "mark": {
+            "type": "text",
+            "fontSize": 27,
+            "fontWeight": 900,
+            "color": "#000000"
+          },
+          "encoding": {
+            "text": {
+              "field": "percentage_text"
+            },
+            "tooltip": [
+              {
+                "field": "industry",
+                "title": "Farming industry"
+              },
+              {
+                "field": "barrier",
+                "title": "Reported barrier"
+              },
+              {
+                "field": "percentage_text",
+                "title": "Farms reporting the barrier"
+              },
+              {
+                "field": "year",
+                "title": "Survey year"
+              }
+            ]
+          }
+        }
+      ],
+      "resolve": {
+        "scale": {
+          "color": "independent"
+        }
+      }
+    },
+    {
+      "title": {
+        "text": "Lack of knowledge",
+        "anchor": "middle",
+        "font": "Lato",
+        "fontSize": 16,
+        "fontWeight": 700,
+        "offset": 12
+      },
+      "transform": [
+        {
+          "filter": "datum.barrier === \"Lack of knowledge\""
+        }
+      ],
+      "spacing": 8,
+      "vconcat": [
+        {
+          "width": 210,
+          "height": 210,
+          "transform": [
+            {
+              "calculate": "sequence(0, 100)",
+              "as": "cells"
+            },
+            {
+              "flatten": [
+                "cells"
+              ],
+              "as": [
+                "cell"
+              ]
+            },
+            {
+              "calculate": "datum.cell % 10",
+              "as": "column"
+            },
+            {
+              "calculate": "floor(datum.cell / 10)",
+              "as": "row"
+            },
+            {
+              "calculate": "isValid(datum.percentage) && datum.cell < datum.percentage ? 'Reported barrier' : 'Remaining share'",
+              "as": "square_status"
+            }
+          ],
+          "mark": {
+            "type": "rect",
+            "stroke": "white",
+            "strokeWidth": 1.5
+          },
+          "encoding": {
+            "x": {
+              "field": "column",
+              "type": "ordinal",
+              "sort": "ascending",
+              "axis": null,
+              "scale": {
+                "paddingInner": 0.06,
+                "paddingOuter": 0
+              }
+            },
+            "y": {
+              "field": "row",
+              "type": "ordinal",
+              "sort": "ascending",
+              "axis": null,
+              "scale": {
+                "paddingInner": 0.06,
+                "paddingOuter": 0
+              }
+            },
+            "color": {
+              "field": "square_status",
+              "type": "nominal",
+              "scale": {
+                "domain": [
+                  "Reported barrier",
+                  "Remaining share"
+                ],
+                "range": [
+                  "#65A9A4",
+                  "#B8BFBC"
+                ]
+              },
+              "legend": null
+            },
+            "tooltip": [
+              {
+                "field": "industry",
+                "title": "Farming industry"
+              },
+              {
+                "field": "barrier",
+                "title": "Reported barrier"
+              },
+              {
+                "field": "percentage_text",
+                "title": "Farms reporting the barrier"
+              },
+              {
+                "field": "year",
+                "title": "Survey year"
+              }
+            ]
+          }
+        },
+        {
+          "width": 210,
+          "height": 40,
+          "mark": {
+            "type": "text",
+            "fontSize": 27,
+            "fontWeight": 900,
+            "color": "#000000"
+          },
+          "encoding": {
+            "text": {
+              "field": "percentage_text"
+            },
+            "tooltip": [
+              {
+                "field": "industry",
+                "title": "Farming industry"
+              },
+              {
+                "field": "barrier",
+                "title": "Reported barrier"
+              },
+              {
+                "field": "percentage_text",
+                "title": "Farms reporting the barrier"
+              },
+              {
+                "field": "year",
+                "title": "Survey year"
+              }
+            ]
+          }
+        }
+      ],
+      "resolve": {
+        "scale": {
+          "color": "independent"
+        }
+      }
+    }
+  ],
+  "spacing": 22,
+  "resolve": {
+    "scale": {
+      "color": "independent"
+    }
+  },
+  "config": {
+    "font": "Lato",
+    "view": {
+      "stroke": null
+    },
+    "concat": {
+      "spacing": 22
+    }
+  }
+}

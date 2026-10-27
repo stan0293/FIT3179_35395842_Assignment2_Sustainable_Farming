@@ -2,25 +2,83 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "background": "white",
   "title": {
-    "text": "How Does Water Management Adoption Vary Across States?",
-    "subtitle": "Broadacre and dairy farms reporting practices, three years to 2023–24",
+    "text": "Where Are Australian Farms Adopting Water-Management Practices?",
+    "subtitle": "Estimated percentage of farms adopting two water-management practices by state, 2021",
     "anchor": "middle",
+    "font": "Lato",
+    "fontSize": 28,
+    "subtitleFont": "Lato",
+    "subtitleFontSize": 16,
+    "color": "#000000",
+    "subtitleColor": "#000000",
+    "offset": 32,
+    "fontWeight": 900,
+    "subtitlePadding": 10,
     "align": "center",
-    "fontSize": 18,
-    "subtitleFontSize": 12,
-    "offset": 20
+    "frame": "bounds",
+    "subtitleFontWeight": 400,
+    "subtitleLineHeight": 20,
+    "lineHeight": 34
   },
-  "spacing": 20,
-
   "hconcat": [
     {
+      "width": 400,
+      "height": 380,
       "title": {
-        "text": "Water efficient varieties",
+        "text": "Using Water-Efficient Crops and Pastures",
         "anchor": "middle",
-        "fontSize": 14
+        "font": "Lato",
+        "fontSize": 17,
+        "color": "#153C2C",
+        "offset": 18,
+        "align": "center"
       },
-      "width": 380,
-      "height": 420,
+      "data": {
+        "url": "https://raw.githubusercontent.com/tonywr71/GeoJson-Data/master/australian-states.json",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "transform": [
+        {
+          "lookup": "properties.STATE_NAME",
+          "from": {
+            "data": {
+              "url": "data/chart5_water_practices_state_2021.csv",
+              "format": {
+                "type": "csv",
+                "parse": {
+                  "water_efficient_varieties_pct": "string",
+                  "increased_water_storage_pct": "string",
+                  "farms_surveyed": "number",
+                  "estimated_farm_population": "number"
+                }
+              }
+            },
+            "key": "state_name",
+            "fields": [
+              "water_efficient_varieties_pct",
+              "increased_water_storage_pct",
+              "farms_surveyed",
+              "estimated_farm_population",
+              "survey_year"
+            ]
+          }
+        },
+        {
+          "calculate": "!isValid(datum.water_efficient_varieties_pct) || trim(toString(datum.water_efficient_varieties_pct)) === '' ? null : toNumber(datum.water_efficient_varieties_pct)",
+          "as": "adoption_pct"
+        },
+        {
+          "calculate": "!isValid(datum.adoption_pct) ? null : datum.adoption_pct < 20 ? '0–<20%' : datum.adoption_pct < 40 ? '20–<40%' : datum.adoption_pct < 60 ? '40–<60%' : datum.adoption_pct < 80 ? '60–<80%' : '80–100%'",
+          "as": "adoption_band"
+        },
+        {
+          "calculate": "isValid(datum.adoption_pct) ? format(datum.adoption_pct, '.0f') + '%' : 'No estimate'",
+          "as": "adoption_label"
+        }
+      ],
       "projection": {
         "type": "conicEqualArea",
         "parallels": [
@@ -35,174 +93,266 @@
       },
       "layer": [
         {
-          "data": {
-            "url": "data/Natural_Resource_Management_(NRM)_Regions_2023.topojson",
-            "format": {
-              "type": "topojson",
-              "feature": "Natural_Resource_Management_(NRM)_Regions_2023"
-            }
-          },
-          "transform": [
-            {
-              "lookup": "properties.NRM_REGION",
-              "from": {
-                "data": {
-                  "url": "data/agricultural_land_use_percentage_by_nrm.csv"
-                },
-                "key": "nrm_region_name",
-                "fields": [
-                  "agricultural_land_percentage"
-                ]
-              }
-            },
-            {
-              "filter": "isValid(datum.agricultural_land_percentage)"
-            },
-            {
-              "lookup": "properties.STATE",
-              "from": {
-                "data": {
-                  "url": "data/water_practices_state_map.csv",
-                  "format": {
-                    "type": "csv",
-                    "parse": {
-                      "water_efficient_varieties_percentage": "number",
-                      "increased_water_storage_percentage": "number"
-                    }
-                  }
-                },
-                "key": "state_code",
-                "fields": [
-                  "water_efficient_varieties_percentage",
-                  "increased_water_storage_percentage"
-                ]
-              }
-            },
-            {
-              "calculate": "isValid(datum.water_efficient_varieties_percentage) ? format(datum.water_efficient_varieties_percentage, '.0f') + '%' : 'No data'",
-              "as": "adoption_label"
-            }
-          ],
           "mark": {
             "type": "geoshape",
-            "filled": true,
-            "stroke": null
+            "stroke": "white",
+            "strokeWidth": 1.2
           },
           "encoding": {
             "color": {
-              "condition": {
-                "test": "isValid(datum.water_efficient_varieties_percentage)",
-                "field": "water_efficient_varieties_percentage",
-                "type": "quantitative",
-                "scale": {
-                  "type": "threshold",
-                  "domain": [
-                    20,
-                    40,
-                    60,
-                    80
-                  ],
-                  "range": [
-                    "#f2f0f7",
-                    "#cbc9e2",
-                    "#9e9ac8",
-                    "#756bb1",
-                    "#54278f"
-                  ]
-                },
-                "legend": {
-                  "type": "symbol",
-                  "title": "Farms reporting practice (%)",
-                  "orient": "right",
-                  "direction": "vertical",
-                  "columns": 1,
-                  "symbolType": "square",
-                  "symbolSize": 625,
-                  "symbolStrokeWidth": 0,
-                  "rowPadding": 0,
-                  "labelOffset": 8,
-                  "titleFontSize": 12,
-                  "labelFontSize": 11,
-                  "offset": 12,
-                  "labelExpr": "datum.index === 0 ? 'Below 20%' : datum.index === 1 ? '20–<40%' : datum.index === 2 ? '40–<60%' : datum.index === 3 ? '60–<80%' : '80–100%'"
-                }
+              "field": "adoption_band",
+              "type": "ordinal",
+              "title": "Farms adopting (%)",
+              "scale": {
+                "domain": [
+                  "0–<20%",
+                  "20–<40%",
+                  "40–<60%",
+                  "60–<80%",
+                  "80–100%"
+                ],
+                "range": [
+                  "#f2e5f5",
+                  "#d3b6e2",
+                  "#ae80c8",
+                  "#8050a7",
+                  "#542078"
+                ]
               },
-              "value": "#dddddd"
+              "legend": {
+                "orient": "top",
+                "direction": "horizontal",
+                "symbolType": "square",
+                "symbolSize": 196,
+                "symbolStrokeColor": "#ffffff",
+                "labelFont": "Lato",
+                "labelFontSize": 15,
+                "titleFont": "Lato",
+                "titleFontSize": 16,
+                "titleLimit": 180,
+                "labelOffset": 9,
+                "offset": 40,
+                "rowPadding": 8,
+                "columns": 5,
+                "columnPadding": 16
+              }
             },
             "tooltip": [
               {
-                "field": "properties.STATE",
+                "field": "properties.STATE_NAME",
                 "type": "nominal",
-                "title": "State or territory"
+                "title": "State"
+              },
+              {
+                "field": "survey_year",
+                "type": "nominal",
+                "title": "Survey year"
               },
               {
                 "field": "adoption_label",
                 "type": "nominal",
-                "title": "Water efficient varieties"
+                "title": "Adoption rate"
+              },
+              {
+                "field": "farms_surveyed",
+                "type": "quantitative",
+                "title": "State survey sample—all practices",
+                "format": ",.0f"
+              },
+              {
+                "field": "estimated_farm_population",
+                "type": "quantitative",
+                "title": "Estimated eligible farm population—state",
+                "format": ",.0f"
               }
             ]
           }
         },
         {
-          "data": {
-            "url": "data/state_outlines.geojson",
-            "format": {
-              "type": "json",
-              "property": "features"
+          "transform": [
+            {
+              "joinaggregate": [
+                {
+                  "op": "max",
+                  "field": "adoption_pct",
+                  "as": "highest_adoption_pct"
+                }
+              ]
+            },
+            {
+              "filter": "isValid(datum.adoption_pct) && datum.adoption_pct === datum.highest_adoption_pct"
+            },
+            {
+              "filter": "datum.properties.STATE_NAME !== 'Australian Capital Territory'"
+            },
+            {
+              "calculate": "datum.geometry.type === 'Polygon' ? {type: 'Polygon', coordinates: [datum.geometry.coordinates[0]]} : datum.geometry",
+              "as": "outer_boundary"
             }
-          },
+          ],
           "mark": {
             "type": "geoshape",
             "filled": false,
-            "stroke": "#555555",
-            "strokeWidth": 0.8
+            "stroke": "#000000",
+            "strokeWidth": 2.5
+          },
+          "encoding": {
+            "shape": {
+              "field": "outer_boundary",
+              "type": "geojson"
+            },
+            "tooltip": [
+              {
+                "field": "properties.STATE_NAME",
+                "type": "nominal",
+                "title": "State"
+              },
+              {
+                "field": "survey_year",
+                "type": "nominal",
+                "title": "Survey year"
+              },
+              {
+                "field": "adoption_label",
+                "type": "nominal",
+                "title": "Adoption rate"
+              },
+              {
+                "field": "farms_surveyed",
+                "type": "quantitative",
+                "title": "State survey sample—all practices",
+                "format": ",.0f"
+              },
+              {
+                "field": "estimated_farm_population",
+                "type": "quantitative",
+                "title": "Estimated eligible farm population—state",
+                "format": ",.0f"
+              }
+            ]
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "!isValid(datum.adoption_pct)"
+            },
+            {
+              "calculate": "'No estimate'",
+              "as": "publication_status"
+            }
+          ],
+          "mark": {
+            "type": "geoshape",
+            "fill": "#e5e7eb",
+            "stroke": "#ffffff",
+            "strokeWidth": 1.1
+          },
+          "encoding": {
+            "tooltip": [
+              {
+                "field": "properties.STATE_NAME",
+                "type": "nominal",
+                "title": "State"
+              },
+              {
+                "field": "survey_year",
+                "type": "nominal",
+                "title": "Survey year"
+              },
+              {
+                "field": "publication_status",
+                "type": "nominal",
+                "title": "Adoption rate"
+              }
+            ]
           }
         },
         {
           "data": {
             "values": [
               {
-                "state": "WA",
-                "longitude": 121,
-                "latitude": -25
+                "properties": {
+                  "STATE_NAME": "Western Australia"
+                },
+                "longitude": 121.4,
+                "latitude": -25.7,
+                "state_label": [
+                  "Western",
+                  "Australia"
+                ]
               },
               {
-                "state": "NT",
-                "longitude": 133,
-                "latitude": -20
+                "properties": {
+                  "STATE_NAME": "Northern Territory"
+                },
+                "longitude": 133.6,
+                "latitude": -19,
+                "state_label": [
+                  "Northern",
+                  "Territory"
+                ]
               },
               {
-                "state": "SA",
-                "longitude": 135,
-                "latitude": -30
-              },
-              {
-                "state": "QLD",
+                "properties": {
+                  "STATE_NAME": "Queensland"
+                },
                 "longitude": 145,
-                "latitude": -23
+                "latitude": -22.3,
+                "state_label": [
+                  "Queensland"
+                ]
               },
               {
-                "state": "NSW",
-                "longitude": 147,
-                "latitude": -32
+                "properties": {
+                  "STATE_NAME": "South Australia"
+                },
+                "longitude": 135,
+                "latitude": -30.2,
+                "state_label": [
+                  "South",
+                  "Australia"
+                ]
               },
               {
-                "state": "VIC",
-                "longitude": 144.5,
-                "latitude": -37
+                "properties": {
+                  "STATE_NAME": "New South Wales"
+                },
+                "longitude": 147.1,
+                "latitude": -32.4,
+                "state_label": [
+                  "New South",
+                  "Wales"
+                ]
               },
               {
-                "state": "TAS",
-                "longitude": 146.5,
-                "latitude": -42
+                "properties": {
+                  "STATE_NAME": "Victoria"
+                },
+                "longitude": 144.7,
+                "latitude": -36.7,
+                "state_label": [
+                  "Victoria"
+                ]
+              },
+              {
+                "properties": {
+                  "STATE_NAME": "Tasmania"
+                },
+                "longitude": 146.7,
+                "latitude": -42,
+                "state_label": [
+                  "Tasmania"
+                ]
               }
             ]
           },
           "mark": {
             "type": "text",
-            "fontSize": 11,
-            "fontWeight": "bold",
-            "color": "black"
+            "font": "Lato",
+            "fontSize": 15,
+            "lineHeight": 18,
+            "fontWeight": 400
           },
           "encoding": {
             "longitude": {
@@ -214,21 +364,264 @@
               "type": "quantitative"
             },
             "text": {
-              "field": "state",
+              "field": "state_label",
               "type": "nominal"
+            },
+            "color": {
+              "condition": {
+                "test": "datum.adoption_pct >= 60",
+                "value": "white"
+              },
+              "value": "#24142f"
+            },
+            "tooltip": [
+              {
+                "field": "properties.STATE_NAME",
+                "type": "nominal",
+                "title": "State"
+              },
+              {
+                "field": "survey_year",
+                "type": "nominal",
+                "title": "Survey year"
+              },
+              {
+                "field": "adoption_label",
+                "type": "nominal",
+                "title": "Adoption rate"
+              },
+              {
+                "field": "farms_surveyed",
+                "type": "quantitative",
+                "title": "State survey sample—all practices",
+                "format": ",.0f"
+              },
+              {
+                "field": "estimated_farm_population",
+                "type": "quantitative",
+                "title": "Estimated eligible farm population—state",
+                "format": ",.0f"
+              }
+            ]
+          },
+          "transform": [
+            {
+              "lookup": "properties.STATE_NAME",
+              "from": {
+                "data": {
+                  "url": "data/chart5_water_practices_state_2021.csv",
+                  "format": {
+                    "type": "csv",
+                    "parse": {
+                      "water_efficient_varieties_pct": "string",
+                      "increased_water_storage_pct": "string",
+                      "farms_surveyed": "number",
+                      "estimated_farm_population": "number"
+                    }
+                  }
+                },
+                "key": "state_name",
+                "fields": [
+                  "water_efficient_varieties_pct",
+                  "increased_water_storage_pct",
+                  "farms_surveyed",
+                  "estimated_farm_population",
+                  "survey_year"
+                ]
+              }
+            },
+            {
+              "calculate": "!isValid(datum.water_efficient_varieties_pct) || trim(toString(datum.water_efficient_varieties_pct)) === '' ? null : toNumber(datum.water_efficient_varieties_pct)",
+              "as": "adoption_pct"
+            },
+            {
+              "calculate": "isValid(datum.adoption_pct) ? format(datum.adoption_pct, '.0f') + '%' : 'No estimate'",
+              "as": "adoption_label"
+            }
+          ]
+        },
+        {
+          "data": {
+            "values": [
+              {
+                "properties": {
+                  "STATE_NAME": "Australian Capital Territory"
+                },
+                "longitude": 149.1,
+                "latitude": -35.3,
+                "end_longitude": 154,
+                "end_latitude": -38.5
+              }
+            ]
+          },
+          "mark": {
+            "type": "rule",
+            "stroke": "#61516e",
+            "strokeWidth": 1
+          },
+          "encoding": {
+            "longitude": {
+              "field": "longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "latitude",
+              "type": "quantitative"
+            },
+            "longitude2": {
+              "field": "end_longitude"
+            },
+            "latitude2": {
+              "field": "end_latitude"
             }
           }
+        },
+        {
+          "data": {
+            "values": [
+              {
+                "properties": {
+                  "STATE_NAME": "Australian Capital Territory"
+                },
+                "longitude": 154,
+                "latitude": -38.5,
+                "label": [
+                  "Australian Capital",
+                  "Territory",
+                  "(no estimate)"
+                ],
+                "adoption_label": "No estimate"
+              }
+            ]
+          },
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "dx": 3,
+            "font": "Lato",
+            "fontSize": 12,
+            "lineHeight": 14,
+            "color": "#4a3b53"
+          },
+          "encoding": {
+            "longitude": {
+              "field": "longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "latitude",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "label",
+              "type": "nominal"
+            },
+            "tooltip": [
+              {
+                "field": "properties.STATE_NAME",
+                "type": "nominal",
+                "title": "State"
+              },
+              {
+                "field": "survey_year",
+                "type": "nominal",
+                "title": "Survey year"
+              },
+              {
+                "field": "adoption_label",
+                "type": "nominal",
+                "title": "Adoption rate"
+              }
+            ]
+          },
+          "transform": [
+            {
+              "lookup": "properties.STATE_NAME",
+              "from": {
+                "data": {
+                  "url": "data/chart5_water_practices_state_2021.csv",
+                  "format": {
+                    "type": "csv",
+                    "parse": {
+                      "water_efficient_varieties_pct": "string",
+                      "increased_water_storage_pct": "string",
+                      "farms_surveyed": "number",
+                      "estimated_farm_population": "number"
+                    }
+                  }
+                },
+                "key": "state_name",
+                "fields": [
+                  "water_efficient_varieties_pct",
+                  "increased_water_storage_pct",
+                  "farms_surveyed",
+                  "estimated_farm_population",
+                  "survey_year"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
     {
+      "width": 400,
+      "height": 380,
       "title": {
-        "text": "Increased water storage",
+        "text": "Increasing Water Storage on Farms",
         "anchor": "middle",
-        "fontSize": 14
+        "font": "Lato",
+        "fontSize": 17,
+        "color": "#153C2C",
+        "offset": 18,
+        "align": "center"
       },
-      "width": 380,
-      "height": 420,
+      "data": {
+        "url": "https://raw.githubusercontent.com/tonywr71/GeoJson-Data/master/australian-states.json",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "transform": [
+        {
+          "lookup": "properties.STATE_NAME",
+          "from": {
+            "data": {
+              "url": "data/chart5_water_practices_state_2021.csv",
+              "format": {
+                "type": "csv",
+                "parse": {
+                  "water_efficient_varieties_pct": "string",
+                  "increased_water_storage_pct": "string",
+                  "farms_surveyed": "number",
+                  "estimated_farm_population": "number"
+                }
+              }
+            },
+            "key": "state_name",
+            "fields": [
+              "water_efficient_varieties_pct",
+              "increased_water_storage_pct",
+              "farms_surveyed",
+              "estimated_farm_population",
+              "survey_year"
+            ]
+          }
+        },
+        {
+          "calculate": "!isValid(datum.increased_water_storage_pct) || trim(toString(datum.increased_water_storage_pct)) === '' ? null : toNumber(datum.increased_water_storage_pct)",
+          "as": "adoption_pct"
+        },
+        {
+          "calculate": "!isValid(datum.adoption_pct) ? null : datum.adoption_pct < 20 ? '0–<20%' : datum.adoption_pct < 40 ? '20–<40%' : datum.adoption_pct < 60 ? '40–<60%' : datum.adoption_pct < 80 ? '60–<80%' : '80–100%'",
+          "as": "adoption_band"
+        },
+        {
+          "calculate": "isValid(datum.adoption_pct) ? format(datum.adoption_pct, '.0f') + '%' : 'No estimate'",
+          "as": "adoption_label"
+        }
+      ],
       "projection": {
         "type": "conicEqualArea",
         "parallels": [
@@ -243,173 +636,266 @@
       },
       "layer": [
         {
-          "data": {
-            "url": "data/Natural_Resource_Management_(NRM)_Regions_2023.topojson",
-            "format": {
-              "type": "topojson",
-              "feature": "Natural_Resource_Management_(NRM)_Regions_2023"
-            }
-          },
-          "transform": [
-            {
-              "lookup": "properties.NRM_REGION",
-              "from": {
-                "data": {
-                  "url": "data/agricultural_land_use_percentage_by_nrm.csv"
-                },
-                "key": "nrm_region_name",
-                "fields": [
-                  "agricultural_land_percentage"
-                ]
-              }
-            },
-            {
-              "filter": "isValid(datum.agricultural_land_percentage)"
-            },
-            {
-              "lookup": "properties.STATE",
-              "from": {
-                "data": {
-                  "url": "data/water_practices_state_map.csv",
-                  "format": {
-                    "type": "csv",
-                    "parse": {
-                      "water_efficient_varieties_percentage": "number",
-                      "increased_water_storage_percentage": "number"
-                    }
-                  }
-                },
-                "key": "state_code",
-                "fields": [
-                  "water_efficient_varieties_percentage",
-                  "increased_water_storage_percentage"
-                ]
-              }
-            },
-            {
-              "calculate": "isValid(datum.increased_water_storage_percentage) ? format(datum.increased_water_storage_percentage, '.0f') + '%' : 'No data'",
-              "as": "adoption_label"
-            }
-          ],
           "mark": {
             "type": "geoshape",
-            "filled": true,
-            "stroke": null
+            "stroke": "white",
+            "strokeWidth": 1.2
           },
           "encoding": {
             "color": {
-              "condition": {
-                "test": "isValid(datum.increased_water_storage_percentage)",
-                "field": "increased_water_storage_percentage",
-                "type": "quantitative",
-                "scale": {
-                  "type": "threshold",
-                  "domain": [
-                    20,
-                    40,
-                    60,
-                    80
-                  ],
-                  "range": [
-                    "#f2f0f7",
-                    "#cbc9e2",
-                    "#9e9ac8",
-                    "#756bb1",
-                    "#54278f"
-                  ]
-                },
-                "legend": {
-                  "type": "symbol",
-                  "title": "Farms reporting practice (%)",
-                  "orient": "right",
-                  "direction": "vertical",
-                  "columns": 1,
-                  "symbolType": "square",
-                  "symbolSize": 625,
-                  "symbolStrokeWidth": 0,
-                  "rowPadding": 0,
-                  "labelOffset": 8,
-                  "titleFontSize": 12,
-                  "labelFontSize": 11,
-                  "offset": 12,
-                  "labelExpr": "datum.index === 0 ? 'Below 20%' : datum.index === 1 ? '20–<40%' : datum.index === 2 ? '40–<60%' : datum.index === 3 ? '60–<80%' : '80–100%'"
-                }
+              "field": "adoption_band",
+              "type": "ordinal",
+              "title": "Farms adopting (%)",
+              "scale": {
+                "domain": [
+                  "0–<20%",
+                  "20–<40%",
+                  "40–<60%",
+                  "60–<80%",
+                  "80–100%"
+                ],
+                "range": [
+                  "#f2e5f5",
+                  "#d3b6e2",
+                  "#ae80c8",
+                  "#8050a7",
+                  "#542078"
+                ]
               },
-              "value": "#dddddd"
+              "legend": {
+                "orient": "top",
+                "direction": "horizontal",
+                "symbolType": "square",
+                "symbolSize": 196,
+                "symbolStrokeColor": "#ffffff",
+                "labelFont": "Lato",
+                "labelFontSize": 15,
+                "titleFont": "Lato",
+                "titleFontSize": 16,
+                "titleLimit": 180,
+                "labelOffset": 9,
+                "offset": 40,
+                "rowPadding": 8,
+                "columns": 5,
+                "columnPadding": 16
+              }
             },
             "tooltip": [
               {
-                "field": "properties.STATE",
+                "field": "properties.STATE_NAME",
                 "type": "nominal",
-                "title": "State or territory"
+                "title": "State"
+              },
+              {
+                "field": "survey_year",
+                "type": "nominal",
+                "title": "Survey year"
               },
               {
                 "field": "adoption_label",
                 "type": "nominal",
-                "title": "Increased water storage"
+                "title": "Adoption rate"
+              },
+              {
+                "field": "farms_surveyed",
+                "type": "quantitative",
+                "title": "State survey sample—all practices",
+                "format": ",.0f"
+              },
+              {
+                "field": "estimated_farm_population",
+                "type": "quantitative",
+                "title": "Estimated eligible farm population—state",
+                "format": ",.0f"
               }
             ]
           }
         },
         {
-          "data": {
-            "url": "data/state_outlines.geojson",
-            "format": {
-              "type": "json",
-              "property": "features"
+          "transform": [
+            {
+              "joinaggregate": [
+                {
+                  "op": "max",
+                  "field": "adoption_pct",
+                  "as": "highest_adoption_pct"
+                }
+              ]
+            },
+            {
+              "filter": "isValid(datum.adoption_pct) && (datum.adoption_pct === datum.highest_adoption_pct || datum.properties.STATE_NAME === 'New South Wales')"
+            },
+            {
+              "filter": "datum.properties.STATE_NAME !== 'Australian Capital Territory'"
+            },
+            {
+              "calculate": "datum.geometry.type === 'Polygon' ? {type: 'Polygon', coordinates: [datum.geometry.coordinates[0]]} : datum.geometry",
+              "as": "outer_boundary"
             }
-          },
+          ],
           "mark": {
             "type": "geoshape",
             "filled": false,
-            "stroke": "#555555",
-            "strokeWidth": 0.8
+            "stroke": "#000000",
+            "strokeWidth": 2.5
+          },
+          "encoding": {
+            "shape": {
+              "field": "outer_boundary",
+              "type": "geojson"
+            },
+            "tooltip": [
+              {
+                "field": "properties.STATE_NAME",
+                "type": "nominal",
+                "title": "State"
+              },
+              {
+                "field": "survey_year",
+                "type": "nominal",
+                "title": "Survey year"
+              },
+              {
+                "field": "adoption_label",
+                "type": "nominal",
+                "title": "Adoption rate"
+              },
+              {
+                "field": "farms_surveyed",
+                "type": "quantitative",
+                "title": "State survey sample—all practices",
+                "format": ",.0f"
+              },
+              {
+                "field": "estimated_farm_population",
+                "type": "quantitative",
+                "title": "Estimated eligible farm population—state",
+                "format": ",.0f"
+              }
+            ]
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "!isValid(datum.adoption_pct)"
+            },
+            {
+              "calculate": "'No estimate'",
+              "as": "publication_status"
+            }
+          ],
+          "mark": {
+            "type": "geoshape",
+            "fill": "#e5e7eb",
+            "stroke": "#ffffff",
+            "strokeWidth": 1.1
+          },
+          "encoding": {
+            "tooltip": [
+              {
+                "field": "properties.STATE_NAME",
+                "type": "nominal",
+                "title": "State"
+              },
+              {
+                "field": "survey_year",
+                "type": "nominal",
+                "title": "Survey year"
+              },
+              {
+                "field": "publication_status",
+                "type": "nominal",
+                "title": "Adoption rate"
+              }
+            ]
           }
         },
         {
           "data": {
             "values": [
               {
-                "state": "WA",
-                "longitude": 121,
-                "latitude": -25
+                "properties": {
+                  "STATE_NAME": "Western Australia"
+                },
+                "longitude": 121.4,
+                "latitude": -25.7,
+                "state_label": [
+                  "Western",
+                  "Australia"
+                ]
               },
               {
-                "state": "NT",
-                "longitude": 133,
-                "latitude": -20
+                "properties": {
+                  "STATE_NAME": "Northern Territory"
+                },
+                "longitude": 133.6,
+                "latitude": -19,
+                "state_label": [
+                  "Northern",
+                  "Territory"
+                ]
               },
               {
-                "state": "SA",
-                "longitude": 135,
-                "latitude": -30
-              },
-              {
-                "state": "QLD",
+                "properties": {
+                  "STATE_NAME": "Queensland"
+                },
                 "longitude": 145,
-                "latitude": -23
+                "latitude": -22.3,
+                "state_label": [
+                  "Queensland"
+                ]
               },
               {
-                "state": "NSW",
-                "longitude": 147,
-                "latitude": -32
+                "properties": {
+                  "STATE_NAME": "South Australia"
+                },
+                "longitude": 135,
+                "latitude": -30.2,
+                "state_label": [
+                  "South",
+                  "Australia"
+                ]
               },
               {
-                "state": "VIC",
-                "longitude": 144.5,
-                "latitude": -37
+                "properties": {
+                  "STATE_NAME": "New South Wales"
+                },
+                "longitude": 147.1,
+                "latitude": -32.4,
+                "state_label": [
+                  "New South",
+                  "Wales"
+                ]
               },
               {
-                "state": "TAS",
-                "longitude": 146.5,
-                "latitude": -42
+                "properties": {
+                  "STATE_NAME": "Victoria"
+                },
+                "longitude": 144.7,
+                "latitude": -36.7,
+                "state_label": [
+                  "Victoria"
+                ]
+              },
+              {
+                "properties": {
+                  "STATE_NAME": "Tasmania"
+                },
+                "longitude": 146.7,
+                "latitude": -42,
+                "state_label": [
+                  "Tasmania"
+                ]
               }
             ]
           },
           "mark": {
             "type": "text",
-            "fontSize": 11,
-            "fontWeight": "bold"
+            "font": "Lato",
+            "fontSize": 15,
+            "lineHeight": 18,
+            "fontWeight": 400
           },
           "encoding": {
             "longitude": {
@@ -421,22 +907,208 @@
               "type": "quantitative"
             },
             "text": {
-              "field": "state",
+              "field": "state_label",
               "type": "nominal"
             },
             "color": {
               "condition": {
-                "test": "datum.state === 'WA' || datum.state === 'NT'",
+                "test": "datum.adoption_pct >= 60",
                 "value": "white"
               },
-              "value": "black"
+              "value": "#24142f"
+            },
+            "tooltip": [
+              {
+                "field": "properties.STATE_NAME",
+                "type": "nominal",
+                "title": "State"
+              },
+              {
+                "field": "survey_year",
+                "type": "nominal",
+                "title": "Survey year"
+              },
+              {
+                "field": "adoption_label",
+                "type": "nominal",
+                "title": "Adoption rate"
+              },
+              {
+                "field": "farms_surveyed",
+                "type": "quantitative",
+                "title": "State survey sample—all practices",
+                "format": ",.0f"
+              },
+              {
+                "field": "estimated_farm_population",
+                "type": "quantitative",
+                "title": "Estimated eligible farm population—state",
+                "format": ",.0f"
+              }
+            ]
+          },
+          "transform": [
+            {
+              "lookup": "properties.STATE_NAME",
+              "from": {
+                "data": {
+                  "url": "data/chart5_water_practices_state_2021.csv",
+                  "format": {
+                    "type": "csv",
+                    "parse": {
+                      "water_efficient_varieties_pct": "string",
+                      "increased_water_storage_pct": "string",
+                      "farms_surveyed": "number",
+                      "estimated_farm_population": "number"
+                    }
+                  }
+                },
+                "key": "state_name",
+                "fields": [
+                  "water_efficient_varieties_pct",
+                  "increased_water_storage_pct",
+                  "farms_surveyed",
+                  "estimated_farm_population",
+                  "survey_year"
+                ]
+              }
+            },
+            {
+              "calculate": "!isValid(datum.increased_water_storage_pct) || trim(toString(datum.increased_water_storage_pct)) === '' ? null : toNumber(datum.increased_water_storage_pct)",
+              "as": "adoption_pct"
+            },
+            {
+              "calculate": "isValid(datum.adoption_pct) ? format(datum.adoption_pct, '.0f') + '%' : 'No estimate'",
+              "as": "adoption_label"
+            }
+          ]
+        },
+        {
+          "data": {
+            "values": [
+              {
+                "properties": {
+                  "STATE_NAME": "Australian Capital Territory"
+                },
+                "longitude": 149.1,
+                "latitude": -35.3,
+                "end_longitude": 154,
+                "end_latitude": -38.5
+              }
+            ]
+          },
+          "mark": {
+            "type": "rule",
+            "stroke": "#61516e",
+            "strokeWidth": 1
+          },
+          "encoding": {
+            "longitude": {
+              "field": "longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "latitude",
+              "type": "quantitative"
+            },
+            "longitude2": {
+              "field": "end_longitude"
+            },
+            "latitude2": {
+              "field": "end_latitude"
             }
           }
+        },
+        {
+          "data": {
+            "values": [
+              {
+                "properties": {
+                  "STATE_NAME": "Australian Capital Territory"
+                },
+                "longitude": 154,
+                "latitude": -38.5,
+                "label": [
+                  "Australian Capital",
+                  "Territory",
+                  "(no estimate)"
+                ],
+                "adoption_label": "No estimate"
+              }
+            ]
+          },
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "dx": 3,
+            "font": "Lato",
+            "fontSize": 12,
+            "lineHeight": 14,
+            "color": "#4a3b53"
+          },
+          "encoding": {
+            "longitude": {
+              "field": "longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "latitude",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "label",
+              "type": "nominal"
+            },
+            "tooltip": [
+              {
+                "field": "properties.STATE_NAME",
+                "type": "nominal",
+                "title": "State"
+              },
+              {
+                "field": "survey_year",
+                "type": "nominal",
+                "title": "Survey year"
+              },
+              {
+                "field": "adoption_label",
+                "type": "nominal",
+                "title": "Adoption rate"
+              }
+            ]
+          },
+          "transform": [
+            {
+              "lookup": "properties.STATE_NAME",
+              "from": {
+                "data": {
+                  "url": "data/chart5_water_practices_state_2021.csv",
+                  "format": {
+                    "type": "csv",
+                    "parse": {
+                      "water_efficient_varieties_pct": "string",
+                      "increased_water_storage_pct": "string",
+                      "farms_surveyed": "number",
+                      "estimated_farm_population": "number"
+                    }
+                  }
+                },
+                "key": "state_name",
+                "fields": [
+                  "water_efficient_varieties_pct",
+                  "increased_water_storage_pct",
+                  "farms_surveyed",
+                  "estimated_farm_population",
+                  "survey_year"
+                ]
+              }
+            }
+          ]
         }
       ]
     }
   ],
-
+  "spacing": 22,
   "resolve": {
     "scale": {
       "color": "shared"
@@ -445,15 +1117,14 @@
       "color": "shared"
     }
   },
-
   "config": {
-    "font": "Arial",
     "view": {
       "stroke": null
     },
+    "legend": {},
     "title": {
-      "color": "black",
-      "subtitleColor": "black"
+      "font": "Lato"
     }
-  }
+  },
+  "padding": 5
 }

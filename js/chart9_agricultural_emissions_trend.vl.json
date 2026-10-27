@@ -1,0 +1,321 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 760,
+  "height": 380,
+  "background": "white",
+  "padding": 10,
+  "title": {
+    "text": [
+      "How Have Australia's Agricultural",
+      "Greenhouse Gas Emissions Changed?"
+    ],
+    "subtitle": [
+      "Annual agricultural greenhouse gas emissions by gas type,",
+      "1989–90 to 2023–24."
+    ],
+    "anchor": "middle",
+    "align": "center",
+    "frame": "bounds",
+    "font": "Lato",
+    "fontSize": 28,
+    "fontWeight": 900,
+    "color": "#000000",
+    "subtitleFont": "Lato",
+    "subtitleFontSize": 16,
+    "subtitleFontWeight": 400,
+    "subtitleColor": "#000000",
+    "subtitlePadding": 10,
+    "offset": 32,
+    "lineHeight": 34,
+    "subtitleLineHeight": 20
+  },
+  "data": {
+    "url": "data/chart9_agricultural_emissions_by_gas.csv",
+    "name": "agricultural_emissions",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "year_end": "number",
+        "emissions_mtco2e": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "joinaggregate": [
+        {
+          "op": "sum",
+          "field": "emissions_mtco2e",
+          "as": "annual_total"
+        }
+      ],
+      "groupby": [
+        "year_end"
+      ]
+    },
+    {
+      "calculate": "datum.emissions_mtco2e / datum.annual_total",
+      "as": "share"
+    },
+    {
+      "calculate": "datum.gas === 'Methane' ? 0 : datum.gas === 'Nitrous oxide' ? 1 : 2",
+      "as": "gas_order"
+    },
+    {
+      "calculate": "datum.gas === 'Methane' ? 'Methane (CH₄)' : datum.gas === 'Nitrous oxide' ? 'Nitrous oxide (N₂O)' : 'Carbon dioxide (CO₂)'",
+      "as": "gas_label"
+    },
+    {
+      "stack": "emissions_mtco2e",
+      "groupby": [
+        "year_end"
+      ],
+      "sort": [
+        {
+          "field": "gas_order",
+          "order": "ascending"
+        }
+      ],
+      "as": [
+        "stack_low",
+        "stack_high"
+      ],
+      "offset": "zero"
+    }
+  ],
+  "layer": [
+    {
+      "name": "agricultureGasAreas",
+      "mark": {
+        "type": "area",
+        "interpolate": "linear",
+        "stroke": "white",
+        "strokeWidth": 0.35,
+        "orient": "vertical",
+        "tooltip": false
+      },
+      "encoding": {
+        "x": {
+          "field": "year_end",
+          "type": "quantitative",
+          "title": "Financial year",
+          "scale": {
+            "domain": [
+              1990,
+              2024
+            ],
+            "nice": false
+          },
+          "axis": {
+            "values": [
+              1990,
+              1995,
+              2000,
+              2005,
+              2010,
+              2015,
+              2020,
+              2024
+            ],
+            "labelExpr": "format(datum.value - 1, 'd') + '–' + slice(format(datum.value, 'd'), 2)",
+            "labelAngle": 0,
+            "grid": false,
+            "labelPadding": 7,
+            "labelOverlap": false,
+            "labelFontSize": 12,
+            "labelFlush": true
+          }
+        },
+        "y": {
+          "field": "stack_high",
+          "type": "quantitative",
+          "title": "Agricultural emissions (Mt CO₂-e)",
+          "scale": {
+            "domain": [
+              0,
+              100
+            ],
+            "zero": true
+          },
+          "axis": {
+            "tickCount": 6
+          }
+        },
+        "y2": {
+          "field": "stack_low"
+        },
+        "color": {
+          "field": "gas",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Methane",
+              "Nitrous oxide",
+              "Carbon dioxide"
+            ],
+            "range": [
+              "#287D70",
+              "#E69F00",
+              "#4C78A8"
+            ]
+          },
+          "legend": {
+            "title": "Greenhouse gas",
+            "orient": "none",
+            "legendX": 0,
+            "legendY": -84,
+            "direction": "horizontal",
+            "columns": 3,
+            "symbolType": "square",
+            "symbolSize": 140,
+            "labelFontSize": 16,
+            "labelLimit": 180,
+            "labelExpr": "datum.label === 'Methane' ? 'Methane (CH₄)' : datum.label === 'Nitrous oxide' ? 'Nitrous oxide (N₂O)' : 'Carbon dioxide (CO₂)'",
+            "titleFont": "Lato",
+            "titleFontSize": 18,
+            "titleFontWeight": 700,
+            "titleOrient": "top",
+            "titleAnchor": "start",
+            "titlePadding": 9
+          }
+        },
+        "opacity": {
+          "condition": {
+            "param": "gasFocus",
+            "value": 1
+          },
+          "value": 0.3
+        },
+        "detail": {
+          "field": "gas"
+        }
+      },
+      "params": [
+        {
+          "name": "gasFocus",
+          "select": {
+            "type": "point",
+            "fields": [
+              "gas"
+            ]
+          },
+          "bind": "legend"
+        }
+      ]
+    },
+    {
+      "name": "agricultureHoverYear",
+      "transform": [
+        {
+          "aggregate": [
+            {
+              "op": "sum",
+              "field": "emissions_mtco2e",
+              "as": "total"
+            }
+          ],
+          "groupby": [
+            "year_end"
+          ]
+        },
+        {
+          "filter": "datum.year_end == hoverYear"
+        }
+      ],
+      "mark": {
+        "type": "rule",
+        "stroke": "#52665B",
+        "strokeDash": [
+          5,
+          4
+        ],
+        "strokeWidth": 1.2,
+        "tooltip": false,
+        "aria": false
+      },
+      "encoding": {
+        "x": {
+          "field": "year_end",
+          "type": "quantitative"
+        },
+        "y": {
+          "value": 0
+        },
+        "y2": {
+          "value": {
+            "expr": "height"
+          }
+        }
+      }
+    },
+    {
+      "name": "agricultureHoverGasPoints",
+      "transform": [
+        {
+          "filter": "datum.year_end == hoverYear"
+        }
+      ],
+      "mark": {
+        "type": "point",
+        "shape": "circle",
+        "filled": true,
+        "size": 75,
+        "stroke": "white",
+        "strokeWidth": 1.7,
+        "tooltip": false,
+        "aria": false
+      },
+      "encoding": {
+        "x": {
+          "field": "year_end",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "stack_high",
+          "type": "quantitative"
+        },
+        "color": {
+          "condition": [
+            {
+              "test": "datum.gas === 'Methane'",
+              "value": "#287D70"
+            },
+            {
+              "test": "datum.gas === 'Nitrous oxide'",
+              "value": "#E69F00"
+            }
+          ],
+          "value": "#4C78A8"
+        },
+        "opacity": {
+          "condition": {
+            "param": "gasFocus",
+            "value": 1
+          },
+          "value": 0.3
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "Lato",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 14,
+      "titleFontSize": 18,
+      "titlePadding": 12,
+      "gridColor": "#E5E7EB"
+    },
+    "legend": {
+      "labelColor": "#303A35"
+    }
+  },
+  "params": [
+    {
+      "name": "hoverYear",
+      "value": 0
+    }
+  ]
+}

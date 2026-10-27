@@ -1,0 +1,337 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 620,
+  "height": 250,
+  "background": "white",
+  "padding": 10,
+  "title": {
+    "text": [
+      "How Do Soil-Management Practices Differ",
+      "Across Farming Industries?"
+    ],
+    "subtitle": [
+      "Percentage of Australian broadacre and dairy farms reporting",
+      "selected soil-management practices, 2021–22 to 2023–24"
+    ],
+    "anchor": "middle",
+    "align": "center",
+    "frame": "bounds",
+    "font": "Lato",
+    "fontSize": 28,
+    "fontWeight": 900,
+    "color": "#000000",
+    "subtitleFont": "Lato",
+    "subtitleFontSize": 16,
+    "subtitleFontWeight": 400,
+    "subtitleColor": "#000000",
+    "subtitlePadding": 10,
+    "offset": 32,
+    "lineHeight": 34,
+    "subtitleLineHeight": 20
+  },
+  "data": {
+    "url": "data/chart7_soil_management_by_industry_2023_24.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "adoption_percentage": "string"
+      }
+    }
+  },
+  "config": {
+    "font": "Lato",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFont": "Lato",
+      "titleFont": "Lato",
+      "labelFontSize": 13,
+      "titleFontSize": 14,
+      "labelColor": "#26372e",
+      "titleColor": "#000000",
+      "domain": false,
+      "gridColor": "#e5eae5",
+      "tickColor": "#bbc9bd",
+      "titlePadding": 13,
+      "labelPadding": 9
+    },
+    "legend": {
+      "labelFont": "Lato",
+      "titleFont": "Lato",
+      "labelFontSize": 14,
+      "titleFontSize": 15,
+      "labelColor": "#000000",
+      "titleColor": "#000000"
+    }
+  },
+  "transform": [
+    {
+      "calculate": "!isValid(datum.adoption_percentage) || trim(toString(datum.adoption_percentage)) === '' ? null : toNumber(datum.adoption_percentage)",
+      "as": "adoption_pct"
+    },
+    {
+      "calculate": "isValid(datum.adoption_pct) ? format(datum.adoption_pct, '.0f') + '%' : 'No estimate'",
+      "as": "percentage_label"
+    },
+    {
+      "joinaggregate": [
+        {
+          "op": "max",
+          "field": "adoption_pct",
+          "as": "industry_max"
+        }
+      ],
+      "groupby": [
+        "industry"
+      ]
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "industry",
+      "type": "ordinal",
+      "sort": [
+        "Wheat and other crops",
+        "Mixed livestock and cropping",
+        "Dairy",
+        "Beef",
+        "Sheep",
+        "Sheep and beef"
+      ],
+      "axis": {
+        "title": "Farming industry",
+        "labelAngle": 0,
+        "labelLineHeight": 17,
+        "labelLimit": 125,
+        "labelExpr": "datum.label === 'Mixed livestock and cropping' ? ['Mixed livestock','and cropping'] : datum.label === 'Wheat and other crops' ? ['Wheat and','other crops'] : datum.label === 'Sheep and beef' ? ['Sheep and','beef'] : datum.label"
+      }
+    },
+    "y": {
+      "field": "practice",
+      "type": "ordinal",
+      "sort": [
+        "Soil testing",
+        "Ground cover",
+        "Stubble retention",
+        "Cover crops",
+        "Incorporated organic matter",
+        "Controlled traffic"
+      ],
+      "axis": {
+        "title": "Soil-management practice",
+        "labelLimit": 180,
+        "labelLineHeight": 17,
+        "labelExpr": "datum.label === 'Incorporated organic matter' ? ['Incorporated','organic matter'] : datum.label"
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rect",
+        "stroke": "white",
+        "strokeWidth": 3,
+        "invalid": null
+      },
+      "encoding": {
+        "color": {
+          "condition": {
+            "test": "!isValid(datum.adoption_pct)",
+            "value": "#E5E7EB"
+          },
+          "field": "adoption_pct",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              100
+            ],
+            "scheme": "greens"
+          },
+          "legend": {
+            "title": "Farms reporting (%)",
+            "orient": "none",
+            "direction": "horizontal",
+            "gradientLength": 320,
+            "values": [
+              0,
+              20,
+              40,
+              60,
+              80,
+              100
+            ],
+            "legendX": -113,
+            "legendY": -76
+          }
+        },
+        "tooltip": [
+          {
+            "field": "industry",
+            "type": "nominal",
+            "title": "Farming industry"
+          },
+          {
+            "field": "practice",
+            "type": "nominal",
+            "title": "Soil-management practice"
+          },
+          {
+            "field": "percentage_label",
+            "type": "nominal",
+            "title": "Adoption percentage"
+          }
+        ]
+      }
+    },
+    {
+      "name": "industryHighestPractice",
+      "transform": [
+        {
+          "filter": "isValid(datum.adoption_pct) && datum.adoption_pct === datum.industry_max"
+        }
+      ],
+      "mark": {
+        "type": "rect",
+        "fill": null,
+        "stroke": "#153C2C",
+        "strokeWidth": 2.5,
+        "strokeDash": [
+          5,
+          3
+        ]
+      },
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "industry",
+            "type": "nominal",
+            "title": "Farming industry"
+          },
+          {
+            "field": "practice",
+            "type": "nominal",
+            "title": "Soil-management practice"
+          },
+          {
+            "field": "percentage_label",
+            "type": "nominal",
+            "title": "Adoption percentage"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 15,
+        "fontWeight": {
+          "expr": "isValid(datum.adoption_pct) && datum.adoption_pct === datum.industry_max ? 900 : 400"
+        }
+      },
+      "encoding": {
+        "text": {
+          "field": "percentage_label",
+          "type": "nominal"
+        },
+        "color": {
+          "condition": {
+            "test": "isValid(datum.adoption_pct) && datum.adoption_pct >= 60",
+            "value": "white"
+          },
+          "value": "#153C2C"
+        },
+        "tooltip": [
+          {
+            "field": "industry",
+            "type": "nominal",
+            "title": "Farming industry"
+          },
+          {
+            "field": "practice",
+            "type": "nominal",
+            "title": "Soil-management practice"
+          },
+          {
+            "field": "percentage_label",
+            "type": "nominal",
+            "title": "Adoption percentage"
+          }
+        ]
+      }
+    },
+    {
+      "name": "highestPracticeKey",
+      "data": {
+        "values": [
+          {}
+        ]
+      },
+      "mark": {
+        "type": "rect",
+        "fill": "white",
+        "stroke": "#153C2C",
+        "strokeWidth": 2.5,
+        "tooltip": false,
+        "aria": false,
+        "strokeDash": [
+          5,
+          3
+        ]
+      },
+      "encoding": {
+        "x": {
+          "value": {
+            "expr": "width - 182"
+          }
+        },
+        "x2": {
+          "value": {
+            "expr": "width - 168"
+          }
+        },
+        "y": {
+          "value": -55
+        },
+        "y2": {
+          "value": -41
+        }
+      }
+    },
+    {
+      "name": "highestPracticeKeyLabel",
+      "data": {
+        "values": [
+          {}
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "font": "Lato",
+        "fontSize": 12,
+        "lineHeight": 15,
+        "align": "left",
+        "baseline": "top",
+        "color": "#153C2C",
+        "tooltip": false
+      },
+      "encoding": {
+        "x": {
+          "value": {
+            "expr": "width - 160"
+          }
+        },
+        "y": {
+          "value": -58
+        },
+        "text": {
+          "value": [
+            "Highest adoption percentage",
+            "within each industry"
+          ]
+        }
+      }
+    }
+  ]
+}

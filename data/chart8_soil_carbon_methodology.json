@@ -1,0 +1,149 @@
+{
+  "years": [
+    2010,
+    2011,
+    2012,
+    2013,
+    2014,
+    2015,
+    2016,
+    2017,
+    2018
+  ],
+  "source_soc": "https://doi.org/10.5281/zenodo.5040380",
+  "source_land": "https://doi.org/10.25814/n0z4-5y98",
+  "land_period": "2020-21 (fixed mask)",
+  "land_codes": {
+    "Native grazing": [
+      200,
+      210
+    ],
+    "Modified pastures": [
+      300,
+      320,
+      321,
+      322,
+      323,
+      324,
+      325
+    ],
+    "Dryland cropping": [
+      330,
+      331,
+      332,
+      333,
+      334,
+      335,
+      336,
+      337,
+      338
+    ],
+    "Dryland horticulture": [
+      340,
+      341,
+      342,
+      343,
+      344,
+      345,
+      346,
+      347,
+      348,
+      349,
+      350,
+      351,
+      352,
+      353
+    ],
+    "Irrigated pastures": [
+      400,
+      420,
+      421,
+      422,
+      423,
+      424
+    ],
+    "Irrigated cropping": [
+      430,
+      431,
+      432,
+      433,
+      434,
+      435,
+      436,
+      437,
+      438,
+      439
+    ],
+    "Irrigated horticulture": [
+      440,
+      441,
+      442,
+      443,
+      444,
+      445,
+      446,
+      447,
+      448,
+      449,
+      450,
+      451,
+      452,
+      453,
+      454
+    ],
+    "Intensive production": [
+      510,
+      511,
+      512,
+      513,
+      514,
+      515,
+      520,
+      521,
+      522,
+      523,
+      524,
+      525,
+      526,
+      527,
+      528
+    ]
+  },
+  "source_urls": {
+    "land": "https://www.agriculture.gov.au/sites/default/files/documents/NLUM_v7_1_250m_ALUMV8_2020_21_alb_20260814.zip",
+    "soc": "https://zenodo.org/records/5040380/files/SOCD30cm_ensembleST_{year}_5km.tif?download=1"
+  },
+  "source_checksums_sha256": {
+    "NLUM_v7_1_250m_ALUMV8_2020_21_alb.tif": "fb6cfbf4b8ae4488c6df2046509659ae65919f80a3940b4c110e0497887e6c2e",
+    "SOCD30cm_ensembleST_2010_5km.tif": "82583557051913aae95c6bf0a528c74e4511e5ca352d2fd3774e1796667dcdb4",
+    "SOCD30cm_ensembleST_2011_5km.tif": "86c8b9195c265b24bd2a1b141185987dd37cb378a6fae23302a63ddc52ead124",
+    "SOCD30cm_ensembleST_2012_5km.tif": "5f830d1c10868ad9d7973e88f26d18a7bcf5316bc8f738cc8f1c20430ec4381f",
+    "SOCD30cm_ensembleST_2013_5km.tif": "5a7331d1a77d8330e6e0af3d8d021d3892428c203a9d02edaff1af2514dfd28e",
+    "SOCD30cm_ensembleST_2014_5km.tif": "a3db3c57f3bc41a87d2460592f1ab301e6b153ddf64fa86f8203227df8ff6f31",
+    "SOCD30cm_ensembleST_2015_5km.tif": "3a747163c98470af38125f13db9bc0a7d1f6af15dfdeb2c97216b084e47d20e8",
+    "SOCD30cm_ensembleST_2016_5km.tif": "b7c524deab3abcd43008335be3649d71a866e0bf35d30adcea7159db275fb536",
+    "SOCD30cm_ensembleST_2017_5km.tif": "f02f6c50c8a054222270ec1665c2a9a2100ea07323a28a5dfa0860aa907f5685",
+    "SOCD30cm_ensembleST_2018_5km.tif": "f5d5e1b82d3fc1c2373c4676f2a694aab95efc1583aa38ed752e8beed2e61f7d"
+  },
+  "units": "t C/ha topsoil 0-30cm",
+  "hex_radius_m": 45000,
+  "min_agriculture_fraction": 0.025,
+  "hex_count": 1294,
+  "agricultural_overlap_area_km2": 4202678.30907613,
+  "common_valid_agricultural_area_km2": 4133492.7499305634,
+  "common_valid_soc_cells": 249913,
+  "map_agricultural_area_km2": 4133425.497871165,
+  "soc_grid_crs": "EPSG:4326",
+  "soc_source_pixel_degrees": [
+    0.041666667000000004,
+    0.041666667000000004
+  ],
+  "notes": [
+    "Approximate agricultural overlap from averaging a high-resolution binary mask",
+    "Historical trends refer to land classified as agricultural in 2020-21",
+    "Spherical latitude-edge pixel areas; modelled mineral-soil SOC, not measurements",
+    "All years use a fixed set of valid raster cells; hexes with fewer than two cells omitted from map",
+    "Regular hexagons aggregate agricultural sample cells and are not coastline-clipped farmland polygons",
+    "No causal attribution to individual farm practices"
+  ]
+}

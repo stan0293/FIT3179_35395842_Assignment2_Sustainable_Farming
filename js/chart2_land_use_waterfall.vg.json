@@ -1,0 +1,411 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Australian agricultural land-use changes, ABARES 2010–11 to 2020–21.",
+  "width": 900,
+  "height": 560,
+  "padding": {
+    "left": 16,
+    "right": 16,
+    "top": 14,
+    "bottom": 20
+  },
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "background": "white",
+  "title": {
+    "text": "Has Australia's Farming Landscape Really Stayed the Same?",
+    "subtitle": "Changes in agricultural land use between 2010–11 and 2020–21",
+    "anchor": "middle",
+    "subtitleAnchor": "middle",
+    "font": "Lato",
+    "fontSize": 28,
+    "fontWeight": 900,
+    "color": "#000000",
+    "subtitleFont": "Lato",
+    "subtitleFontSize": 16,
+    "subtitlePadding": 10,
+    "subtitleColor": "#000000",
+    "offset": 32,
+    "frame": "bounds",
+    "align": "center",
+    "lineHeight": 34,
+    "subtitleFontWeight": 400,
+    "subtitleLineHeight": 20
+  },
+  "data": [
+    {
+      "name": "changes",
+      "url": "data/chart2_land_use_changes.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "order": "number",
+          "area_2010_11_mha": "number",
+          "area_2020_21_mha": "number",
+          "change_mha": "number",
+          "running_before_mha": "number",
+          "running_after_mha": "number",
+          "lower_mha": "number",
+          "upper_mha": "number",
+          "label_y": "number"
+        }
+      }
+    },
+    {
+      "name": "connectors",
+      "source": "changes",
+      "transform": [
+        {
+          "type": "collect",
+          "sort": {
+            "field": "order",
+            "order": "ascending"
+          }
+        },
+        {
+          "type": "window",
+          "ops": [
+            "lead"
+          ],
+          "fields": [
+            "label"
+          ],
+          "as": [
+            "next_label"
+          ],
+          "frame": [
+            null,
+            null
+          ]
+        },
+        {
+          "type": "filter",
+          "expr": "datum.next_label != null && datum.type !== 'Net'"
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "x",
+      "type": "band",
+      "domain": {
+        "data": "changes",
+        "field": "label",
+        "sort": {
+          "op": "min",
+          "field": "order",
+          "order": "ascending"
+        }
+      },
+      "range": "width",
+      "paddingInner": 0.16,
+      "paddingOuter": 0.06
+    },
+    {
+      "name": "y",
+      "type": "linear",
+      "domain": [
+        -0.4,
+        11.5
+      ],
+      "range": "height",
+      "zero": false,
+      "nice": false
+    },
+    {
+      "name": "colors",
+      "type": "ordinal",
+      "domain": [
+        "Increase",
+        "Decrease",
+        "Net"
+      ],
+      "range": [
+        "#397E83",
+        "#D18B46",
+        "#06402B"
+      ]
+    }
+  ],
+  "axes": [
+    {
+      "orient": "left",
+      "scale": "y",
+      "grid": true,
+      "values": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10
+      ],
+      "gridColor": "#E8ECE7",
+      "gridWidth": 1,
+      "domain": false,
+      "tickColor": "#B9C7BC",
+      "labelColor": "#000000",
+      "labelFont": "Lato",
+      "labelFontSize": 13,
+      "labelPadding": 7,
+      "title": "Cumulative net change (million ha)",
+      "titleFont": "Lato",
+      "titleFontSize": 14,
+      "titleColor": "#000000",
+      "titlePadding": 14,
+      "format": "+.0f"
+    },
+    {
+      "orient": "bottom",
+      "scale": "x",
+      "domain": false,
+      "ticks": false,
+      "labelAngle": -38,
+      "labelAlign": "right",
+      "labelBaseline": "top",
+      "labelColor": "#000000",
+      "labelFont": "Lato",
+      "labelFontSize": 13,
+      "labelLimit": 170,
+      "labelPadding": 12
+    }
+  ],
+  "legends": [
+    {
+      "fill": "colors",
+      "orient": "right",
+      "direction": "vertical",
+      "symbolType": "square",
+      "symbolSize": 125,
+      "labelFont": "Lato",
+      "labelFontSize": 13,
+      "labelColor": "#000000",
+      "offset": 12
+    }
+  ],
+  "marks": [
+    {
+      "type": "rule",
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "value": 0
+          },
+          "x2": {
+            "signal": "width"
+          },
+          "y": {
+            "scale": "y",
+            "value": 0
+          },
+          "stroke": {
+            "value": "#65796D"
+          },
+          "strokeWidth": {
+            "value": 1.5
+          }
+        }
+      }
+    },
+    {
+      "name": "waterfallConnectors",
+      "type": "rule",
+      "interactive": false,
+      "from": {
+        "data": "connectors"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "scale('x', datum.label) + bandwidth('x')"
+          },
+          "x2": {
+            "signal": "scale('x', datum.next_label)"
+          },
+          "y": {
+            "scale": "y",
+            "field": "running_after_mha"
+          },
+          "y2": {
+            "scale": "y",
+            "field": "running_after_mha"
+          },
+          "stroke": {
+            "value": "#87968D"
+          },
+          "strokeWidth": {
+            "value": 1.6
+          },
+          "strokeOpacity": {
+            "value": 1
+          }
+        }
+      }
+    },
+    {
+      "name": "waterfallBars",
+      "type": "rect",
+      "from": {
+        "data": "changes"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "scale": "x",
+            "field": "label"
+          },
+          "width": {
+            "scale": "x",
+            "band": 1
+          },
+          "y": {
+            "scale": "y",
+            "field": "upper_mha"
+          },
+          "y2": {
+            "scale": "y",
+            "field": "lower_mha"
+          },
+          "fill": {
+            "scale": "colors",
+            "field": "type"
+          },
+          "tooltip": {
+            "signal": "{'Category': datum.category, '2010–11 area (million ha)': format(datum.area_2010_11_mha, ',.3f'), '2020–21 area (million ha)': format(datum.area_2020_21_mha, ',.3f'), 'Net change (million ha)': format(datum.change_mha, '+.3f')}"
+          },
+          "stroke": {
+            "signal": "(datum.label === 'Dryland cropping' || datum.label === 'Modified pastures') ? '#172720' : null"
+          },
+          "strokeWidth": {
+            "signal": "(datum.label === 'Dryland cropping' || datum.label === 'Modified pastures') ? 3 : 0"
+          }
+        },
+        "hover": {
+          "stroke": {
+            "value": "#172720"
+          },
+          "strokeWidth": {
+            "signal": "(datum.label === 'Dryland cropping' || datum.label === 'Modified pastures') ? 3 : 2"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "interactive": false,
+      "from": {
+        "data": "changes"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "scale": "x",
+            "field": "label",
+            "band": 0.5
+          },
+          "y": {
+            "signal": "scale('y', datum.upper_mha) - 10"
+          },
+          "text": {
+            "field": "display_change"
+          },
+          "align": {
+            "value": "center"
+          },
+          "baseline": {
+            "value": "bottom"
+          },
+          "font": {
+            "value": "Lato"
+          },
+          "fontSize": {
+            "value": 13
+          },
+          "fontWeight": {
+            "value": "bold"
+          },
+          "fill": {
+            "value": "#000000"
+          }
+        }
+      }
+    },
+    {
+      "name": "baselineLeader",
+      "type": "rule",
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "width * 2 / 3"
+          },
+          "y": {
+            "value": 125
+          },
+          "y2": {
+            "scale": "y",
+            "value": 0
+          },
+          "stroke": {
+            "value": "#65796D"
+          },
+          "strokeWidth": {
+            "value": 1
+          },
+          "strokeDash": {
+            "value": [
+              5,
+              4
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "baselineLabel",
+      "type": "text",
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "width * 2 / 3"
+          },
+          "y": {
+            "value": 85
+          },
+          "text": {
+            "value": [
+              "2010–11 starting area",
+              "418.393 million hectares"
+            ]
+          },
+          "align": {
+            "value": "center"
+          },
+          "baseline": {
+            "value": "top"
+          },
+          "font": {
+            "value": "Lato"
+          },
+          "fontSize": {
+            "value": 13
+          },
+          "fontWeight": {
+            "value": 700
+          },
+          "lineHeight": {
+            "value": 16
+          },
+          "fill": {
+            "value": "#40584A"
+          }
+        }
+      }
+    }
+  ]
+}

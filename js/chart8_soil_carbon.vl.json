@@ -1,0 +1,482 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "white",
+  "padding": 8,
+  "params": [
+    {
+      "name": "selectedYear",
+      "value": 2018,
+      "bind": {
+        "input": "range",
+        "min": 2011,
+        "max": 2018,
+        "step": 1,
+        "name": "Compare with 2010: "
+      }
+    }
+  ],
+  "vconcat": [
+    {
+      "width": 620,
+      "height": 385,
+      "projection": {
+        "type": "conicEqualArea",
+        "parallels": [
+          -18,
+          -36
+        ],
+        "rotate": [
+          -134,
+          0,
+          0
+        ]
+      },
+      "layer": [
+        {
+          "data": {
+            "url": "data/chart8_soil_carbon_hexagons.geojson",
+            "format": {
+              "type": "json",
+              "property": "features"
+            }
+          },
+          "transform": [
+            {
+              "calculate": "datum.properties['change_' + selectedYear]",
+              "as": "carbon_change"
+            },
+            {
+              "filter": "isValid(datum.carbon_change)"
+            },
+            {
+              "calculate": "selectedYear",
+              "as": "selected_year"
+            },
+            {
+              "calculate": "datum.properties['soc_' + selectedYear]",
+              "as": "selected_soc"
+            },
+            {
+              "calculate": "'2010 to ' + selectedYear",
+              "as": "comparison_period"
+            },
+            {
+              "lookup": "properties.hex_id",
+              "from": {
+                "data": {
+                  "url": "data/chart8_soil_carbon_hex_state_lookup.csv"
+                },
+                "key": "hex_id",
+                "fields": [
+                  "state_names"
+                ]
+              }
+            }
+          ],
+          "mark": {
+            "type": "geoshape",
+            "stroke": "#D6DBDD",
+            "strokeWidth": 0.25
+          },
+          "encoding": {
+            "color": {
+              "field": "carbon_change",
+              "type": "quantitative",
+              "title": "Change in soil organic carbon (t C/ha)",
+              "scale": {
+                "domain": [
+                  -5.1,
+                  0,
+                  5.1
+                ],
+                "range": [
+                  "#D95F0E",
+                  "#F2F2F2",
+                  "#1F78B4"
+                ],
+                "clamp": true,
+                "interpolate": "lab"
+              },
+              "legend": {
+                "orient": "top",
+                "direction": "horizontal",
+                "gradientLength": 330,
+                "titleFontSize": 13,
+                "labelFontSize": 12,
+                "offset": 100,
+                "titleLimit": 450
+              }
+            },
+            "tooltip": [
+              {
+                "field": "state_names",
+                "type": "nominal",
+                "title": "Intersecting states / territories"
+              },
+              {
+                "field": "comparison_period",
+                "type": "nominal",
+                "title": "Comparison period"
+              },
+              {
+                "field": "carbon_change",
+                "type": "quantitative",
+                "format": "+.2f",
+                "title": "Soil organic carbon change (t C/ha)"
+              },
+              {
+                "field": "properties.ag_area_km2",
+                "type": "quantitative",
+                "format": ",.1f",
+                "title": "Agricultural area represented (km²)"
+              },
+              {
+                "field": "properties.soc_2010",
+                "type": "quantitative",
+                "format": ".2f",
+                "title": "2010 soil organic carbon (t C/ha)"
+              },
+              {
+                "field": "selected_soc",
+                "type": "quantitative",
+                "format": ".2f",
+                "title": "Selected-year soil organic carbon (t C/ha)"
+              }
+            ]
+          },
+          "name": "soilCarbonHexes"
+        },
+        {
+          "data": {
+            "url": "data/chart8_soil_carbon_state_boundaries.geojson",
+            "format": {
+              "type": "json",
+              "property": "features"
+            }
+          },
+          "mark": {
+            "type": "geoshape",
+            "filled": false,
+            "stroke": "#626A6E",
+            "strokeWidth": 0.75,
+            "tooltip": false
+          },
+          "name": "soilCarbonBoundaries"
+        },
+        {
+          "data": {
+            "values": [
+              {
+                "state": "WA",
+                "lon": 121,
+                "lat": -26
+              },
+              {
+                "state": "NT",
+                "lon": 134,
+                "lat": -20
+              },
+              {
+                "state": "SA",
+                "lon": 135,
+                "lat": -30
+              },
+              {
+                "state": "QLD",
+                "lon": 145,
+                "lat": -23
+              },
+              {
+                "state": "NSW",
+                "lon": 147,
+                "lat": -32
+              },
+              {
+                "state": "VIC",
+                "lon": 144.5,
+                "lat": -37
+              },
+              {
+                "state": "TAS",
+                "lon": 147,
+                "lat": -42
+              },
+              {
+                "state": "ACT",
+                "lon": 151,
+                "lat": -36
+              }
+            ]
+          },
+          "mark": {
+            "type": "text",
+            "fontSize": 12,
+            "fontWeight": 700,
+            "fill": "white",
+            "stroke": "white",
+            "strokeWidth": 3,
+            "tooltip": false
+          },
+          "encoding": {
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "state"
+            }
+          },
+          "name": "soilCarbonLabelHalo"
+        },
+        {
+          "data": {
+            "values": [
+              {
+                "state": "WA",
+                "lon": 121,
+                "lat": -26
+              },
+              {
+                "state": "NT",
+                "lon": 134,
+                "lat": -20
+              },
+              {
+                "state": "SA",
+                "lon": 135,
+                "lat": -30
+              },
+              {
+                "state": "QLD",
+                "lon": 145,
+                "lat": -23
+              },
+              {
+                "state": "NSW",
+                "lon": 147,
+                "lat": -32
+              },
+              {
+                "state": "VIC",
+                "lon": 144.5,
+                "lat": -37
+              },
+              {
+                "state": "TAS",
+                "lon": 147,
+                "lat": -42
+              },
+              {
+                "state": "ACT",
+                "lon": 151,
+                "lat": -36
+              }
+            ]
+          },
+          "mark": {
+            "type": "text",
+            "fontSize": 12,
+            "fontWeight": 700,
+            "color": "#37474F",
+            "tooltip": false
+          },
+          "encoding": {
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "state"
+            }
+          },
+          "name": "soilCarbonLabels"
+        }
+      ]
+    },
+    {
+      "width": 620,
+      "height": 125,
+      "title": {
+        "text": "How Has Average Soil Organic Carbon Changed?",
+        "anchor": "start",
+        "font": "Arial",
+        "fontSize": 14,
+        "subtitle": "National agricultural-area-weighted mean, 2010–2018",
+        "subtitleFontSize": 12,
+        "subtitlePadding": 6
+      },
+      "data": {
+        "url": "data/chart8_national_soil_carbon_trend.csv"
+      },
+      "layer": [
+        {
+          "name": "soilCarbonSelectedYearRule",
+          "transform": [
+            {
+              "filter": "datum.year == selectedYear"
+            }
+          ],
+          "mark": {
+            "type": "rule",
+            "color": "#000000",
+            "strokeDash": [
+              4,
+              4
+            ],
+            "strokeWidth": 1,
+            "opacity": 0.65,
+            "tooltip": false
+          },
+          "encoding": {
+            "x": {
+              "field": "year",
+              "type": "ordinal"
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "line",
+            "point": {
+              "filled": true,
+              "size": 45,
+              "color": "#000000"
+            },
+            "strokeWidth": 2.5,
+            "color": "#000000"
+          },
+          "encoding": {
+            "x": {
+              "field": "year",
+              "type": "ordinal",
+              "title": "Year",
+              "axis": {
+                "labelAngle": 0
+              }
+            },
+            "y": {
+              "field": "mean_soc_t_ha",
+              "type": "quantitative",
+              "title": "Soil organic carbon (t C/ha)",
+              "scale": {
+                "domain": [
+                  30,
+                  31
+                ],
+                "zero": false
+              }
+            },
+            "tooltip": [
+              {
+                "field": "year",
+                "type": "ordinal",
+                "title": "Year"
+              },
+              {
+                "field": "mean_soc_t_ha",
+                "type": "quantitative",
+                "format": ".3f",
+                "title": "Average soil organic carbon (t C/ha)"
+              }
+            ]
+          }
+        },
+        {
+          "name": "soilCarbonSelectedYearPoint",
+          "transform": [
+            {
+              "filter": "datum.year == selectedYear"
+            }
+          ],
+          "mark": {
+            "type": "point",
+            "filled": true,
+            "size": 120,
+            "color": "#000000",
+            "stroke": "white",
+            "strokeWidth": 1.5
+          },
+          "encoding": {
+            "x": {
+              "field": "year",
+              "type": "ordinal",
+              "title": "Year",
+              "axis": {
+                "labelAngle": 0
+              }
+            },
+            "y": {
+              "field": "mean_soc_t_ha",
+              "type": "quantitative",
+              "title": "Soil organic carbon (t C/ha)",
+              "scale": {
+                "domain": [
+                  30,
+                  31
+                ],
+                "zero": false
+              }
+            },
+            "tooltip": [
+              {
+                "field": "year",
+                "type": "ordinal",
+                "title": "Year"
+              },
+              {
+                "field": "mean_soc_t_ha",
+                "type": "quantitative",
+                "format": ".3f",
+                "title": "Average soil organic carbon (t C/ha)"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "spacing": 14,
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    }
+  },
+  "title": {
+    "text": [
+      "How Has Soil Organic Carbon Changed",
+      "Across Australian Farmland?"
+    ],
+    "subtitle": [
+      "Changes in soil organic carbon across Australian agricultural land, 2010–2018",
+      "Units: tonnes of carbon per hectare (t C/ha)."
+    ],
+    "anchor": "middle",
+    "align": "center",
+    "frame": "bounds",
+    "font": "Lato",
+    "fontSize": 28,
+    "fontWeight": 900,
+    "color": "#000000",
+    "subtitleFont": "Lato",
+    "subtitleFontSize": 16,
+    "subtitleFontWeight": 400,
+    "subtitleColor": "#000000",
+    "subtitlePadding": 10,
+    "offset": 32,
+    "lineHeight": 34,
+    "subtitleLineHeight": 20
+  }
+}

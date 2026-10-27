@@ -1,0 +1,25 @@
+year_index,year,state_code,state,longitude,latitude,water_gl,source_status
+0,2015–16,NSW,New South Wales,147.1,-32.4,2610.9,published
+0,2015–16,VIC,Victoria,144.7,-36.7,1946.1,published
+0,2015–16,QLD,Queensland,145.0,-22.3,2433.5,published
+0,2015–16,SA,South Australia,135.0,-30.2,777.8,published
+0,2015–16,WA,Western Australia,121.4,-25.7,287.5,published
+0,2015–16,TAS,Tasmania,146.7,-42.0,308.7,published
+0,2015–16,NT,Northern Territory,133.6,-19.0,16.9,published
+0,2015–16,ACT,Australian Capital Territory,149.1,-35.3,0.1,published
+1,2016–17,NSW,New South Wales,147.1,-32.4,3815,published
+1,2016–17,VIC,Victoria,144.7,-36.7,1755,published
+1,2016–17,QLD,Queensland,145.0,-22.3,2423,published
+1,2016–17,SA,South Australia,135.0,-30.2,544,published
+1,2016–17,WA,Western Australia,121.4,-25.7,275,published
+1,2016–17,TAS,Tasmania,146.7,-42.0,240,published
+1,2016–17,NT,Northern Territory,133.6,-19.0,,not_published
+1,2016–17,ACT,Australian Capital Territory,149.1,-35.3,,not_published
+2,2020–21,NSW,New South Wales,147.1,-32.4,2707.355,published
+2,2020–21,VIC,Victoria,144.7,-36.7,1642.701,published
+2,2020–21,QLD,Queensland,145.0,-22.3,1966.711,published
+2,2020–21,SA,South Australia,135.0,-30.2,762.311,published
+2,2020–21,WA,Western Australia,121.4,-25.7,324.941,published
+2,2020–21,TAS,Tasmania,146.7,-42.0,337.851,published
+2,2020–21,NT,Northern Territory,133.6,-19.0,,not_published
+2,2020–21,ACT,Australian Capital Territory,149.1,-35.3,,not_published

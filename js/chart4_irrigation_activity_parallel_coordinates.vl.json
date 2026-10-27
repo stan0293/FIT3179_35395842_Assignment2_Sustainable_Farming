@@ -1,0 +1,507 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Irrigation profiles with nearby endpoint labels. Each measure is normalised independently to 0–1: area / 500000 hectares, application rate / 12 megalitres per hectare, volume / 1500 gigalitres. Labels show original units.",
+  "width": 840,
+  "height": 400,
+  "background": "white",
+  "padding": {
+    "left": 5,
+    "right": 5,
+    "top": 12,
+    "bottom": 5
+  },
+  "title": {
+    "text": "Do All Farming Activities Use Water the Same Way?",
+    "subtitle": [
+      "Comparing irrigated area, water application rates and total water use",
+      "across Australian farming activities, 2020–21"
+    ],
+    "anchor": "middle",
+    "font": "Lato",
+    "fontSize": 28,
+    "fontWeight": 900,
+    "color": "#000000",
+    "subtitleFont": "Lato",
+    "subtitleFontSize": 16,
+    "subtitleColor": "#000000",
+    "offset": 32,
+    "subtitlePadding": 10,
+    "align": "center",
+    "frame": "bounds",
+    "subtitleFontWeight": 400,
+    "subtitleLineHeight": 20,
+    "lineHeight": 34
+  },
+  "data": {
+    "url": "data/chart4_irrigation_by_activity_2020_21.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "area_ha": "number",
+        "application_ml_ha": "number",
+        "volume_gl": "number"
+      }
+    }
+  },
+  "params": [
+    {
+      "name": "activityChoice",
+      "value": "Key activities",
+      "bind": {
+        "input": "select",
+        "name": "Highlight activity: ",
+        "options": [
+          "Key activities",
+          "Grazing pastures",
+          "Rice",
+          "Hay and silage",
+          "Vegetables",
+          "Fruit and nuts",
+          "Grapevines",
+          "Nurseries and turf",
+          "Other cereals",
+          "Cotton",
+          "Sugar cane",
+          "Other crops"
+        ]
+      }
+    }
+  ],
+  "transform": [
+    {
+      "calculate": "datum.area_ha / 500000",
+      "as": "area_norm"
+    },
+    {
+      "calculate": "datum.application_ml_ha / 12",
+      "as": "rate_norm"
+    },
+    {
+      "calculate": "datum.volume_gl / 1500",
+      "as": "volume_norm"
+    },
+    {
+      "calculate": "activityChoice === 'Key activities' ? (datum.activity === 'Grazing pastures' || datum.activity === 'Rice') : datum.activity === activityChoice",
+      "as": "selected_activity"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "type": "quantitative",
+      "scale": {
+        "domain": [
+          -0.75,
+          2.75
+        ],
+        "nice": false
+      },
+      "axis": null
+    },
+    "y": {
+      "type": "quantitative",
+      "scale": {
+        "domain": [
+          -0.12,
+          1.13
+        ],
+        "nice": false
+      },
+      "axis": null
+    }
+  },
+  "layer": [
+    {
+      "data": {
+        "values": [
+          {
+            "axis": 0
+          },
+          {
+            "axis": 1
+          },
+          {
+            "axis": 2
+          }
+        ]
+      },
+      "mark": {
+        "type": "rule",
+        "stroke": "#9BAFA4",
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "x": {
+          "field": "axis"
+        },
+        "y": {
+          "datum": 0
+        },
+        "y2": {
+          "datum": 1
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "axis": 0,
+            "heading": "Total area watered"
+          },
+          {
+            "axis": 1,
+            "heading": "Water applied per hectare"
+          },
+          {
+            "axis": 2,
+            "heading": "Total irrigation water applied"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "font": "Lato",
+        "fontWeight": "bold",
+        "fontSize": 16,
+        "align": "center",
+        "color": "#000000"
+      },
+      "encoding": {
+        "x": {
+          "field": "axis"
+        },
+        "y": {
+          "datum": 1.085
+        },
+        "text": {
+          "field": "heading"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "axis": 0,
+            "maximum": "500,000 ha"
+          },
+          {
+            "axis": 1,
+            "maximum": "12 ML/ha"
+          },
+          {
+            "axis": 2,
+            "maximum": "1,500 GL"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "font": "Lato",
+        "fontSize": 14,
+        "align": "center",
+        "color": "#52665B"
+      },
+      "encoding": {
+        "x": {
+          "field": "axis"
+        },
+        "y": {
+          "datum": 1.035
+        },
+        "text": {
+          "field": "maximum"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "axis": 0
+          },
+          {
+            "axis": 1
+          },
+          {
+            "axis": 2
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "font": "Lato",
+        "fontSize": 14,
+        "align": "center",
+        "color": "#52665B"
+      },
+      "encoding": {
+        "x": {
+          "field": "axis"
+        },
+        "y": {
+          "datum": -0.055
+        },
+        "text": {
+          "value": "0"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "fold": [
+            "area_norm",
+            "rate_norm",
+            "volume_norm"
+          ],
+          "as": [
+            "metric",
+            "level"
+          ]
+        },
+        {
+          "calculate": "datum.metric === 'area_norm' ? 0 : datum.metric === 'rate_norm' ? 1 : 2",
+          "as": "axis_pos"
+        }
+      ],
+      "mark": {
+        "type": "line",
+        "strokeWidth": 2.4,
+        "point": {
+          "filled": true,
+          "size": 35
+        }
+      },
+      "encoding": {
+        "x": {
+          "field": "axis_pos"
+        },
+        "y": {
+          "field": "level"
+        },
+        "detail": {
+          "field": "activity"
+        },
+        "order": {
+          "field": "axis_pos",
+          "type": "quantitative"
+        },
+        "color": {
+          "condition": [
+            {
+              "test": "datum.selected_activity && datum.activity === 'Grazing pastures'",
+              "value": "#087F86"
+            },
+            {
+              "test": "datum.selected_activity && datum.activity === 'Rice'",
+              "value": "#D48A27"
+            },
+            {
+              "test": "datum.selected_activity",
+              "value": "#4F63B5"
+            }
+          ],
+          "value": "#929C9F"
+        },
+        "opacity": {
+          "condition": {
+            "test": "datum.selected_activity",
+            "value": 1
+          },
+          "value": 0.62
+        },
+        "tooltip": [
+          {
+            "field": "activity",
+            "title": "Activity"
+          },
+          {
+            "field": "area_ha",
+            "title": "Total area watered (hectares)",
+            "format": ",.0f"
+          },
+          {
+            "field": "application_ml_ha",
+            "title": "Application rate (ML/ha)",
+            "format": ".2f"
+          },
+          {
+            "field": "volume_gl",
+            "title": "Volume applied (GL)",
+            "format": ",.1f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "fold": [
+            "area_norm",
+            "rate_norm",
+            "volume_norm"
+          ],
+          "as": [
+            "metric",
+            "level"
+          ]
+        },
+        {
+          "calculate": "datum.metric === 'area_norm' ? 0 : datum.metric === 'rate_norm' ? 1 : 2",
+          "as": "axis_pos"
+        }
+      ],
+      "mark": {
+        "type": "line",
+        "strokeWidth": 12,
+        "strokeOpacity": 0,
+        "color": "#000000"
+      },
+      "encoding": {
+        "x": {
+          "field": "axis_pos"
+        },
+        "y": {
+          "field": "level"
+        },
+        "detail": {
+          "field": "activity"
+        },
+        "order": {
+          "field": "axis_pos",
+          "type": "quantitative"
+        },
+        "tooltip": [
+          {
+            "field": "activity",
+            "title": "Activity"
+          },
+          {
+            "field": "area_ha",
+            "title": "Total area watered (hectares)",
+            "format": ",.0f"
+          },
+          {
+            "field": "application_ml_ha",
+            "title": "Application rate (ML/ha)",
+            "format": ".2f"
+          },
+          {
+            "field": "volume_gl",
+            "title": "Volume applied (GL)",
+            "format": ",.1f"
+          }
+        ]
+      },
+      "name": "activityHoverLines"
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "middle",
+        "font": "Lato",
+        "fontSize": 14,
+        "dx": -5,
+        "dy": {
+          "expr": "datum.activity === 'Hay and silage' ? -7 : datum.activity === 'Fruit and nuts' ? 9 : 0"
+        }
+      },
+      "encoding": {
+        "x": {
+          "datum": -0.025
+        },
+        "y": {
+          "field": "area_norm"
+        },
+        "text": {
+          "field": "activity"
+        },
+        "color": {
+          "condition": [
+            {
+              "test": "datum.selected_activity && datum.activity === 'Grazing pastures'",
+              "value": "#087F86"
+            },
+            {
+              "test": "datum.selected_activity && datum.activity === 'Rice'",
+              "value": "#B77219"
+            },
+            {
+              "test": "datum.selected_activity",
+              "value": "#4F63B5"
+            }
+          ],
+          "value": "#7C8789"
+        },
+        "tooltip": [
+          {
+            "field": "activity"
+          },
+          {
+            "field": "area_ha",
+            "title": "Total area watered (hectares)",
+            "format": ",.0f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "font": "Lato",
+        "fontSize": 14,
+        "dx": 5,
+        "dy": {
+          "expr": "datum.activity === 'Rice' ? -4 : datum.activity === 'Grapevines' ? 5 : 0"
+        }
+      },
+      "encoding": {
+        "x": {
+          "datum": 2.025
+        },
+        "y": {
+          "field": "volume_norm"
+        },
+        "text": {
+          "field": "activity"
+        },
+        "color": {
+          "condition": [
+            {
+              "test": "datum.selected_activity && datum.activity === 'Grazing pastures'",
+              "value": "#087F86"
+            },
+            {
+              "test": "datum.selected_activity && datum.activity === 'Rice'",
+              "value": "#B77219"
+            },
+            {
+              "test": "datum.selected_activity",
+              "value": "#4F63B5"
+            }
+          ],
+          "value": "#7C8789"
+        },
+        "tooltip": [
+          {
+            "field": "activity"
+          },
+          {
+            "field": "volume_gl",
+            "title": "Volume applied (GL)",
+            "format": ",.1f"
+          }
+        ]
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": null
+    }
+  }
+}

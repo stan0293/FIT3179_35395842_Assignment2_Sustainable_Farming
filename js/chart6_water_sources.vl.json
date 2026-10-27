@@ -1,0 +1,357 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": [
+      "How Have Australia's Farm Water Sources",
+      "Changed Over Time?"
+    ],
+    "subtitle": [
+      "Volume of water obtained by Australian farms from different sources,",
+      "2015–16 to 2020–21"
+    ],
+    "anchor": "middle",
+    "font": "Lato",
+    "fontSize": 28,
+    "subtitleFont": "Lato",
+    "subtitleFontSize": 16,
+    "color": "#000000",
+    "subtitleColor": "#000000",
+    "offset": 32,
+    "fontWeight": 900,
+    "subtitlePadding": 10,
+    "align": "center",
+    "frame": "bounds",
+    "subtitleFontWeight": 400,
+    "subtitleLineHeight": 20,
+    "lineHeight": 34
+  },
+  "width": 690,
+  "height": 255,
+  "background": "white",
+  "data": {
+    "url": "data/chart6_water_sources.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "water_gl": "number"
+      }
+    }
+  },
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal",
+      "sort": [
+        "2015-16",
+        "2016-17",
+        "2017-18",
+        "2018-19",
+        "2019-20",
+        "2020-21"
+      ],
+      "axis": {
+        "title": "Financial year",
+        "labelAngle": 0,
+        "labelFontSize": 15,
+        "titlePadding": 12,
+        "labelFont": "Lato",
+        "titleFont": "Lato",
+        "titleFontSize": 16,
+        "labelPadding": 8
+      }
+    },
+    "y": {
+      "field": "water_gl",
+      "type": "quantitative",
+      "scale": {
+        "zero": true
+      },
+      "axis": {
+        "title": "Water sourced (GL)",
+        "format": ",.0f",
+        "titlePadding": 12,
+        "grid": true,
+        "gridColor": "#ededed",
+        "labelFont": "Lato",
+        "titleFont": "Lato",
+        "labelFontSize": 15,
+        "titleFontSize": 16,
+        "labelPadding": 8
+      }
+    },
+    "color": {
+      "field": "source",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Irrigation channels or pipelines",
+          "Rivers creeks or lakes",
+          "Groundwater",
+          "On-farm dams or tanks",
+          "Recycled or reused water",
+          "Reticulated mains supply"
+        ],
+        "range": [
+          "#295B97",
+          "#E17632",
+          "#5F8B5E",
+          "#8B6AB1",
+          "#D04A79",
+          "#8C8C8C"
+        ]
+      },
+      "legend": {
+        "title": "Water source",
+        "orient": "none",
+        "columns": 2,
+        "labelLimit": 250,
+        "labelFontSize": 14,
+        "symbolStrokeWidth": 3,
+        "legendX": 0,
+        "legendY": -132,
+        "direction": "horizontal",
+        "labelFont": "Lato",
+        "titleFont": "Lato",
+        "titleFontSize": 16,
+        "symbolSize": 120,
+        "rowPadding": 8,
+        "columnPadding": 18,
+        "titlePadding": 10
+      }
+    },
+    "tooltip": [
+      {
+        "field": "year",
+        "type": "nominal",
+        "title": "Financial year"
+      },
+      {
+        "field": "source",
+        "type": "nominal",
+        "title": "Water source"
+      },
+      {
+        "field": "water_gl",
+        "type": "quantitative",
+        "title": "Water sourced (GL)",
+        "format": ",.0f"
+      }
+    ]
+  },
+  "layer": [
+    {
+      "name": "droughtPeriod",
+      "data": {
+        "values": [
+          {}
+        ]
+      },
+      "mark": {
+        "type": "rect",
+        "tooltip": false,
+        "aria": false
+      },
+      "encoding": {
+        "x": {
+          "datum": "2016-17",
+          "type": "ordinal"
+        },
+        "x2": {
+          "datum": "2019-20"
+        },
+        "y": {
+          "value": 0
+        },
+        "y2": {
+          "value": {
+            "expr": "height"
+          }
+        },
+        "color": {
+          "value": "#E6A15B"
+        },
+        "opacity": {
+          "value": 0.15
+        },
+        "tooltip": null
+      }
+    },
+    {
+      "name": "droughtLeader",
+      "data": {
+        "values": [
+          {}
+        ]
+      },
+      "mark": {
+        "type": "rule",
+        "strokeDash": [
+          2,
+          4
+        ],
+        "strokeWidth": 1,
+        "tooltip": false,
+        "aria": false
+      },
+      "encoding": {
+        "x": {
+          "datum": "2019-20",
+          "type": "ordinal"
+        },
+        "x2": {
+          "value": {
+            "expr": "width - 95"
+          }
+        },
+        "y": {
+          "value": 8
+        },
+        "y2": {
+          "value": -11
+        },
+        "color": {
+          "value": "#9B7956"
+        },
+        "tooltip": null
+      }
+    },
+    {
+      "name": "droughtLabel",
+      "data": {
+        "values": [
+          {}
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "font": "Lato",
+        "fontSize": 13,
+        "align": "right",
+        "baseline": "bottom",
+        "tooltip": false,
+        "aria": false
+      },
+      "encoding": {
+        "x": {
+          "value": {
+            "expr": "width - 8"
+          }
+        },
+        "y": {
+          "value": -12
+        },
+        "text": {
+          "value": "Widespread drought (2017–2019)"
+        },
+        "color": {
+          "value": "#765435"
+        },
+        "tooltip": null
+      }
+    },
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 2.8,
+        "point": false
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 65
+      }
+    },
+    {
+      "transform": [
+        {
+          "aggregate": [
+            {
+              "op": "count",
+              "as": "rows"
+            }
+          ],
+          "groupby": [
+            "year"
+          ]
+        }
+      ],
+      "mark": {
+        "type": "rule",
+        "strokeDash": [
+          5,
+          4
+        ],
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal"
+        },
+        "y": {
+          "value": 0
+        },
+        "y2": {
+          "value": {
+            "expr": "height"
+          }
+        },
+        "color": {
+          "value": "#52665B"
+        },
+        "opacity": {
+          "condition": {
+            "param": "waterSourceYear",
+            "empty": false,
+            "value": 1
+          },
+          "value": 0
+        },
+        "tooltip": null
+      }
+    },
+    {
+      "params": [
+        {
+          "name": "waterSourceYear",
+          "select": {
+            "type": "point",
+            "fields": [
+              "year"
+            ],
+            "nearest": true,
+            "on": "pointerover",
+            "clear": "pointerout"
+          }
+        }
+      ],
+      "mark": {
+        "type": "point",
+        "opacity": 0,
+        "size": 120
+      }
+    }
+  ],
+  "config": {
+    "font": "Lato",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#222222",
+      "titleColor": "#222222"
+    },
+    "legend": {
+      "labelColor": "#222222",
+      "titleColor": "#222222"
+    }
+  },
+  "padding": {
+    "left": 12,
+    "right": 18,
+    "top": 12,
+    "bottom": 10
+  }
+}

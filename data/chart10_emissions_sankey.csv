@@ -1,0 +1,316 @@
+year,year_end,source,gas,emissions_mtco2e,ipcc_code
+1989-90,1990,Enteric fermentation,Methane,75.689753465495,3.A
+1989-90,1990,Manure management,Methane,3.580466064730,3.B
+1989-90,1990,Manure management,Nitrous oxide,0.241149789594,3.B
+1989-90,1990,Rice cultivation,Methane,0.538135283286,3.C
+1989-90,1990,Agricultural soils,Nitrous oxide,8.754324967276,3.D
+1989-90,1990,Field burning of agricultural residues,Methane,0.326990722417,3.F
+1989-90,1990,Field burning of agricultural residues,Nitrous oxide,0.123520193708,3.F
+1989-90,1990,Liming,Carbon dioxide,0.215346542713,3.G
+1989-90,1990,Urea application,Carbon dioxide,0.366666666667,3.H
+1990-91,1991,Enteric fermentation,Methane,75.340825298985,3.A
+1990-91,1991,Manure management,Methane,3.514156741876,3.B
+1990-91,1991,Manure management,Nitrous oxide,0.243285404721,3.B
+1990-91,1991,Rice cultivation,Methane,0.433809387762,3.C
+1990-91,1991,Agricultural soils,Nitrous oxide,8.639323614545,3.D
+1990-91,1991,Field burning of agricultural residues,Methane,0.322423496389,3.F
+1990-91,1991,Field burning of agricultural residues,Nitrous oxide,0.121973055497,3.F
+1990-91,1991,Liming,Carbon dioxide,0.260258460601,3.G
+1990-91,1991,Urea application,Carbon dioxide,0.374637681159,3.H
+1991-92,1992,Enteric fermentation,Methane,72.724536239333,3.A
+1991-92,1992,Manure management,Methane,3.488765565698,3.B
+1991-92,1992,Manure management,Nitrous oxide,0.252593979760,3.B
+1991-92,1992,Rice cultivation,Methane,0.581396772192,3.C
+1991-92,1992,Agricultural soils,Nitrous oxide,8.353310286880,3.D
+1991-92,1992,Field burning of agricultural residues,Methane,0.297596971656,3.F
+1991-92,1992,Field burning of agricultural residues,Nitrous oxide,0.115894902415,3.F
+1991-92,1992,Liming,Carbon dioxide,0.316767744778,3.G
+1991-92,1992,Urea application,Carbon dioxide,0.373043478261,3.H
+1992-93,1993,Enteric fermentation,Methane,70.404968010378,3.A
+1992-93,1993,Manure management,Methane,3.480070830397,3.B
+1992-93,1993,Manure management,Nitrous oxide,0.261476946507,3.B
+1992-93,1993,Rice cultivation,Methane,0.574391572897,3.C
+1992-93,1993,Agricultural soils,Nitrous oxide,8.181176474116,3.D
+1992-93,1993,Field burning of agricultural residues,Methane,0.359905026427,3.F
+1992-93,1993,Field burning of agricultural residues,Nitrous oxide,0.137493701409,3.F
+1992-93,1993,Liming,Carbon dioxide,0.382831712018,3.G
+1992-93,1993,Urea application,Carbon dioxide,0.384202898551,3.H
+1993-94,1994,Enteric fermentation,Methane,69.826077983100,3.A
+1993-94,1994,Manure management,Methane,3.589667183378,3.B
+1993-94,1994,Manure management,Nitrous oxide,0.278257084924,3.B
+1993-94,1994,Rice cultivation,Methane,0.618938128498,3.C
+1993-94,1994,Agricultural soils,Nitrous oxide,8.362959090344,3.D
+1993-94,1994,Field burning of agricultural residues,Methane,0.411090212121,3.F
+1993-94,1994,Field burning of agricultural residues,Nitrous oxide,0.158251364646,3.F
+1993-94,1994,Liming,Carbon dioxide,0.487770389979,3.G
+1993-94,1994,Urea application,Carbon dioxide,0.381014492754,3.H
+1994-95,1995,Enteric fermentation,Methane,67.443912776970,3.A
+1994-95,1995,Manure management,Methane,3.445985057490,3.B
+1994-95,1995,Manure management,Nitrous oxide,0.294535802267,3.B
+1994-95,1995,Rice cultivation,Methane,0.602748918407,3.C
+1994-95,1995,Agricultural soils,Nitrous oxide,7.855203647029,3.D
+1994-95,1995,Field burning of agricultural residues,Methane,0.238491626196,3.F
+1994-95,1995,Field burning of agricultural residues,Nitrous oxide,0.090589382594,3.F
+1994-95,1995,Liming,Carbon dioxide,0.439542334071,3.G
+1994-95,1995,Urea application,Carbon dioxide,0.479855072464,3.H
+1995-96,1996,Enteric fermentation,Methane,68.628358820206,3.A
+1995-96,1996,Manure management,Methane,3.402252040347,3.B
+1995-96,1996,Manure management,Nitrous oxide,0.294580319347,3.B
+1995-96,1996,Rice cultivation,Methane,0.698483927949,3.C
+1995-96,1996,Agricultural soils,Nitrous oxide,8.330635593347,3.D
+1995-96,1996,Field burning of agricultural residues,Methane,0.364655347062,3.F
+1995-96,1996,Field burning of agricultural residues,Nitrous oxide,0.140904211893,3.F
+1995-96,1996,Liming,Carbon dioxide,0.385987552500,3.G
+1995-96,1996,Urea application,Carbon dioxide,0.559565217391,3.H
+1996-97,1997,Enteric fermentation,Methane,68.941298743619,3.A
+1996-97,1997,Manure management,Methane,3.461146473181,3.B
+1996-97,1997,Manure management,Nitrous oxide,0.295481255320,3.B
+1996-97,1997,Rice cultivation,Methane,0.775099027298,3.C
+1996-97,1997,Agricultural soils,Nitrous oxide,8.627014311070,3.D
+1996-97,1997,Field burning of agricultural residues,Methane,0.443078754566,3.F
+1996-97,1997,Field burning of agricultural residues,Nitrous oxide,0.170607861200,3.F
+1996-97,1997,Liming,Carbon dioxide,0.485715306713,3.G
+1996-97,1997,Urea application,Carbon dioxide,0.667971014493,3.H
+1997-98,1998,Enteric fermentation,Methane,68.673975870201,3.A
+1997-98,1998,Manure management,Methane,3.612294124372,3.B
+1997-98,1998,Manure management,Nitrous oxide,0.320892176437,3.B
+1997-98,1998,Rice cultivation,Methane,0.653404887545,3.C
+1997-98,1998,Agricultural soils,Nitrous oxide,8.684497956317,3.D
+1997-98,1998,Field burning of agricultural residues,Methane,0.399232441525,3.F
+1997-98,1998,Field burning of agricultural residues,Nitrous oxide,0.154431215363,3.F
+1997-98,1998,Liming,Carbon dioxide,0.585826126885,3.G
+1997-98,1998,Urea application,Carbon dioxide,0.742898550725,3.H
+1998-99,1999,Enteric fermentation,Methane,68.073965130841,3.A
+1998-99,1999,Manure management,Methane,3.559761444921,3.B
+1998-99,1999,Manure management,Nitrous oxide,0.339126006034,3.B
+1998-99,1999,Rice cultivation,Methane,0.658645447931,3.C
+1998-99,1999,Agricultural soils,Nitrous oxide,8.970102784728,3.D
+1998-99,1999,Field burning of agricultural residues,Methane,0.431037671316,3.F
+1998-99,1999,Field burning of agricultural residues,Nitrous oxide,0.169764316084,3.F
+1998-99,1999,Liming,Carbon dioxide,0.720580806982,3.G
+1998-99,1999,Urea application,Carbon dioxide,0.792318840580,3.H
+1999-00,2000,Enteric fermentation,Methane,70.627783739430,3.A
+1999-00,2000,Manure management,Methane,3.616701248614,3.B
+1999-00,2000,Manure management,Nitrous oxide,0.397654895650,3.B
+1999-00,2000,Rice cultivation,Methane,0.578737976637,3.C
+1999-00,2000,Agricultural soils,Nitrous oxide,9.518790019413,3.D
+1999-00,2000,Field burning of agricultural residues,Methane,0.382259972845,3.F
+1999-00,2000,Field burning of agricultural residues,Nitrous oxide,0.150775188646,3.F
+1999-00,2000,Liming,Carbon dioxide,0.738222876462,3.G
+1999-00,2000,Urea application,Carbon dioxide,0.962898550725,3.H
+2000-01,2001,Enteric fermentation,Methane,68.980577621255,3.A
+2000-01,2001,Manure management,Methane,3.751763327851,3.B
+2000-01,2001,Manure management,Nitrous oxide,0.433139000600,3.B
+2000-01,2001,Rice cultivation,Methane,0.784883427341,3.C
+2000-01,2001,Agricultural soils,Nitrous oxide,9.417031193550,3.D
+2000-01,2001,Field burning of agricultural residues,Methane,0.386479766340,3.F
+2000-01,2001,Field burning of agricultural residues,Nitrous oxide,0.151675534142,3.F
+2000-01,2001,Liming,Carbon dioxide,0.761686828870,3.G
+2000-01,2001,Urea application,Carbon dioxide,1.056956521739,3.H
+2001-02,2002,Enteric fermentation,Methane,68.595454591436,3.A
+2001-02,2002,Manure management,Methane,3.861917988558,3.B
+2001-02,2002,Manure management,Nitrous oxide,0.454349179976,3.B
+2001-02,2002,Rice cultivation,Methane,0.640103948136,3.C
+2001-02,2002,Agricultural soils,Nitrous oxide,9.455723253816,3.D
+2001-02,2002,Field burning of agricultural residues,Methane,0.398177311329,3.F
+2001-02,2002,Field burning of agricultural residues,Nitrous oxide,0.156621552385,3.F
+2001-02,2002,Liming,Carbon dioxide,1.021287833683,3.G
+2001-02,2002,Urea application,Carbon dioxide,0.909124966615,3.H
+2002-03,2003,Enteric fermentation,Methane,65.266572619984,3.A
+2002-03,2003,Manure management,Methane,3.655901200827,3.B
+2002-03,2003,Manure management,Nitrous oxide,0.448044962456,3.B
+2002-03,2003,Rice cultivation,Methane,0.200907072691,3.C
+2002-03,2003,Agricultural soils,Nitrous oxide,8.542146603924,3.D
+2002-03,2003,Field burning of agricultural residues,Methane,0.187615562704,3.F
+2002-03,2003,Field burning of agricultural residues,Nitrous oxide,0.072103278214,3.F
+2002-03,2003,Liming,Carbon dioxide,1.050193770412,3.G
+2002-03,2003,Urea application,Carbon dioxide,0.875729976000,3.H
+2003-04,2004,Enteric fermentation,Methane,67.077761438185,3.A
+2003-04,2004,Manure management,Methane,3.623789113023,3.B
+2003-04,2004,Manure management,Nitrous oxide,0.440495690731,3.B
+2003-04,2004,Rice cultivation,Methane,0.295715433552,3.C
+2003-04,2004,Agricultural soils,Nitrous oxide,9.350656912277,3.D
+2003-04,2004,Field burning of agricultural residues,Methane,0.385397795240,3.F
+2003-04,2004,Field burning of agricultural residues,Nitrous oxide,0.150520942105,3.F
+2003-04,2004,Liming,Carbon dioxide,1.079513312353,3.G
+2003-04,2004,Urea application,Carbon dioxide,0.955556755609,3.H
+2004-05,2005,Enteric fermentation,Methane,66.389781630370,3.A
+2004-05,2005,Manure management,Methane,4.081782872349,3.B
+2004-05,2005,Manure management,Nitrous oxide,0.503977164408,3.B
+2004-05,2005,Rice cultivation,Methane,0.229712212184,3.C
+2004-05,2005,Agricultural soils,Nitrous oxide,9.209642236660,3.D
+2004-05,2005,Field burning of agricultural residues,Methane,0.254895004436,3.F
+2004-05,2005,Field burning of agricultural residues,Nitrous oxide,0.098397160288,3.F
+2004-05,2005,Liming,Carbon dioxide,1.076177947662,3.G
+2004-05,2005,Urea application,Carbon dioxide,0.887274410836,3.H
+2005-06,2006,Enteric fermentation,Methane,65.150992885836,3.A
+2005-06,2006,Manure management,Methane,3.994174614593,3.B
+2005-06,2006,Manure management,Nitrous oxide,0.522112674675,3.B
+2005-06,2006,Rice cultivation,Methane,0.448309002191,3.C
+2005-06,2006,Agricultural soils,Nitrous oxide,9.061385923218,3.D
+2005-06,2006,Field burning of agricultural residues,Methane,0.322947392365,3.F
+2005-06,2006,Field burning of agricultural residues,Nitrous oxide,0.125743726228,3.F
+2005-06,2006,Liming,Carbon dioxide,1.072842582971,3.G
+2005-06,2006,Urea application,Carbon dioxide,0.756848563230,3.H
+2006-07,2007,Enteric fermentation,Methane,63.452674623347,3.A
+2006-07,2007,Manure management,Methane,3.882828596595,3.B
+2006-07,2007,Manure management,Nitrous oxide,0.526428422780,3.B
+2006-07,2007,Rice cultivation,Methane,0.089631685192,3.C
+2006-07,2007,Agricultural soils,Nitrous oxide,8.093977330089,3.D
+2006-07,2007,Field burning of agricultural residues,Methane,0.143396510451,3.F
+2006-07,2007,Field burning of agricultural residues,Nitrous oxide,0.052897691302,3.F
+2006-07,2007,Liming,Carbon dioxide,1.069507218280,3.G
+2006-07,2007,Urea application,Carbon dioxide,0.746280036355,3.H
+2007-08,2008,Enteric fermentation,Methane,61.325422113978,3.A
+2007-08,2008,Manure management,Methane,3.617327608372,3.B
+2007-08,2008,Manure management,Nitrous oxide,0.449655112255,3.B
+2007-08,2008,Rice cultivation,Methane,0.009339601331,3.C
+2007-08,2008,Agricultural soils,Nitrous oxide,7.905677606751,3.D
+2007-08,2008,Field burning of agricultural residues,Methane,0.177749407944,3.F
+2007-08,2008,Field burning of agricultural residues,Nitrous oxide,0.069702395929,3.F
+2007-08,2008,Liming,Carbon dioxide,1.065530700716,3.G
+2007-08,2008,Urea application,Carbon dioxide,0.764851772202,3.H
+2008-09,2009,Enteric fermentation,Methane,60.866857263162,3.A
+2008-09,2009,Manure management,Methane,3.570613206337,3.B
+2008-09,2009,Manure management,Nitrous oxide,0.459026789583,3.B
+2008-09,2009,Rice cultivation,Methane,0.032427167942,3.C
+2008-09,2009,Agricultural soils,Nitrous oxide,8.183533622137,3.D
+2008-09,2009,Field burning of agricultural residues,Methane,0.220298773106,3.F
+2008-09,2009,Field burning of agricultural residues,Nitrous oxide,0.085885501872,3.F
+2008-09,2009,Liming,Carbon dioxide,1.159490484452,3.G
+2008-09,2009,Urea application,Carbon dioxide,0.783693248129,3.H
+2009-10,2010,Enteric fermentation,Methane,58.091366557412,3.A
+2009-10,2010,Manure management,Methane,3.666905453781,3.B
+2009-10,2010,Manure management,Nitrous oxide,0.451741959100,3.B
+2009-10,2010,Rice cultivation,Methane,0.078974398016,3.C
+2009-10,2010,Agricultural soils,Nitrous oxide,8.106294226433,3.D
+2009-10,2010,Field burning of agricultural residues,Methane,0.191701250501,3.F
+2009-10,2010,Field burning of agricultural residues,Nitrous oxide,0.074544167428,3.F
+2009-10,2010,Liming,Carbon dioxide,1.252828734916,3.G
+2009-10,2010,Urea application,Carbon dioxide,0.936310038464,3.H
+2010-11,2011,Enteric fermentation,Methane,61.320253318994,3.A
+2010-11,2011,Manure management,Methane,3.729436879125,3.B
+2010-11,2011,Manure management,Nitrous oxide,0.480907037696,3.B
+2010-11,2011,Rice cultivation,Methane,0.331619385950,3.C
+2010-11,2011,Agricultural soils,Nitrous oxide,8.871945658040,3.D
+2010-11,2011,Field burning of agricultural residues,Methane,0.282004849676,3.F
+2010-11,2011,Field burning of agricultural residues,Nitrous oxide,0.110251969421,3.F
+2010-11,2011,Liming,Carbon dioxide,1.088302771159,3.G
+2010-11,2011,Urea application,Carbon dioxide,1.112247993326,3.H
+2011-12,2012,Enteric fermentation,Methane,62.278869805298,3.A
+2011-12,2012,Manure management,Methane,3.744240690306,3.B
+2011-12,2012,Manure management,Nitrous oxide,0.478531644429,3.B
+2011-12,2012,Rice cultivation,Methane,0.447200594749,3.C
+2011-12,2012,Agricultural soils,Nitrous oxide,9.064476794978,3.D
+2011-12,2012,Field burning of agricultural residues,Methane,0.284758654512,3.F
+2011-12,2012,Field burning of agricultural residues,Nitrous oxide,0.112492277037,3.F
+2011-12,2012,Liming,Carbon dioxide,0.924616353800,3.G
+2011-12,2012,Urea application,Carbon dioxide,1.120457373632,3.H
+2012-13,2013,Enteric fermentation,Methane,62.657930613134,3.A
+2012-13,2013,Manure management,Methane,3.683566455950,3.B
+2012-13,2013,Manure management,Nitrous oxide,0.484409319040,3.B
+2012-13,2013,Rice cultivation,Methane,0.484992360988,3.C
+2012-13,2013,Agricultural soils,Nitrous oxide,9.088148562943,3.D
+2012-13,2013,Field burning of agricultural residues,Methane,0.266162558006,3.F
+2012-13,2013,Field burning of agricultural residues,Nitrous oxide,0.107565739652,3.F
+2012-13,2013,Liming,Carbon dioxide,0.760315540325,3.G
+2012-13,2013,Urea application,Carbon dioxide,1.277796849752,3.H
+2013-14,2014,Enteric fermentation,Methane,62.046023216188,3.A
+2013-14,2014,Manure management,Methane,3.836807600809,3.B
+2013-14,2014,Manure management,Nitrous oxide,0.499397994820,3.B
+2013-14,2014,Rice cultivation,Methane,0.325071158088,3.C
+2013-14,2014,Agricultural soils,Nitrous oxide,9.523211025723,3.D
+2013-14,2014,Field burning of agricultural residues,Methane,0.247841841104,3.F
+2013-14,2014,Field burning of agricultural residues,Nitrous oxide,0.098611633693,3.F
+2013-14,2014,Liming,Carbon dioxide,1.138743439552,3.G
+2013-14,2014,Urea application,Carbon dioxide,1.352166285983,3.H
+2014-15,2015,Enteric fermentation,Methane,59.465541428085,3.A
+2014-15,2015,Manure management,Methane,3.711771469004,3.B
+2014-15,2015,Manure management,Nitrous oxide,0.543098220070,3.B
+2014-15,2015,Rice cultivation,Methane,0.293706034291,3.C
+2014-15,2015,Agricultural soils,Nitrous oxide,9.223826256177,3.D
+2014-15,2015,Field burning of agricultural residues,Methane,0.236918231192,3.F
+2014-15,2015,Field burning of agricultural residues,Nitrous oxide,0.093977747225,3.F
+2014-15,2015,Liming,Carbon dioxide,1.272018728402,3.G
+2014-15,2015,Urea application,Carbon dioxide,1.308580368412,3.H
+2015-16,2016,Enteric fermentation,Methane,58.093257329942,3.A
+2015-16,2016,Manure management,Methane,3.650291505417,3.B
+2015-16,2016,Manure management,Nitrous oxide,0.548350825328,3.B
+2015-16,2016,Rice cultivation,Methane,0.113519390004,3.C
+2015-16,2016,Agricultural soils,Nitrous oxide,9.308783217821,3.D
+2015-16,2016,Field burning of agricultural residues,Methane,0.215647652626,3.F
+2015-16,2016,Field burning of agricultural residues,Nitrous oxide,0.084554252431,3.F
+2015-16,2016,Liming,Carbon dioxide,1.233067012922,3.G
+2015-16,2016,Urea application,Carbon dioxide,1.509858276147,3.H
+2016-17,2017,Enteric fermentation,Methane,60.857000342119,3.A
+2016-17,2017,Manure management,Methane,3.800174294258,3.B
+2016-17,2017,Manure management,Nitrous oxide,0.558776301069,3.B
+2016-17,2017,Rice cultivation,Methane,0.354761856449,3.C
+2016-17,2017,Agricultural soils,Nitrous oxide,10.094437407270,3.D
+2016-17,2017,Field burning of agricultural residues,Methane,0.347226263641,3.F
+2016-17,2017,Field burning of agricultural residues,Nitrous oxide,0.140373895461,3.F
+2016-17,2017,Liming,Carbon dioxide,1.372241435429,3.G
+2016-17,2017,Urea application,Carbon dioxide,1.543353124009,3.H
+2017-18,2018,Enteric fermentation,Methane,60.894423258256,3.A
+2017-18,2018,Manure management,Methane,3.902286150401,3.B
+2017-18,2018,Manure management,Nitrous oxide,0.592554368698,3.B
+2017-18,2018,Rice cultivation,Methane,0.255897926550,3.C
+2017-18,2018,Agricultural soils,Nitrous oxide,9.377674847740,3.D
+2017-18,2018,Field burning of agricultural residues,Methane,0.241303023744,3.F
+2017-18,2018,Field burning of agricultural residues,Nitrous oxide,0.097827449402,3.F
+2017-18,2018,Liming,Carbon dioxide,1.387345563483,3.G
+2017-18,2018,Urea application,Carbon dioxide,1.356327624963,3.H
+2018-19,2019,Enteric fermentation,Methane,56.352092646152,3.A
+2018-19,2019,Manure management,Methane,3.550646622783,3.B
+2018-19,2019,Manure management,Nitrous oxide,0.609719367965,3.B
+2018-19,2019,Rice cultivation,Methane,0.029277967395,3.C
+2018-19,2019,Agricultural soils,Nitrous oxide,8.619059784277,3.D
+2018-19,2019,Field burning of agricultural residues,Methane,0.152826267291,3.F
+2018-19,2019,Field burning of agricultural residues,Nitrous oxide,0.060180077154,3.F
+2018-19,2019,Liming,Carbon dioxide,1.425645935325,3.G
+2018-19,2019,Urea application,Carbon dioxide,1.346997873253,3.H
+2019-20,2020,Enteric fermentation,Methane,54.201036731742,3.A
+2019-20,2020,Manure management,Methane,3.485581008407,3.B
+2019-20,2020,Manure management,Nitrous oxide,0.609480778370,3.B
+2019-20,2020,Rice cultivation,Methane,0.017765369098,3.C
+2019-20,2020,Agricultural soils,Nitrous oxide,8.737908659068,3.D
+2019-20,2020,Field burning of agricultural residues,Methane,0.160328241043,3.F
+2019-20,2020,Field burning of agricultural residues,Nitrous oxide,0.063808835122,3.F
+2019-20,2020,Liming,Carbon dioxide,1.463946307167,3.G
+2019-20,2020,Urea application,Carbon dioxide,1.478158528501,3.H
+2020-21,2021,Enteric fermentation,Methane,57.356076971286,3.A
+2020-21,2021,Manure management,Methane,3.770750038413,3.B
+2020-21,2021,Manure management,Nitrous oxide,0.604990731666,3.B
+2020-21,2021,Rice cultivation,Methane,0.180417733094,3.C
+2020-21,2021,Agricultural soils,Nitrous oxide,9.841670959556,3.D
+2020-21,2021,Field burning of agricultural residues,Methane,0.338389764163,3.F
+2020-21,2021,Field burning of agricultural residues,Nitrous oxide,0.135838864513,3.F
+2020-21,2021,Liming,Carbon dioxide,1.502246679009,3.G
+2020-21,2021,Urea application,Carbon dioxide,1.765003604462,3.H
+2021-22,2022,Enteric fermentation,Methane,57.462586080908,3.A
+2021-22,2022,Manure management,Methane,3.731252702595,3.B
+2021-22,2022,Manure management,Nitrous oxide,0.636646638215,3.B
+2021-22,2022,Rice cultivation,Methane,0.254109997928,3.C
+2021-22,2022,Agricultural soils,Nitrous oxide,10.533559984667,3.D
+2021-22,2022,Field burning of agricultural residues,Methane,0.359902907426,3.F
+2021-22,2022,Field burning of agricultural residues,Nitrous oxide,0.146606848292,3.F
+2021-22,2022,Liming,Carbon dioxide,1.540547050850,3.G
+2021-22,2022,Urea application,Carbon dioxide,1.884030265806,3.H
+2022-23,2023,Enteric fermentation,Methane,59.358297650362,3.A
+2022-23,2023,Manure management,Methane,3.707318092282,3.B
+2022-23,2023,Manure management,Nitrous oxide,0.629230875576,3.B
+2022-23,2023,Rice cultivation,Methane,0.214386569630,3.C
+2022-23,2023,Agricultural soils,Nitrous oxide,10.654192456015,3.D
+2022-23,2023,Field burning of agricultural residues,Methane,0.372576061423,3.F
+2022-23,2023,Field burning of agricultural residues,Nitrous oxide,0.152995407094,3.F
+2022-23,2023,Liming,Carbon dioxide,1.578847422692,3.G
+2022-23,2023,Urea application,Carbon dioxide,2.114442827102,3.H
+2023-24,2024,Enteric fermentation,Methane,58.832483044849,3.A
+2023-24,2024,Manure management,Methane,3.663588434375,3.B
+2023-24,2024,Manure management,Nitrous oxide,0.675828035412,3.B
+2023-24,2024,Rice cultivation,Methane,0.193020647208,3.C
+2023-24,2024,Agricultural soils,Nitrous oxide,9.013495762485,3.D
+2023-24,2024,Field burning of agricultural residues,Methane,0.311135842213,3.F
+2023-24,2024,Field burning of agricultural residues,Nitrous oxide,0.129185394044,3.F
+2023-24,2024,Liming,Carbon dioxide,1.617147794534,3.G
+2023-24,2024,Urea application,Carbon dioxide,1.236401414080,3.H

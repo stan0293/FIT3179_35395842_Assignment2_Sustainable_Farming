@@ -1,48 +1,63 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "ABARES NLUM Version 7.1, Australian land use, 2020–21.",
   "width": 740,
-  "height": 580,
-  "padding": 8,
+  "height": 575,
+  "padding": {
+    "left": 8,
+    "right": 8,
+    "top": 12,
+    "bottom": 10
+  },
   "autosize": {
     "type": "fit",
     "contains": "padding"
   },
   "background": "white",
   "title": {
-    "text": "How Is Australia’s Mapped Area Used?",
+    "text": "How Much of Australia's Land Is Shaped by Farming?",
     "subtitle": [
-      "Percentage of total mapped area across 57",
-      "Natural Resource Management (NRM) regions"
+      "Explore Australia's agricultural and other land uses in 2020–21"
     ],
     "anchor": "middle",
-    "font": "Arial",
-    "fontSize": 18,
+    "subtitleAnchor": "middle",
+    "font": "Lato",
+    "fontSize": 28,
+    "fontWeight": 900,
     "color": "#000000",
-    "subtitleFont": "Arial",
-    "subtitleFontSize": 12,
+    "subtitleFont": "Lato",
+    "subtitleFontSize": 16,
+    "subtitlePadding": 10,
     "subtitleColor": "#000000",
-    "offset": 18
+    "offset": 32,
+    "frame": "bounds",
+    "align": "center",
+    "lineHeight": 34,
+    "subtitleFontWeight": 400,
+    "subtitleLineHeight": 20
   },
-
   "signals": [
     {
-      "name": "legendColumns",
-      "update": "width >= 600 ? 2 : 1"
+      "name": "treemapOffsetY",
+      "value": 148
     },
     {
-      "name": "legendHeight",
-      "update": "legendColumns === 2 ? 120 : 200"
+      "name": "legendRowHeight",
+      "value": 24
     },
     {
-      "name": "mapHeight",
-      "update": "max(180, height - legendHeight)"
+      "name": "agriculturalWidth",
+      "update": "width * 419485 / 769614"
+    },
+    {
+      "name": "otherWidth",
+      "update": "width - agriculturalWidth"
     }
   ],
-
   "data": [
     {
       "name": "raw",
-      "url": "data/land_use_hierarchy.csv",
+      "url": "data/chart1_land_use_2020_21.csv",
       "format": {
         "type": "csv",
         "parse": {
@@ -50,7 +65,14 @@
           "share_total": "number",
           "share_group": "number"
         }
-      }
+      },
+      "transform": [
+        {
+          "type": "formula",
+          "as": "short_name",
+          "expr": "datum.name === 'Grazing native vegetation' ? 'Native grazing' : datum.name === 'Grazing modified pastures' ? 'Modified pastures' : datum.name === 'Managed resource protection' ? 'Resource protection' : datum.name === 'Other minimal use' ? 'Minimal use' : datum.name === 'Production native forests' ? 'Native forests' : datum.name === 'Rural residential and farm infrastructure' ? 'Rural infrastructure' : datum.name === 'Intensive horticulture and animal production' ? 'Intensive production' : datum.name"
+        }
+      ]
     },
     {
       "name": "tree",
@@ -58,7 +80,7 @@
       "transform": [
         {
           "type": "formula",
-          "expr": "datum.id === 'root' || datum.parent === 'root' ? 0 : datum.share_total",
+          "expr": "datum.id === 'root' || datum.parent === 'root' ? 0 : datum.area_ha",
           "as": "layout_weight"
         },
         {
@@ -79,12 +101,12 @@
               "signal": "width"
             },
             {
-              "signal": "mapHeight"
+              "signal": "height - treemapOffsetY"
             }
           ],
-          "paddingTop": 30,
+          "paddingTop": 29,
           "paddingInner": 3,
-          "paddingOuter": 3,
+          "paddingOuter": 2,
           "round": true
         }
       ]
@@ -115,24 +137,23 @@
       "transform": [
         {
           "type": "filter",
-          "expr": "datum.x1 - datum.x0 >= 115 && datum.y1 - datum.y0 >= 55"
+          "expr": "datum.x1-datum.x0 >= 110 && datum.y1-datum.y0 >= 55"
         }
       ]
     },
     {
-      "name": "legendItems",
+      "name": "agricultureLegend",
       "source": "leaves",
       "transform": [
         {
-          "type": "formula",
-          "expr": "indexof(['Livestock production', 'Cropping', 'Horticulture', 'Nature conservation', 'Forests and plantations', 'Intensive uses', 'Water'], datum.name)",
-          "as": "legend_order"
+          "type": "filter",
+          "expr": "datum.group === 'Agriculture'"
         },
         {
           "type": "collect",
           "sort": {
-            "field": "legend_order",
-            "order": "ascending"
+            "field": "area_ha",
+            "order": "descending"
           }
         },
         {
@@ -141,50 +162,84 @@
             "row_number"
           ],
           "as": [
-            "row_index"
+            "legend_index"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "otherLegend",
+      "source": "leaves",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.group === 'Other land uses'"
+        },
+        {
+          "type": "collect",
+          "sort": {
+            "field": "area_ha",
+            "order": "descending"
+          }
+        },
+        {
+          "type": "window",
+          "ops": [
+            "row_number"
+          ],
+          "as": [
+            "legend_index"
           ]
         }
       ]
     }
   ],
-
   "scales": [
-    {
-      "name": "groupColors",
-      "type": "ordinal",
-      "domain": [
-        "Agriculture",
-        "Non-agriculture"
-      ],
-      "range": [
-        "#B9530B",
-        "#F6C78E"
-      ]
-    },
     {
       "name": "tileColors",
       "type": "ordinal",
       "domain": [
-        "Livestock production",
-        "Cropping",
-        "Horticulture",
+        "Grazing native vegetation",
+        "Grazing modified pastures",
+        "Irrigated pastures",
+        "Dryland cropping",
+        "Irrigated cropping",
+        "Dryland horticulture",
+        "Irrigated horticulture",
+        "Intensive horticulture and animal production",
         "Nature conservation",
-        "Forests and plantations",
-        "Intensive uses",
+        "Managed resource protection",
+        "Other minimal use",
+        "Production native forests",
+        "Plantation forests",
+        "Rural residential and farm infrastructure",
+        "Urban residential",
+        "Other intensive uses",
+        "Mining and waste",
         "Water"
       ],
       "range": [
-        "#0072B2",
-        "#E69F00",
-        "#CC79A7",
-        "#009E73",
-        "#8064A2",
-        "#777777",
-        "#56B4E9"
+        "#2675A8",
+        "#F2B8D0",
+        "#8763BD",
+        "#F5B52E",
+        "#D99719",
+        "#467B63",
+        "#9B7345",
+        "#6760A8",
+        "#138E93",
+        "#B56D70",
+        "#82912C",
+        "#4359A4",
+        "#C07E35",
+        "#79518A",
+        "#5F8293",
+        "#A76585",
+        "#80654B",
+        "#3E9EBD"
       ]
     }
   ],
-
   "marks": [
     {
       "type": "text",
@@ -192,82 +247,25 @@
       "encode": {
         "update": {
           "x": {
-            "value": 0
+            "value": 4
           },
           "y": {
-            "value": 14
+            "value": 15
           },
           "text": {
-            "value": "All percentages are shares of total mapped area"
+            "value": "AGRICULTURE"
           },
           "font": {
-            "value": "Arial"
+            "value": "Lato"
           },
           "fontSize": {
-            "value": 12
+            "value": 13
+          },
+          "fontWeight": {
+            "value": "bold"
           },
           "fill": {
-            "value": "#555555"
-          }
-        }
-      }
-    },
-    {
-      "type": "rect",
-      "from": {
-        "data": "groups"
-      },
-      "encode": {
-        "update": {
-          "x": {
-            "field": "x0"
-          },
-          "y": {
-            "field": "y0"
-          },
-          "x2": {
-            "field": "x1"
-          },
-          "y2": {
-            "field": "y1"
-          },
-          "fill": {
-            "value": "#ffffff"
-          },
-          "stroke": {
-            "value": "#555555"
-          },
-          "strokeWidth": {
-            "value": 1.5
-          }
-        }
-      }
-    },
-    {
-      "type": "rect",
-      "from": {
-        "data": "groups"
-      },
-      "encode": {
-        "update": {
-          "x": {
-            "field": "x0"
-          },
-          "y": {
-            "field": "y0"
-          },
-          "x2": {
-            "field": "x1"
-          },
-          "height": {
-            "value": 28
-          },
-          "fill": {
-            "scale": "groupColors",
-            "field": "name"
-          },
-          "tooltip": {
-            "signal": "datum.name + ' (' + format(datum.share_total, '.1f') + '% of total mapped area)'"
+            "value": "#000000"
           }
         }
       }
@@ -275,125 +273,28 @@
     {
       "type": "text",
       "interactive": false,
-      "from": {
-        "data": "groups"
-      },
       "encode": {
         "update": {
           "x": {
-            "signal": "datum.x0 + 8"
+            "signal": "agriculturalWidth + 8"
           },
           "y": {
-            "signal": "datum.y0 + 14"
+            "value": 15
           },
           "text": {
-            "signal": "datum.name + ' (' + format(datum.share_total, '.1f') + '%)'"
+            "value": "OTHER LAND USES"
           },
           "font": {
-            "value": "Arial"
+            "value": "Lato"
           },
           "fontSize": {
-            "value": 14
+            "value": 13
           },
           "fontWeight": {
             "value": "bold"
           },
-          "baseline": {
-            "value": "middle"
-          },
           "fill": {
-            "signal": "datum.name === 'Agriculture' ? '#ffffff' : '#222222'"
-          },
-          "limit": {
-            "signal": "max(0, datum.x1 - datum.x0 - 16)"
-          }
-        }
-      }
-    },
-    {
-      "name": "tiles",
-      "type": "rect",
-      "from": {
-        "data": "leaves"
-      },
-      "encode": {
-        "update": {
-          "x": {
-            "field": "x0"
-          },
-          "y": {
-            "field": "y0"
-          },
-          "x2": {
-            "field": "x1"
-          },
-          "y2": {
-            "field": "y1"
-          },
-          "fill": {
-            "scale": "tileColors",
-            "field": "name"
-          },
-          "stroke": {
-            "value": "#ffffff"
-          },
-          "strokeWidth": {
-            "value": 1
-          },
-          "tooltip": {
-            "signal": "datum.name + ' (' + format(datum.share_total, '.1f') + '% of total mapped area)'"
-          }
-        },
-        "hover": {
-          "stroke": {
-            "value": "#222222"
-          },
-          "strokeWidth": {
-            "value": 2
-          }
-        }
-      }
-    },
-    {
-      "type": "text",
-      "interactive": false,
-      "from": {
-        "data": "insideLabels"
-      },
-      "encode": {
-        "update": {
-          "x": {
-            "signal": "(datum.x0 + datum.x1) / 2"
-          },
-          "y": {
-            "signal": "(datum.y0 + datum.y1) / 2 - 9"
-          },
-          "text": {
-            "signal": "[datum.name, '(' + format(datum.share_total, '.1f') + '%)']"
-          },
-          "font": {
-            "value": "Arial"
-          },
-          "fontSize": {
-            "value": 14
-          },
-          "fontWeight": {
-            "value": "bold"
-          },
-          "lineHeight": {
-            "value": 21
-          },
-          "align": {
-            "value": "center"
-          },
-          "baseline": {
-            "value": "middle"
-          },
-          "fill": {
-            "signal": "indexof(['Livestock production', 'Forests and plantations', 'Intensive uses'], datum.name) >= 0 ? '#ffffff' : '#111111'"
-          },
-          "limit": {
-            "signal": "max(0, datum.x1 - datum.x0 - 14)"
+            "value": "#000000"
           }
         }
       }
@@ -402,15 +303,15 @@
       "type": "rect",
       "interactive": false,
       "from": {
-        "data": "legendItems"
+        "data": "agricultureLegend"
       },
       "encode": {
         "update": {
           "x": {
-            "signal": "((datum.row_index - 1) % legendColumns) * (width / legendColumns)"
+            "signal": "4 + ((datum.legend_index - 1) % 2) * (agriculturalWidth / 2)"
           },
           "y": {
-            "signal": "mapHeight + 20 + floor((datum.row_index - 1) / legendColumns) * 24"
+            "signal": "33 + floor((datum.legend_index - 1) / 2) * legendRowHeight"
           },
           "width": {
             "value": 12
@@ -429,33 +330,319 @@
       "type": "text",
       "interactive": false,
       "from": {
-        "data": "legendItems"
+        "data": "agricultureLegend"
       },
       "encode": {
         "update": {
           "x": {
-            "signal": "20 + ((datum.row_index - 1) % legendColumns) * (width / legendColumns)"
+            "signal": "4 + ((datum.legend_index - 1) % 2) * (agriculturalWidth / 2) + 18"
           },
           "y": {
-            "signal": "mapHeight + 26 + floor((datum.row_index - 1) / legendColumns) * 24"
+            "signal": "33 + floor((datum.legend_index - 1) / 2) * legendRowHeight + 6"
           },
           "text": {
-            "signal": "datum.name + ' (' + format(datum.share_total, '.1f') + '%)'"
+            "field": "short_name"
           },
           "font": {
-            "value": "Arial"
+            "value": "Lato"
           },
           "fontSize": {
-            "value": 12
+            "value": 11
           },
           "baseline": {
             "value": "middle"
           },
           "fill": {
-            "value": "#222222"
+            "value": "#000000"
           },
           "limit": {
-            "signal": "max(0, width / legendColumns - 26)"
+            "signal": "max(0, agriculturalWidth / 2 - 26)"
+          }
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "interactive": false,
+      "from": {
+        "data": "otherLegend"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "agriculturalWidth + 8 + ((datum.legend_index - 1) % 2) * (otherWidth / 2)"
+          },
+          "y": {
+            "signal": "33 + floor((datum.legend_index - 1) / 2) * legendRowHeight"
+          },
+          "width": {
+            "value": 12
+          },
+          "height": {
+            "value": 12
+          },
+          "fill": {
+            "scale": "tileColors",
+            "field": "name"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "interactive": false,
+      "from": {
+        "data": "otherLegend"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "agriculturalWidth + 8 + ((datum.legend_index - 1) % 2) * (otherWidth / 2) + 18"
+          },
+          "y": {
+            "signal": "33 + floor((datum.legend_index - 1) / 2) * legendRowHeight + 6"
+          },
+          "text": {
+            "field": "short_name"
+          },
+          "font": {
+            "value": "Lato"
+          },
+          "fontSize": {
+            "value": 11
+          },
+          "baseline": {
+            "value": "middle"
+          },
+          "fill": {
+            "value": "#000000"
+          },
+          "limit": {
+            "signal": "max(0, otherWidth / 2 - 26)"
+          }
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "from": {
+        "data": "groups"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "field": "x0"
+          },
+          "y": {
+            "signal": "datum.y0 + treemapOffsetY"
+          },
+          "x2": {
+            "field": "x1"
+          },
+          "y2": {
+            "signal": "datum.y1 + treemapOffsetY"
+          },
+          "fill": {
+            "value": "#FFFFFF"
+          },
+          "stroke": {
+            "value": "#FFFFFF"
+          },
+          "strokeWidth": {
+            "value": 3
+          }
+        }
+      }
+    },
+    {
+      "name": "tiles",
+      "type": "rect",
+      "from": {
+        "data": "leaves"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "field": "x0"
+          },
+          "y": {
+            "signal": "datum.y0 + treemapOffsetY"
+          },
+          "x2": {
+            "field": "x1"
+          },
+          "y2": {
+            "signal": "datum.y1 + treemapOffsetY"
+          },
+          "fill": {
+            "scale": "tileColors",
+            "field": "name"
+          },
+          "stroke": {
+            "value": "#FFFFFF"
+          },
+          "strokeWidth": {
+            "value": 1
+          },
+          "tooltip": {
+            "signal": "{'Land use': datum.name, 'Group': datum.group, 'Area (ha)': format(datum.area_ha, ',.0f'), 'Share of Australia': format(datum.share_total, '.2f') + '%', 'Share within group': format(datum.share_group, '.2f') + '%'}"
+          }
+        },
+        "hover": {
+          "stroke": {
+            "value": "#20252B"
+          },
+          "strokeWidth": {
+            "value": 2
+          }
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "from": {
+        "data": "groups"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "field": "x0"
+          },
+          "y": {
+            "signal": "datum.y0 + treemapOffsetY"
+          },
+          "x2": {
+            "field": "x1"
+          },
+          "height": {
+            "value": 27
+          },
+          "fill": {
+            "signal": "datum.name === 'Agriculture' ? '#274F72' : '#5F6973'"
+          },
+          "tooltip": {
+            "signal": "{'Group': datum.name, 'Area (ha)': format(datum.area_ha, ',.0f'), 'Share of Australia': format(datum.share_total, '.2f') + '%'}"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "interactive": false,
+      "from": {
+        "data": "groups"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "datum.x0 + 9"
+          },
+          "y": {
+            "signal": "datum.y0 + treemapOffsetY + 13"
+          },
+          "align": {
+            "value": "left"
+          },
+          "baseline": {
+            "value": "middle"
+          },
+          "font": {
+            "value": "Lato"
+          },
+          "fontSize": {
+            "value": 13
+          },
+          "fontWeight": {
+            "value": "bold"
+          },
+          "fill": {
+            "value": "#FFFFFF"
+          },
+          "text": {
+            "signal": "datum.name + ' · ' + format(datum.area_ha / 1000000, ',.1f') + 'M ha (' + format(datum.share_total, '.1f') + '%)'"
+          },
+          "limit": {
+            "signal": "max(0, datum.x1 - datum.x0 - 14)"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "interactive": false,
+      "from": {
+        "data": "insideLabels"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "(datum.x0 + datum.x1) / 2"
+          },
+          "y": {
+            "signal": "(datum.y0 + datum.y1) / 2 + treemapOffsetY"
+          },
+          "align": {
+            "value": "center"
+          },
+          "baseline": {
+            "value": "middle"
+          },
+          "font": {
+            "value": "Lato"
+          },
+          "fontSize": {
+            "value": 12
+          },
+          "fontWeight": {
+            "value": "bold"
+          },
+          "lineHeight": {
+            "value": 18
+          },
+          "fill": {
+            "signal": "indexof(['Grazing modified pastures','Dryland cropping','Irrigated cropping','Other minimal use','Water','Irrigated pastures'], datum.name)>=0 ? '#17222B' : '#FFFFFF'"
+          },
+          "text": {
+            "signal": "[datum.short_name, datum.area_ha >= 1000000 ? format(datum.area_ha / 1000000, ',.1f') + 'M ha' : format(datum.area_ha / 1000, ',.0f') + 'K ha']"
+          },
+          "limit": {
+            "signal": "max(0, datum.x1 - datum.x0 - 12)"
+          }
+        }
+      }
+    },
+    {
+      "name": "agricultureOutline",
+      "type": "rect",
+      "interactive": false,
+      "from": {
+        "data": "groups"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "field": "x0"
+          },
+          "y": {
+            "signal": "datum.y0 + treemapOffsetY"
+          },
+          "x2": {
+            "field": "x1"
+          },
+          "y2": {
+            "signal": "datum.y1 + treemapOffsetY"
+          },
+          "fill": {
+            "value": null
+          },
+          "stroke": {
+            "value": "#06402B"
+          },
+          "strokeWidth": {
+            "value": 3
+          },
+          "strokeOpacity": {
+            "signal": "datum.name === 'Agriculture' ? 1 : 0"
           }
         }
       }

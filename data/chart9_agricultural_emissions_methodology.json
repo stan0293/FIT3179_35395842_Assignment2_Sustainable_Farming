@@ -1,0 +1,64 @@
+{
+  "retrieved": "2026-10-28",
+  "dataset": "Australia National Greenhouse Accounts: National Inventory Report 2024 series",
+  "report_url": "https://www.dcceew.gov.au/climate-change/publications/national-inventory-report-2024",
+  "viewer_url": "https://www.greenhouseaccounts.climatechange.gov.au/",
+  "api_base": "https://www.greenhouseaccounts.climatechange.gov.au/api/OutputTimeSeries",
+  "parameters": {
+    "urlencodedsectorlist": 681,
+    "sector": "3 Agriculture",
+    "locationid": 3,
+    "location": "Australia",
+    "fuelid": 1,
+    "datatypeid": 13,
+    "datatype": "Emissions - net"
+  },
+  "gas_ids": {
+    "Methane": 108,
+    "Nitrous oxide": 109,
+    "Carbon dioxide": 107,
+    "All gases reconciliation total": 103
+  },
+  "raw_gas_mass_ids": {
+    "Methane": 34,
+    "Nitrous oxide": 35
+  },
+  "reporting_basis": "IPCC AR5 100-year global warming potentials: CO2=1, CH4=28, N2O=265; same factors applied to all years. AR5/mass ratios checked in every year.",
+  "source_units": "kt CO2-e (numerically equal to Gg CO2-e); verified against all 35 Australia/Agriculture workbook totals.",
+  "output_units": "Mt CO2-e; source value divided by 1000, not a new gas conversion.",
+  "period": "1989-90 to 2023-24; API date denotes financial-year ending (1990 to 2024).",
+  "exclusions": "Other inventory sectors, including farm fuel/energy and LULUCF, are excluded. This is not the ANZSIC agriculture economic-sector footprint.",
+  "extraction": "One national Agriculture series for each AR5 gas, no parent+child double-counting. Three rows per financial year. No interpolation or missing-value substitution.",
+  "validation": {
+    "annual_rows": 105,
+    "financial_years": 35,
+    "sum_vs_api_total_tolerance_kt": 1e-07,
+    "sum_vs_existing_official_workbook_totals_tolerance_mt": 1e-10,
+    "max_difference_from_official_workbook_totals_mt": 8.526512829121202e-14
+  },
+  "source_requests": {
+    "Methane": "https://www.greenhouseaccounts.climatechange.gov.au/api/OutputTimeSeries?urlencodedsectorlist=681&locationid=3&fuelid=1&gasid=108&datatypeid=13",
+    "Nitrous oxide": "https://www.greenhouseaccounts.climatechange.gov.au/api/OutputTimeSeries?urlencodedsectorlist=681&locationid=3&fuelid=1&gasid=109&datatypeid=13",
+    "Carbon dioxide": "https://www.greenhouseaccounts.climatechange.gov.au/api/OutputTimeSeries?urlencodedsectorlist=681&locationid=3&fuelid=1&gasid=107&datatypeid=13",
+    "Total": "https://www.greenhouseaccounts.climatechange.gov.au/api/OutputTimeSeries?urlencodedsectorlist=681&locationid=3&fuelid=1&gasid=103&datatypeid=13"
+  },
+  "raw_sha256": {
+    "chart9_anga_agriculture_total_ar5_2024.json": "4e57767d549198cc9a7dce2b99f560cf74a1d32457dd971ff1c99e64ed69042e",
+    "chart9_anga_carbon_dioxide_ar5_2024.json": "977d76e73f0ea90cd7cd42624bc3946b859ffc1837a43926809be59b4f3c7304",
+    "chart9_anga_livestock_methane_2024.json": "d69749a83bd2dbfeb76151ac9d31117079a451b695e2d5822126231a8e3a7821",
+    "chart9_anga_methane_ar5_2024.json": "334ebef4354d564ed167ceb8bb1cc74f5f68a3c8c8cfc4a203653381fd3dc705",
+    "chart9_anga_methane_mass_2024.json": "9be2d980c9c0cbcf13126277874ac827fd652e2b69bf9bf811faaed1eb5156a6",
+    "chart9_anga_nitrous_oxide_ar5_2024.json": "0a66eb0356f29a6c30c4975f784ca8790847d705785066191d9eb894b72fccfe",
+    "chart9_anga_nitrous_oxide_mass_2024.json": "bd014aa45c9bcefcf6c5dc36c2dcaf8bb4f2a276d4c0b84eca32dbc8c50ae3f0",
+    "chart9_anga_reporting_definitions_2024.json": "e01b3a4bf4dc010451267e1969d84dbfd6768756aa9fe23cc3698ac40b3c6b36"
+  },
+  "extraction_script": "scripts/build_chart9.py",
+  "livestock_methane_support": {
+    "source_url": "https://www.greenhouseaccounts.climatechange.gov.au/api/OutputTimeSeries?urlencodedsectorlist=682%2C735&locationid=3&fuelid=1&gasid=108&datatypeid=13",
+    "sectors": [
+      "3.A Enteric Fermentation",
+      "3.B Manure Management"
+    ],
+    "share_of_agriculture_methane_2023_24_percent": 99.19975449983863
+  }
+}

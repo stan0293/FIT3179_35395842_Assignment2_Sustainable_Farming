@@ -1,0 +1,22 @@
+id,parent,name,area_ha,share_total,share_group,group
+root,,Australia,769614000,100,100,
+group_ag,root,Agriculture,419485000,54.5059,100,Agriculture
+group_other,root,Other land uses,350129000,45.4941,100,Other land uses
+land_01,group_other,Nature conservation,72275000,9.3911,20.6424,Other land uses
+land_02,group_other,Managed resource protection,143315000,18.6217,40.9321,Other land uses
+land_03,group_other,Other minimal use,91480000,11.8865,26.1275,Other land uses
+land_04,group_ag,Grazing native vegetation,311498000,40.4746,74.2572,Agriculture
+land_05,group_other,Production native forests,8739000,1.1355,2.4959,Other land uses
+land_06,group_other,Plantation forests,2010000,0.2612,0.5741,Other land uses
+land_07,group_ag,Grazing modified pastures,63959000,8.3105,15.247,Agriculture
+land_08,group_ag,Dryland cropping,41060000,5.3351,9.7882,Agriculture
+land_09,group_ag,Dryland horticulture,74000,0.0096,0.0176,Agriculture
+land_10,group_ag,Irrigated pastures,557000,0.0724,0.1328,Agriculture
+land_11,group_ag,Irrigated cropping,1446000,0.1879,0.3447,Agriculture
+land_12,group_ag,Irrigated horticulture,752000,0.0977,0.1793,Agriculture
+land_13,group_ag,Intensive horticulture and animal production,139000,0.0181,0.0331,Agriculture
+land_14,group_other,Rural residential and farm infrastructure,2248000,0.2921,0.642,Other land uses
+land_15,group_other,Urban residential,1557000,0.2023,0.4447,Other land uses
+land_16,group_other,Other intensive uses,1093000,0.142,0.3122,Other land uses
+land_17,group_other,Mining and waste,698000,0.0907,0.1994,Other land uses
+land_18,group_other,Water,26714000,3.4711,7.6298,Other land uses

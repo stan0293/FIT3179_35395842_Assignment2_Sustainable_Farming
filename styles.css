@@ -1,105 +1,1979 @@
-* { box-sizing: border-box; }
-body { margin: 0; font-family: Arial, sans-serif; background: white; color: black; }
-#page-header {
-  width: 100%;
+/*
+ * Stylesheet overview
+ * 1. Fonts, theme, page header and story navigation
+ * 2. Shared chart cards, insights, definitions and sources
+ * 3. Shared responsive layouts (1050px, 900px and 600px)
+ * 4. Chart controls, help popovers and alternating narratives
+ * 5. Chart-specific styles: soil carbon (8), emissions (9-11)
+ *
+ * Shared styles appear first, followed by adjustments for individual charts.
+ * Keep this order so later rules continue to override the shared defaults.
+ */
+
+/* =========================================
+   Google fonts
+   ========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Lato:wght@400;700;900&display=swap');
+
+
+/* =========================================
+   Theme variables
+   ========================================= */
+
+:root {
+  --font-heading: 'DM Serif Display', Georgia, serif;
+  --font-body: 'Lato', Arial, sans-serif;
+
+  --page-background: #F7F7F2;
+  --header-background: #06402B;
+  --section-background: #E5EDE3;
+
+  --card-background: #FFFFFF;
+  --card-border: #DEE5DD;
+
+  --ink: #000000;
+  --muted: #6B7280;
+  --link-color: #3995C5;
+
+  --divider-color: #D7E1D7;
+
+  --definition-background: #F3F6F2;
+  --definition-border: #E3EBE1;
+
+  /* Scale chart cards slightly on wider screens. */
+  --card-zoom: 0.92;
+}
+
+
+/* =========================================
+   Global styling
+   ========================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
   margin: 0;
-  padding: 50px 24px 40px;
+
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.65;
+
+  background: var(--page-background);
+  color: var(--ink);
+  text-align: left;
+}
+
+
+/* =========================================
+   Main webpage header
+   ========================================= */
+
+#page-header {
+  padding: 52px 24px 48px;
+  background: var(--header-background);
   text-align: center;
-  background-color: #E8EFE6;
 }
 
 #page-header h1 {
-  max-width: 1200px;
-  margin: 0 auto 20px;
-  font-size: 36px;
-  line-height: 1.3;
-  color: #000000;
+  max-width: 1150px;
+  margin: 0 auto 18px;
+
+  font-family: var(--font-heading);
+  font-size: clamp(37px, 4vw, 56px);
+  font-weight: 400;
+  line-height: 1.15;
+
+  color: #FFFFFF;
+  text-align: center;
 }
 
 #page-header p {
-  max-width: 800px;
+  max-width: 940px;
   margin: 0 auto;
-  font-size: 18px;
+
+  font-family: var(--font-body);
+  font-size: 19px;
+  font-weight: 400;
   line-height: 1.6;
-  color: #000000;
-}
-.agriculture-section { max-width: 1400px; margin: 40px auto; padding: 0 24px; }
-.agriculture-section > h2 {
-  width: fit-content;
-  background-color: #E8EFE6;
-  color: #000000;
-  padding: 18px 24px;
-  margin: 0 0 32px;
-  border-radius: 16px;
-}
-.agriculture-layout { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 32px; align-items: start; margin: 40px 0 60px; }
-.agriculture-chart, .agriculture-insights { min-width: 0; }
-.chart, .chart .vega-embed { width: 100%; }
-.agriculture-insights { line-height: 1.6; }
-.agriculture-insights h3 { margin-top: 0; }
-.agriculture-source, .map-label-key { font-size: 13px; line-height: 1.5; color: #555; }
-.chart-error { color: #a50f15; overflow-wrap: anywhere; }
-.pie-category-notes {
-  margin-top: 16px;
-  font-size: 13px;
-  line-height: 1.5;
-  color: #555555;
+
+  color: #FFFFFF;
+  text-align: center;
 }
 
-.pie-category-notes p {
+
+/* =========================================
+   Storyline overview
+   ========================================= */
+
+.story-overview {
+  max-width: 1370px;
+  margin: 38px auto 12px;
+  padding: 0 24px;
+}
+
+.story-overview > h2 {
   margin: 0 0 8px;
-}
-@media (max-width: 900px) { .agriculture-layout { grid-template-columns: 1fr; } }
-@media (max-width: 600px) { #page-header h1 { font-size: 28px; } #page-header p { font-size: 16px; } }
 
+  font-family: var(--font-heading);
+  font-size: 32px;
+  font-weight: 400;
 
-/* Give only the paired purple maps a full-width row */
-.agriculture-layout:has(#water-practices) {
-  grid-template-columns: minmax(0, 1fr);
-}
-
-/* Place its explanation below the maps */
-.agriculture-layout:has(#water-practices) .agriculture-insights {
-  max-width: 900px;
+  color: #000000;
+  text-align: center;
 }
 
-/* Keep the rendered chart within the available width */
-#water-practices canvas,
-#water-practices svg {
+.story-overview > p {
+  margin: 0 0 22px;
+
+  font-size: 15px;
+  color: var(--muted);
+  text-align: center;
+}
+
+
+/* =========================================
+   Storyline cards
+   ========================================= */
+
+.story-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.story-step {
   display: block;
-  max-width: 100%;
-  height: auto;
+  min-width: 0;
+  padding: 19px 20px;
+  color: inherit;
+  text-decoration: none;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+
+  background: #FFFFFF;
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+
+  box-shadow: 0 3px 12px rgba(48, 61, 48, 0.035);
 }
 
-/* Chart 6: maps left, explanation right */
-.agriculture-layout:has(#water-practices) {
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+.story-step:hover,
+.story-step:focus-visible {
+  transform: scale(1.035);
+  border-color: #06402B;
+  box-shadow: 0 7px 20px rgba(6, 64, 43, 0.14);
 }
 
-#water-practices canvas,
-#water-practices svg {
-  display: block;
-  max-width: 100%;
-  height: auto;
+.story-step:focus-visible {
+  outline: 3px solid #3995C5;
+  outline-offset: 3px;
 }
 
-/* Stack on smaller screens */
-@media (max-width: 900px) {
-  .agriculture-layout:has(#water-practices) {
-    grid-template-columns: 1fr;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .story-step {
+    transition: none;
+  }
+  .story-step:hover,
+  .story-step:focus-visible {
+    transform: none;
   }
 }
+
+.story-step-number {
+  display: block;
+  margin-bottom: 9px;
+
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #06402B;
+}
+
+.story-step h3 {
+  margin: 0 0 8px;
+
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.35;
+
+  color: #000000;
+}
+
+.story-step p {
+  margin: 0;
+
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+
+/* =========================================
+   Section containers
+   ========================================= */
+
+.agriculture-section {
+  scroll-margin-top: 24px;
+  max-width: 1540px;
+  margin: 40px auto 65px;
+  padding: 0 24px;
+}
+
+
+/* =========================================
+   Section headings
+   ========================================= */
+
+.agriculture-section > h2 {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  max-width: 100%;
+
+  margin: 0 0 26px;
+  padding: 0 0 18px;
+
+  border-bottom: 2px solid var(--divider-color);
+
+  font-family: var(--font-heading);
+  font-size: clamp(26px, 2.6vw, 35px);
+  font-weight: 400;
+  line-height: 1.22;
+
+  color: #000000;
+  text-align: left;
+}
+
+.section-number {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  background: #06402B;
+  border-radius: 8px;
+  color: #FFFFFF;
+  font-family: var(--font-body);
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+
+/* =========================================
+   White chart cards
+   ========================================= */
+
+.agriculture-layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 2fr)
+    minmax(0, 1fr);
+
+  gap: 28px;
+  align-items: stretch;
+
+  width: 100%;
+  max-width: 1370px;
+
+  margin: 24px auto 34px;
+  padding: 27px 30px;
+
+  background: var(--card-background);
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+
+  box-shadow:
+    0 5px 20px rgba(48, 61, 48, 0.055);
+
+  zoom: var(--card-zoom);
+}
+
+
+/* =========================================
+   Chart area
+   ========================================= */
+
+.agriculture-chart,
+.agriculture-insights {
+  min-width: 0;
+}
+
+.agriculture-chart {
+  padding-right: 10px;
+}
+
+.chart {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chart .vega-embed {
+  width: fit-content;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Let SVG charts resize to fit their columns without losing clarity. */
+.chart svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* =========================================
+   Chart 1 and Chart 2: centred Vega charts
+   ========================================= */
+
+#land-use-treemap,
+#land-use-waterfall {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  width: 100%;
+}
+
+#land-use-treemap .vega-embed,
+#land-use-waterfall .vega-embed {
+  width: fit-content;
+  max-width: 100%;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Keep charts within the available column width. */
+#land-use-treemap svg,
+#land-use-waterfall svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+
+/* =========================================
+   Insight panel
+   ========================================= */
+
+.agriculture-insights {
+  align-self: stretch;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding-left: 26px;
+
+  /* Separate the chart and insights with a full-height divider. */
+  border-left: 2px solid var(--divider-color);
+
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.65;
+
+  color: #000000;
+  text-align: left;
+}
+
+
+/* =========================================
+   Insight headings
+   ========================================= */
+
+.agriculture-insights h3 {
+  margin: 0 0 18px;
+
+  font-family: var(--font-body);
+  font-size: 23px;
+  font-weight: 900;
+  line-height: 1.3;
+
+  color: #000000;
+  text-align: left;
+}
+
+
+/* =========================================
+   Insight paragraphs
+   ========================================= */
+
+.agriculture-insights p {
+  margin: 0 0 16px;
+
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.65;
+
+  color: #000000;
+  text-align: left;
+}
+
+.agriculture-insights p:last-child {
+  margin-bottom: 0;
+}
+
+.agriculture-insights strong {
+  font-weight: 700;
+}
+
+
+/* =========================================
+   Insight lists
+   ========================================= */
+
+.agriculture-insights ul {
+  margin: 0 0 16px;
+  padding-left: 20px;
+}
+
+.agriculture-insights li {
+  margin: 0 0 9px;
+
+  font-size: 17px;
+  line-height: 1.65;
+  color: #000000;
+}
+
+
+/* =========================================
+   Chart 1: agricultural definitions
+   ========================================= */
+
+.agriculture-definitions {
+  margin-top: 20px;
+  padding: 18px;
+
+  background: var(--definition-background);
+  border: 1px solid var(--definition-border);
+  border-radius: 10px;
+}
+
+.agriculture-definitions h4 {
+  margin: 0 0 14px;
+
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.4;
+
+  color: #000000;
+  text-align: left;
+}
+
+.agriculture-insights .agriculture-definitions p {
+  margin: 0 0 9px;
+
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
+
+  color: #5D6870;
+  text-align: left;
+}
+
+.agriculture-insights .agriculture-definitions p:last-child {
+  margin-bottom: 0;
+}
+
+.agriculture-definitions strong {
+  font-weight: 700;
+  color: #303A35;
+}
+
+
+/* =========================================
+   Chart notes and sources
+   ========================================= */
+
+.map-label-key,
+.agriculture-source,
+.pie-category-notes {
+  margin: 12px 0 0;
+
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.6;
+
+  color: var(--muted);
+  text-align: left;
+}
+
+.map-label-key strong {
+  color: var(--muted);
+}
+
+
+/* =========================================
+   Source links
+   ========================================= */
+
+.agriculture-source a {
+  color: var(--link-color);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  overflow-wrap: anywhere;
+}
+
+.agriculture-source a:visited {
+  color: var(--link-color);
+}
+
+.agriculture-source a:hover {
+  color: #2678A7;
+}
+
+
+/* =========================================
+   Chart errors
+   ========================================= */
+
+.chart-error {
+  margin: 0;
+  color: #B42333;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.chart-error:empty {
+  display: none;
+}
+
+
+/* =========================================
+   Emissions barrier notes
+   ========================================= */
 
 .barrier-definition-note {
   margin-top: 18px;
   padding: 14px 16px;
+
+  background: #F1F3EE;
   border-radius: 10px;
-  background-color: #f3eef8;
-  color: #45404b;
+
   font-size: 13px;
   line-height: 1.6;
+  color: #000000;
 }
 
 .barrier-definition-note p {
   margin: 6px 0 0;
+}
+
+.barrier-definition-note .definition-caution {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+
+/* =========================================
+   Water practices chart
+   ========================================= */
+
+#water-practices svg,
+#water-practices canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.water-practices-heading {
+  text-align: center;
+  font-family: var(--font-body);
+  color: #000000;
+  margin-bottom: 32px;
+}
+.water-practices-heading h3 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 34px;
+}
+.water-practices-heading p {
+  margin: 10px 0 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+}
+#water-practices .mark-shape.role-mark path {
+  transition: filter 150ms ease;
+}
+#water-practices .mark-shape.role-mark path.state-hovered {
+  filter: drop-shadow(0 2px 3px rgba(25, 15, 35, 0.45)) brightness(1.06);
+}
+#water-practices svg path,
+#water-practices svg text {
+  cursor: default;
+}
+
+
+/* =========================================
+   Tablet
+   ========================================= */
+
+@media (max-width: 1050px) {
+
+  .agriculture-layout {
+    grid-template-columns:
+      minmax(0, 1.6fr)
+      minmax(0, 1fr);
+
+    gap: 20px;
+    padding: 22px;
+  }
+
+  .agriculture-insights {
+    padding-left: 19px;
+  }
+
+  .story-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =========================================
+   Narrow screens
+   ========================================= */
+
+@media (max-width: 900px) {
+
+  :root {
+    --card-zoom: 1;
+  }
+
+  .agriculture-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .agriculture-insights {
+    border-left: 0;
+    border-top: 2px solid var(--divider-color);
+
+    padding: 20px 0 0;
+
+    align-self: stretch;
+    justify-content: flex-start;
+  }
+
+  #page-header {
+    padding: 36px 24px;
+  }
+
+}
+
+
+/* =========================================
+   Mobile
+   ========================================= */
+
+@media (max-width: 600px) {
+
+  .agriculture-section {
+    padding: 0 14px;
+  }
+
+  .agriculture-section > h2 {
+    gap: 12px;
+    padding: 0 0 14px;
+  }
+
+  .section-number {
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+  }
+
+  .agriculture-layout {
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .story-overview {
+    margin-top: 28px;
+    padding: 0 14px;
+  }
+
+  .story-overview > h2 {
+    font-size: 28px;
+  }
+
+  .story-steps {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  #page-header h1 {
+    font-size: 38px;
+  }
+
+  #page-header p {
+    font-size: 16px;
+  }
+
+  .agriculture-insights h3 {
+    font-size: 21px;
+  }
+
+}
+
+
+/* Allow headings and body text to wrap naturally. */
+h1, h2, h3, h4, p, li {
+  white-space: normal;
+  word-break: normal;
+  text-wrap: wrap;
+}
+
+/* =========================================
+   Shared year sliders and irrigation map controls
+   ========================================= */
+.water-year-range {
+  appearance: none;
+  width: 100%;
+  height: 20px;
+  margin: 18px 0 12px;
+  border-radius: 4px;
+  background:
+    radial-gradient(circle at 12px center, #89958D 0 6px, transparent 7px),
+    radial-gradient(circle at 50% center, #89958D 0 6px, transparent 7px),
+    radial-gradient(circle at calc(100% - 12px) center, #89958D 0 6px, transparent 7px),
+    linear-gradient(#D7E1D7, #D7E1D7) center / calc(100% - 24px) 8px no-repeat;
+  cursor: pointer;
+}
+.water-map-heading {
+  text-align: center;
+  font-family: var(--font-body);
+  color: #000000;
+}
+#water-map .mark-symbol path {
+  transition: filter 150ms ease;
+}
+#water-map .mark-symbol path.water-hovered {
+  filter: drop-shadow(0 2px 3px rgba(12, 70, 85, 0.45)) brightness(1.08);
+}
+#water-map svg path,
+#water-map svg text {
+  cursor: default;
+}
+.water-map-heading h3 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+.water-map-heading p {
+  margin: 10px 0 0;
+  font-size: 16px;
+  line-height: 1.4;
+}
+.irrigation-year-control {
+  width: 100%;
+  max-width: 260px;
+  margin: 8px 0 10px;
+  font-family: var(--font-body);
+  font-size: 13px;
+}
+.irrigation-year-control .water-year-range {
+  margin: 6px 0 2px;
+}
+.irrigation-year-control .water-year-ticks {
+  font-size: 12px;
+}
+.water-map-column {
+  position: relative;
+}
+.water-map-column .irrigation-year-control {
+  display: grid;
+  grid-template-columns: auto minmax(0, 230px);
+  column-gap: 14px;
+  align-items: center;
+  max-width: 390px;
+  margin: 10px 0 12px;
+}
+.water-map-column .irrigation-year-control > label {
+  grid-row: 1 / 3;
+  line-height: 1.3;
+}
+.water-map-column .water-year-range {
+  grid-column: 2;
+  margin: 4px 0;
+}
+.water-map-column .water-year-ticks {
+  grid-column: 2;
+  line-height: 1.2;
+}
+.water-year-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border: 3px solid #FFFFFF;
+  border-radius: 50%;
+  background: #237C86;
+  box-shadow: 0 0 0 2px #237C86;
+}
+.water-year-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: 3px solid #FFFFFF;
+  border-radius: 50%;
+  background: #237C86;
+  box-shadow: 0 0 0 2px #237C86;
+}
+.water-year-range:focus-visible {
+  outline: 2px solid #237C86;
+  outline-offset: 7px;
+}
+.water-year-ticks {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #52665B;
+}
+.water-year-ticks .selected-year {
+  color: #0C4655;
+  font-weight: 900;
+}
+
+/* Show definitions on hover, click or keyboard focus. */
+.insight-heading-with-help {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.insight-heading-with-help h3 {
+  flex: 1;
+  margin-bottom: 0;
+}
+.land-use-help {
+  flex: 0 0 28px;
+}
+.land-use-help::details-content {
+  content-visibility: visible;
+}
+.land-use-help summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid #06402B;
+  border-radius: 50%;
+  background: var(--definition-background);
+  color: #06402B;
+  font-size: 17px;
+  font-weight: 900;
+  cursor: pointer;
+  list-style: none;
+}
+.land-use-help summary::-webkit-details-marker {
+  display: none;
+}
+.land-use-help::after {
+  content: "";
+  position: absolute;
+  top: 28px;
+  right: 0;
+  width: 28px;
+  height: 8px;
+}
+.land-use-help summary:focus-visible {
+  outline: 3px solid #3995C5;
+  outline-offset: 3px;
+}
+.land-use-help .agriculture-definitions {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  top: 34px;
+  right: 0;
+  width: 100%;
+  margin-top: 0;
+  max-height: min(520px, 65vh);
+  overflow-y: auto;
+  box-shadow: 0 6px 22px rgba(6, 64, 43, 0.18);
+}
+.land-use-help[open] .agriculture-definitions,
+.land-use-help:hover .agriculture-definitions,
+.land-use-help:focus-within .agriculture-definitions {
+  display: block;
+}
+
+/* =========================================
+   Shared inline definitions and editorial narratives
+   ========================================= */
+.treemap-with-help {
+  position: relative;
+}
+.chart-definition-help {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+.chart-definition-help .agriculture-definitions {
+  width: min(360px, 100%);
+}
+.chart-definition-help .agriculture-definitions p {
+  margin: 0 0 9px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #5D6870;
+}
+.treemap-legend-help {
+  position: absolute;
+  z-index: 10;
+  visibility: hidden;
+}
+.treemap-legend-help .agriculture-definitions {
+  left: 0;
+  right: auto;
+  width: var(--help-width, 300px);
+}
+.treemap-legend-help .agriculture-definitions p {
+  margin: 0 0 9px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #5D6870;
+}
+.treemap-legend-help .agriculture-definitions p:last-child {
+  margin-bottom: 0;
+}
+.story-highlight {
+  color: #E65C00;
+  font-weight: 700;
+}
+.defined-term {
+  position: relative;
+  text-decoration: underline dotted #06402B;
+  text-underline-offset: 4px;
+  cursor: help;
+}
+.term-definition {
+  display: none;
+  position: absolute;
+  z-index: 20;
+  bottom: calc(100% + 8px);
+  left: 0;
+  width: 230px;
+  max-width: 70vw;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: #06402B;
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-decoration: none;
+}
+.defined-term:hover .term-definition,
+.defined-term:focus .term-definition {
+  display: block;
+}
+.irrigation-definition {
+  left: auto;
+  right: 0;
+  width: 300px;
+}
+.irrigation-definition > span {
+  display: block;
+  margin-bottom: 8px;
+}
+.irrigation-definition > span:last-child {
+  margin-bottom: 0;
+}
+.irrigation-definition > .term-activity {
+  display: list-item;
+  list-style-type: disc;
+  margin-left: 16px;
+}
+.term-note-heading {
+  font-weight: 700;
+}
+.water-practice-term .term-definition {
+  left: auto;
+  right: 0;
+}
+@media (max-width: 600px) {
+  .water-practice-term .term-definition {
+    position: fixed;
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+    width: auto;
+    max-width: none;
+  }
+}
+.narrative-editorial {
+  position: relative;
+}
+.narrative-editorial > p:first-of-type::first-letter {
+  font-family: var(--font-heading);
+  font-size: 1.7em;
+  font-weight: 400;
+  line-height: 1;
+  color: #06402B;
+  text-transform: uppercase;
+}
+.has-narrative-help > p:first-of-type {
+  padding-right: 40px;
+}
+.narrative-editorial > .insight-heading-with-help {
+  position: absolute;
+  top: 0;
+  left: 26px;
+  right: 0;
+  justify-content: flex-end;
+  margin: 0;
+  pointer-events: none;
+}
+.narrative-editorial .land-use-help {
+  pointer-events: auto;
+}
+@media (min-width: 901px) {
+  .waterfall-layout {
+    min-height: var(--landscape-card-height, auto);
+  }
+  .layout-reverse {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  }
+  .layout-reverse > .agriculture-chart {
+    grid-column: 2;
+    grid-row: 1;
+    padding-right: 0;
+    padding-left: 10px;
+  }
+  .layout-reverse > .agriculture-insights {
+    grid-column: 1;
+    grid-row: 1;
+    border-left: 0;
+    border-right: 2px solid var(--divider-color);
+    padding-left: 0;
+    padding-right: 26px;
+  }
+  .layout-reverse .insight-heading-with-help {
+    left: 0;
+    right: 26px;
+  }
+}
+@media (min-width: 901px) and (max-width: 1050px) {
+  .layout-reverse {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  }
+}
+@media (max-width: 900px) {
+  .narrative-editorial > .insight-heading-with-help {
+    top: 20px;
+    left: 0;
+  }
+}
+
+/* =========================================
+   Soil help, water-source definitions and closing content
+   ========================================= */
+.chart7-layout .agriculture-definitions {
+  margin-top: 12px;
+  padding: 12px;
+}
+.chart7-layout .agriculture-definitions h4 {
+  margin-bottom: 8px;
+}
+.chart7-layout .agriculture-definitions p {
+  margin-bottom: 5px;
+  line-height: 1.45;
+}
+.water-sources-with-help {
+  position: relative;
+}
+.water-source-legend-help {
+  position: absolute;
+  z-index: 20;
+  visibility: hidden;
+}
+.water-source-legend-help summary {
+  width: 20px;
+  height: 20px;
+  font-size: 13px;
+}
+.water-source-legend-help::after {
+  top: 20px;
+  width: 20px;
+}
+.water-source-legend-help .agriculture-definitions {
+  top: 26px;
+  left: 0;
+  right: auto;
+  width: var(--source-help-width, 320px);
+}
+.water-source-legend-help .agriculture-definitions p {
+  margin: 0 0 9px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.water-source-legend-help .agriculture-definitions p:last-child {
+  margin-bottom: 0;
+}
+.water-source-legend-help ul {
+  margin: 0;
+  padding-left: 18px;
+}
+.water-source-legend-help li {
+  margin-bottom: 9px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.water-source-legend-help li:last-child {
+  margin-bottom: 0;
+}
+
+.new-section-context {
+  max-width: 1260px;
+  margin: 0 auto 24px;
+  font-size: 15px;
+  color: #52665B;
+}
+#emissions-knowledge .vega-embed {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+}
+.closing-card {
+  max-width: 1370px;
+  margin: 24px auto;
+  padding: 27px 30px;
+  background: var(--card-background);
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+}
+.closing-card p {
+  margin: 0 0 16px;
+}
+.closing-card p:last-child {
+  margin-bottom: 0;
+}
+.completion-footer {
+  max-width: 1370px;
+  font-size: 13px;
+  color: #52665B;
+  overflow-wrap: anywhere;
+}
+.completion-footer h3 {
+  font-size: 16px;
+  color: #06402B;
+}
+.completion-footer p {
+  margin: 0 0 18px;
+}
+.completion-footer a {
+  color: var(--link-color);
+}
+
+/* =========================================
+   Chart 7: soil-management legend help
+   ========================================= */
+.soil-heatmap-with-help {
+  position: relative;
+}
+.soil-legend-help {
+  position: absolute;
+  z-index: 30;
+  visibility: hidden;
+}
+.soil-legend-help summary {
+  width: 20px;
+  height: 20px;
+  font-size: 13px;
+}
+.soil-legend-help::after {
+  top: 20px;
+  width: 20px;
+}
+.chart7-layout .soil-legend-help .agriculture-definitions {
+  margin: 0;
+  top: 26px;
+  right: auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.soil-legend-help h5 {
+  margin: 14px 0 7px;
+  font-size: 13px;
+  color: #06402B;
+}
+.soil-legend-help h5 + ul {
+  margin: 0;
+  padding-left: 18px;
+}
+.soil-legend-help li {
+  margin-bottom: 7px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.soil-legend-help li:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================================
+   Shared question-mark popover content
+   ========================================= */
+.land-use-help .agriculture-definitions {
+  padding: 12px;
+  background: var(--definition-background);
+  border: 1px solid var(--definition-border);
+  border-radius: 10px;
+  color: #303A35;
+  font-family: var(--font-body);
+  text-align: left;
+}
+.land-use-help .agriculture-definitions h4 {
+  margin: 0 0 8px;
+  color: #000000;
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.4;
+}
+.land-use-help .agriculture-definitions h5 {
+  margin: 14px 0 7px;
+  color: #06402B;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.land-use-help .agriculture-definitions ul {
+  margin: 0;
+  padding-left: 18px;
+}
+.land-use-help .agriculture-definitions li,
+.land-use-help .agriculture-definitions p {
+  margin: 0 0 7px;
+  color: #303A35;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+.land-use-help .agriculture-definitions li:last-child,
+.land-use-help .agriculture-definitions p:last-child {
+  margin-bottom: 0;
+}
+.land-use-help .agriculture-definitions strong {
+  color: #303A35;
+  font-weight: 700;
+}
+
+
+/* =========================================
+   Chart 8: soil organic carbon
+   ========================================= */
+
+/* Use the shared white card and two-column layout for Chart 8. */
+
+#soil-carbon-section .chart8-chart-column {
+  min-width: 0;
+  padding-right: 10px;
+}
+
+/* Centre the chart in its column. */
+#chart8-soil-carbon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Resize the chart to fit the available width. */
+#chart8-soil-carbon .vega-embed {
+  width: fit-content;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#chart8-soil-carbon svg,
+#chart8-soil-carbon canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Chart notes and sources */
+#soil-carbon-section .chart8-source,
+#soil-carbon-section .chart8-note {
+  margin: 12px 0 0;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--muted);
+  text-align: left;
+}
+
+/* Source links */
+#soil-carbon-section .chart8-source a,
+#soil-carbon-section .chart8-note a {
+  color: var(--link-color);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  overflow-wrap: anywhere;
+}
+
+#soil-carbon-section .chart8-source a:hover,
+#soil-carbon-section .chart8-note a:hover {
+  color: #2678A7;
+}
+
+/* Keep the insights vertically centred beside the chart. */
+#soil-carbon-section .chart8-insights {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: stretch;
+  min-width: 0;
+  padding-left: 26px;
+  border-left: 2px solid var(--divider-color);
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: #000000;
+  text-align: left;
+}
+
+/* Paragraph spacing */
+#soil-carbon-section .chart8-insights p {
+  margin: 0 0 16px;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+#soil-carbon-section .chart8-insights p:last-child {
+  margin-bottom: 0;
+}
+
+/* Emphasise selected terms and figures in the insights. */
+#soil-carbon-section .chart8-insights strong {
+  font-weight: 700;
+}
+
+/* Use the orange accent for the sustainability takeaway. */
+#soil-carbon-section .story-highlight {
+  color: #E65C00;
+  font-weight: 700;
+}
+
+/* Enlarge the first letter to match the other narrative panels. */
+#soil-carbon-section
+.chart8-insights > p:first-of-type::first-letter {
+  font-family: var(--font-heading);
+  font-size: 1.7em;
+  font-weight: 400;
+  line-height: 1;
+  color: #06402B;
+  text-transform: uppercase;
+}
+
+/* =========================================
+   Chart 8: responsive layout
+   ========================================= */
+
+@media (max-width: 1050px) {
+  #soil-carbon-section .chart8-insights {
+    padding-left: 19px;
+  }
+}
+
+@media (max-width: 900px) {
+  #soil-carbon-section .chart8-chart-column {
+    padding-right: 0;
+  }
+
+  #soil-carbon-section .chart8-insights {
+    border-left: 0;
+    border-top: 2px solid var(--divider-color);
+    padding: 20px 0 0;
+    align-self: stretch;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  #soil-carbon-section .chart8-insights,
+  #soil-carbon-section .chart8-insights p {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  #soil-carbon-section .chart8-source,
+  #soil-carbon-section .chart8-note {
+    font-size: 12px;
+  }
+}
+
+/* =========================================
+   Chart 8: legend controls and geographic navigation
+   ========================================= */
+#chart8-soil-carbon {
+  position: relative;
+}
+#chart8-soil-carbon .vega-bindings {
+  position: absolute;
+  z-index: 2;
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 24px;
+}
+#chart8-soil-carbon .vega-bindings select {
+  padding: 2px 6px;
+  border: 1px solid var(--card-border);
+  border-radius: 4px;
+  background: white;
+  color: #303A35;
+  font: inherit;
+}
+
+/* Let pointer events reach the hexagons beneath map labels and boundaries. */
+#chart8-soil-carbon [class*="soilCarbonBoundaries"],
+#chart8-soil-carbon [class*="soilCarbonLabel"] {
+  pointer-events: none;
+}
+
+/* Keep the map controls and legend help together. */
+#soil-carbon-section .chart8-map-frame {
+  position: relative;
+}
+#soil-carbon-section .chart8-map-controls {
+  position: absolute;
+  z-index: 3;
+  width: 620px;
+  transform-origin: top left;
+  font: 13px/1.5 var(--font-body);
+  color: #000000;
+}
+#soil-carbon-section .chart8-year-row .vega-bindings {
+  position: static;
+}
+#soil-carbon-section .chart8-navigation {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px;
+}
+#soil-carbon-section .chart8-navigation label {
+  white-space: nowrap;
+}
+#soil-carbon-section .chart8-navigation select {
+  width: 176px;
+  font: inherit;
+  padding: 3px;
+}
+#soil-carbon-section #chart8-zoom {
+  width: 90px;
+  accent-color: #000000;
+}
+#soil-carbon-section #chart8-zoom-value {
+  min-width: 32px;
+}
+#soil-carbon-section #chart8-reset {
+  border: 1px solid var(--card-border);
+  border-radius: 4px;
+  padding: 3px 8px;
+  background: white;
+  color: #000000;
+  font: inherit;
+  cursor: pointer;
+}
+#soil-carbon-section #chart8-pan-hint {
+  font-size: 11px;
+  color: #000000;
+}
+#soil-carbon-section .chart8-map-viewport {
+  touch-action: none;
+}
+#soil-carbon-section .chart8-carbon-help {
+  position: absolute;
+  z-index: 30;
+  visibility: hidden;
+}
+#soil-carbon-section .chart8-carbon-help summary {
+  width: 20px;
+  height: 20px;
+  font-size: 13px;
+}
+#soil-carbon-section .chart8-carbon-help::after {
+  top: 20px;
+  width: 20px;
+}
+#soil-carbon-section .chart8-carbon-help .agriculture-definitions {
+  top: 26px;
+  right: auto;
+  margin: 0;
+  overscroll-behavior: contain;
+}
+
+/* Place Chart 8 on the right to continue the alternating desktop layout. */
+@media (min-width: 901px) {
+  #soil-carbon-section .layout-reverse > .chart8-chart-column {
+    grid-column: 2;
+    grid-row: 1;
+    padding-right: 0;
+    padding-left: 10px;
+  }
+  #soil-carbon-section .layout-reverse > .chart8-insights {
+    grid-column: 1;
+    grid-row: 1;
+    padding-left: 0;
+    padding-right: 26px;
+    border-left: 0;
+    border-right: 2px solid var(--divider-color);
+  }
+}
+
+/* =========================================
+   Shared source text and supporting details
+   ========================================= */
+.agriculture-source,
+#soil-carbon-section .chart8-note,
+#soil-carbon-section .chart8-source {
+  font-style: normal;
+}
+.agriculture-source em,
+#soil-carbon-section .chart8-note em,
+#soil-carbon-section .chart8-source em {
+  font-style: normal;
+}
+.agriculture-source .source-detail,
+#soil-carbon-section .source-detail {
+  display: block;
+  margin-top: 5px;
+  font-style: normal;
+}
+
+/* =========================================
+   Chart 8: comparison-year slider
+   ========================================= */
+#soil-carbon-section .chart8-year-row .vega-bind label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+#soil-carbon-section .chart8-year-track {
+  display: inline-flex;
+  flex-direction: column;
+  width: 200px;
+}
+#soil-carbon-section #chart8-comparison-year {
+  width: 100%;
+  height: 16px;
+  margin: 0;
+  accent-color: #000000;
+  cursor: pointer;
+}
+#soil-carbon-section .chart8-year-endpoints {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  line-height: 12px;
+  color: #000000;
+}
+#soil-carbon-section .chart8-selected-year {
+  min-width: 32px;
+  color: #000000;
+  font-weight: 700;
+}
+#soil-carbon-section .chart8-year-row .vega-bind-value {
+  display: none;
+}
+
+/* =========================================
+   Chart 9: emissions interactions, heading and tooltip
+   ========================================= */
+.chart9-layout .chart9-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.chart9-layout #chart9-show-all {
+  padding: 4px 10px;
+  border: 1px solid var(--card-border);
+  border-radius: 5px;
+  background: var(--definition-background);
+  color: #06402B;
+  font: inherit;
+  cursor: pointer;
+}
+.chart9-layout #chart9-show-all:focus-visible {
+  outline: 3px solid var(--link-color);
+  outline-offset: 3px;
+}
+
+/* Let users select gases and hover over the chart through the year guide. */
+.chart9-layout .agricultureHoverYear_marks {
+  pointer-events: none;
+}
+.chart9-layout .mark-area path,
+.chart9-layout .role-legend-label text,
+.chart9-layout .role-legend-symbol path {
+  cursor: pointer;
+}
+
+/* Keep hover markers on the upper edge of each gas area. */
+.chart9-layout .agricultureHoverGasPoints_marks {
+  pointer-events: none;
+}
+
+/* Keep the heading size consistent when the chart SVG is scaled. */
+.chart9-layout .chart9-heading {
+  margin-bottom: 32px;
+  text-align: center;
+  font-family: var(--font-body);
+  color: #000000;
+}
+.chart9-layout .chart9-heading h3 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 34px;
+}
+.chart9-layout .chart9-heading p {
+  margin: 10px 0 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+/* Style the compact Chart 9 tooltip without affecting other charts. */
+.chart9-tooltip {
+  position: fixed;
+  z-index: 10000;
+  max-width: min(330px, calc(100vw - 24px));
+  padding: 9px 11px;
+  border: 1px solid #D7E1D7;
+  border-radius: 6px;
+  background: #FFFFFF;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.14);
+  color: #303A35;
+  font: 12px/1.45 var(--font-body);
+  pointer-events: none;
+}
+.chart9-tooltip-title {
+  margin-bottom: 6px;
+  color: #06402B;
+  font-size: 13px;
+  font-weight: 700;
+}
+.chart9-tooltip-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 2px;
+}
+.chart9-tooltip-row > span:last-child {
+  white-space: nowrap;
+}
+
+/* =========================================
+   Chart 10: sankey heading, year control and help
+   ========================================= */
+.chart10-layout .chart10-heading {
+  text-align: center;
+  margin-bottom: 24px;
+  font-family: var(--font-body);
+  color: #000000;
+}
+.chart10-layout .chart10-heading h3 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 34px;
+}
+.chart10-layout .chart10-heading p {
+  margin: 10px 0 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+}
+.chart10-layout .chart10-year-control {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 520px;
+  margin: 0 auto 22px;
+  font-size: 13px;
+}
+.chart10-layout .chart10-year-control > label {
+  white-space: nowrap;
+}
+.chart10-layout .chart10-year-track {
+  flex: 1;
+  min-width: 70px;
+}
+.chart10-layout #chart10-year {
+  display: block;
+  width: 100%;
+  margin: 0;
+  accent-color: #06402B;
+  cursor: pointer;
+}
+.chart10-layout .chart10-year-endpoints {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2px;
+  font-size: 11px;
+  line-height: 1.3;
+  color: #52665B;
+}
+.chart10-layout #chart10-year-value {
+  min-width: 50px;
+  font-weight: 700;
+  color: #06402B;
+}
+.chart10-layout .chart10-help {
+  position: relative;
+  flex: 0 0 20px;
+  z-index: 30;
+}
+.chart10-layout .chart10-help summary {
+  width: 20px;
+  height: 20px;
+  font-size: 13px;
+}
+.chart10-layout .chart10-help::after {
+  top: 20px;
+  width: 20px;
+}
+.chart10-layout .chart10-help .agriculture-definitions {
+  top: 26px;
+  right: auto;
+  margin: 0;
+  overscroll-behavior: contain;
+}
+.chart10-layout #chart10-year:focus-visible {
+  outline: 3px solid var(--link-color);
+  outline-offset: 3px;
+}
+
+/* Position the help icon beside the agricultural activities heading. */
+.chart10-layout .chart10-map-with-help {
+  position: relative;
+}
+.chart10-layout .chart10-map-with-help .chart10-help {
+  position: absolute;
+  visibility: hidden;
+}
+
+/* =========================================
+   Chart 11: centred heading and survey-indicator help
+   ========================================= */
+.chart11-layout .chart11-heading {
+  text-align: center;
+  font-family: var(--font-body);
+  margin-bottom: 32px;
+}
+.chart11-layout .chart11-heading h3 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 34px;
+}
+.chart11-layout .chart11-heading p {
+  margin: 10px 0 0;
+  font-size: 16px;
+  line-height: 20px;
+}
+.chart11-layout .chart11-with-help {
+  position: relative;
+}
+.chart11-layout .chart11-axis-help {
+  position: absolute;
+  z-index: 30;
+  visibility: hidden;
+}
+.chart11-layout .chart11-axis-help summary {
+  width: 20px;
+  height: 20px;
+  font-size: 13px;
+}
+.chart11-layout .chart11-axis-help::after {
+  top: 20px;
+  width: 20px;
+}
+.chart11-layout .chart11-axis-help .agriculture-definitions {
+  top: 26px;
+  right: auto;
+  margin: 0;
+  overscroll-behavior: contain;
+}
+
+/* =========================================
+   Chart 12: centred heading
+   ========================================= */
+.chart12-layout .chart12-heading {
+  margin-bottom: 40px;
+  text-align: center;
+  font-family: var(--font-body);
+}
+.chart12-layout .chart12-heading h3 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 34px;
+}
+.chart12-layout .chart12-heading p {
+  margin: 10px 0 0;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+/* Chart 12: one industry control updates all three waffles. */
+.chart12-layout .chart12-industry-control {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px 12px;
+  margin-bottom: 16px;
+  font-size: 13px;
+}
+.chart12-layout #chart12-industry {
+  max-width: 100%;
+  padding: 5px 8px;
+  border: 1px solid var(--card-border);
+  border-radius: 4px;
+  background: white;
+  color: black;
+  font: inherit;
+}
+.chart12-layout #chart12-industry:focus-visible {
+  outline: 3px solid var(--link-color);
+  outline-offset: 3px;
+}
+
+/* Keep Chart 12's definitions close to the population selector. */
+.chart12-layout .chart12-help {
+  position: relative;
+  flex: 0 0 20px;
+  z-index: 30;
+}
+.chart12-layout .chart12-help summary {
+  width: 20px;
+  height: 20px;
+  font-size: 13px;
+}
+.chart12-layout .chart12-help::after {
+  top: 20px;
+  width: 20px;
+}
+.chart12-layout .chart12-help .agriculture-definitions {
+  top: 26px;
+  right: auto;
+  margin: 0;
+  overscroll-behavior: contain;
+}
+
+/* One shared key explains the squares in all three waffles. */
+.chart12-layout .chart12-waffle-key {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 10px 24px;
+  margin: 0 0 24px;
+  font-size: 12px;
+  color: #000000;
+}
+.chart12-layout .chart12-waffle-key > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.chart12-layout .chart12-reported-key {
+  display: inline-flex;
+  gap: 2px;
+}
+.chart12-layout .chart12-reported-key i,
+.chart12-layout .chart12-remaining-key {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+}
+.chart12-layout .chart12-reported-key i:nth-child(1) { background: #D978A0; }
+.chart12-layout .chart12-reported-key i:nth-child(2) { background: #9B8BC7; }
+.chart12-layout .chart12-reported-key i:nth-child(3) { background: #65A9A4; }
+.chart12-layout .chart12-remaining-key { background: #B8BFBC; }
+
+/* Give APA references a hanging indent without affecting chart source notes. */
+.completion-footer .reference-list p {
+  padding-left: 2em;
+  text-indent: -2em;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+/* Align authorship labels and values in a compact two-column layout. */
+.completion-footer .authorship-details {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 4px 14px;
+  margin: 0 0 18px;
+}
+.completion-footer .authorship-details dt {
+  font-weight: 700;
+}
+.completion-footer .authorship-details dd {
+  margin: 0;
+}
+
+/* Separate the reference list from the author details. */
+.completion-footer .authorship-heading {
+  margin-top: 32px;
+}
+
+/* Align the conclusion with the footer and keep its reading lines short. */
+#conclusion {
+  max-width: 1370px;
+}
+#conclusion .conclusion-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+}
+#conclusion .conclusion-line {
+  display: block;
+}
+@media (max-width: 900px) {
+  #conclusion .conclusion-columns {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 }

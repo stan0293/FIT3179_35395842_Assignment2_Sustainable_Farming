@@ -1,0 +1,10 @@
+order,category,label,type,area_2010_11_mha,area_2020_21_mha,change_mha,running_before_mha,running_after_mha,lower_mha,upper_mha,label_y,display_change
+1,Dryland cropping,Dryland cropping,Increase,31.286,41.06,9.774,0,9.774,0,9.774,10.114,+9.774M
+2,Grazing modified pastures,Modified pastures,Decrease,72.691,63.959,-8.732,9.774,1.042,1.042,9.774,10.074,-8.732M
+3,Grazing native vegetation,Native grazing,Decrease,312.185,311.498,-0.687,1.042,0.355,0.355,1.042,1.342,-0.687M
+4,Irrigated cropping,Irrigated cropping,Increase,0.826,1.446,0.62,0.355,0.975,0.355,0.975,1.315,+0.620M
+5,Irrigated horticulture,Irrigated horticulture,Increase,0.44,0.752,0.312,0.975,1.287,0.975,1.287,1.627,+0.312M
+6,Dryland horticulture,Dryland horticulture,Decrease,0.222,0.074,-0.148,1.287,1.139,1.139,1.287,1.587,-0.148M
+7,Irrigated pastures,Irrigated pastures,Decrease,0.64,0.557,-0.083,1.139,1.056,1.056,1.139,1.439,-0.083M
+8,Intensive horticulture and animal production,Intensive production,Increase,0.103,0.139,0.036,1.056,1.092,1.056,1.092,1.432,+0.036M
+9,Net agricultural change,Net change,Net,418.393,419.485,1.092,0,1.092,0,1.092,1.58,+1.092M

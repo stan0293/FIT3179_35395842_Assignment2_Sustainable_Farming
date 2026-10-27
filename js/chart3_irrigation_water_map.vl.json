@@ -1,0 +1,272 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Irrigation water applied to crops and pastures, selected verified ABS years: 2015–16, 2016–17 and 2020–21. Bubble-size scale fixed at 0–4,000 GL.",
+  "width": 740,
+  "height": 510,
+  "background": "white",
+  "padding": 10,
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [
+      -18,
+      -36
+    ],
+    "rotate": [
+      -134,
+      0,
+      0
+    ]
+  },
+  "params": [
+    {
+      "name": "yearChoice",
+      "value": 2
+    }
+  ],
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/rowanhogan/australian-states/master/states.geojson",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#EFF3EE",
+        "stroke": "#869A8B",
+        "strokeWidth": 1.2,
+        "tooltip": false
+      }
+    },
+    {
+      "data": {
+        "url": "data/chart3_irrigation_water_by_state.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "water_gl": "number",
+            "longitude": "number",
+            "latitude": "number",
+            "year_index": "number"
+          }
+        }
+      },
+      "transform": [
+        {
+          "filter": "datum.year_index === yearChoice"
+        },
+        {
+          "filter": "isValid(datum.water_gl) && datum.water_gl > 0"
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "color": "#237C86",
+        "opacity": 0.72,
+        "stroke": "#0C4655",
+        "strokeWidth": 1.2
+      },
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        },
+        "size": {
+          "field": "water_gl",
+          "type": "quantitative",
+          "title": "Irrigation water applied (GL)",
+          "scale": {
+            "type": "sqrt",
+            "domain": [
+              0,
+              4000
+            ],
+            "range": [
+              0,
+              18000
+            ]
+          },
+          "legend": {
+            "orient": "right",
+            "format": ",.0f",
+            "symbolFillColor": "#087F8C",
+            "symbolStrokeColor": "#07505A",
+            "title": "Water applied (GL)",
+            "titleFontSize": 18,
+            "labelFontSize": 15,
+            "titleLimit": 260,
+            "labelLimit": 140
+          }
+        },
+        "tooltip": [
+          {
+            "field": "state",
+            "type": "nominal",
+            "title": "State"
+          },
+          {
+            "field": "year",
+            "type": "nominal",
+            "title": "Financial year"
+          },
+          {
+            "field": "water_gl",
+            "type": "quantitative",
+            "title": "Irrigation applied (GL)",
+            "format": ",.1f"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "longitude": 149.1,
+            "latitude": -35.3,
+            "longitude2": 152,
+            "latitude2": -39
+          }
+        ]
+      },
+      "mark": {
+        "type": "rule",
+        "stroke": "#52665B",
+        "strokeWidth": 1,
+        "tooltip": false
+      },
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        },
+        "longitude2": {
+          "field": "longitude2"
+        },
+        "latitude2": {
+          "field": "latitude2"
+        }
+      }
+    },
+    {
+      "data": {
+        "url": "data/chart3_irrigation_water_by_state.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "water_gl": "number",
+            "longitude": "number",
+            "latitude": "number",
+            "year_index": "number"
+          }
+        }
+      },
+      "transform": [
+        {
+          "filter": "datum.year_index === yearChoice"
+        },
+        {
+          "calculate": "datum.state_code === 'ACT' ? 152.2 : datum.longitude",
+          "as": "label_longitude"
+        },
+        {
+          "calculate": "datum.state_code === 'ACT' ? -39 : datum.latitude",
+          "as": "label_latitude"
+        },
+        {
+          "calculate": "split((datum.state_code === 'ACT' ? 'Australian Capital|Territory' : datum.state) + (datum.source_status === 'not_published' ? '|(not published)' : ''), '|')",
+          "as": "state_label"
+        },
+        {
+          "calculate": "datum.source_status === 'not_published' || !isValid(datum.water_gl) || trim(toString(datum.water_gl)) === '' ? 'Not published' : format(datum.water_gl, ',.1f') + ' GL'",
+          "as": "water_label"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "font": "Lato",
+        "fontSize": 14,
+        "lineHeight": 17,
+        "color": "#000000",
+        "align": {
+          "expr": "datum.state_code === 'ACT' ? 'left' : 'center'"
+        },
+        "baseline": "middle"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "label_longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "label_latitude",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "state_label",
+          "type": "nominal"
+        },
+        "tooltip": [
+          {
+            "field": "state",
+            "type": "nominal",
+            "title": "State or territory"
+          },
+          {
+            "field": "year",
+            "type": "nominal",
+            "title": "Financial year"
+          },
+          {
+            "field": "water_label",
+            "type": "nominal",
+            "title": "Irrigation water applied"
+          }
+        ]
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "legend": {
+      "labelFont": "Lato",
+      "titleFont": "Lato",
+      "labelColor": "#000000",
+      "titleColor": "#000000"
+    },
+    "axis": {
+      "labelFont": "Lato",
+      "titleFont": "Lato"
+    }
+  },
+  "title": {
+    "text": "Where Does Australia's Irrigation Water Go?",
+    "subtitle": "Irrigation water applied across Australian states in selected years, 2015–16 to 2020–21",
+    "anchor": "middle",
+    "align": "center",
+    "frame": "bounds",
+    "font": "Lato",
+    "fontSize": 28,
+    "fontWeight": 900,
+    "color": "#000000",
+    "subtitleFont": "Lato",
+    "subtitleFontSize": 16,
+    "subtitleFontWeight": 400,
+    "subtitleColor": "#000000",
+    "subtitlePadding": 10,
+    "subtitleLineHeight": 20,
+    "offset": 32
+  }
+}

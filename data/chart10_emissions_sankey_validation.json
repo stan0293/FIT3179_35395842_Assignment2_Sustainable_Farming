@@ -1,0 +1,83 @@
+{
+  "rows": 315,
+  "years": 35,
+  "source_count": 7,
+  "flows_per_year": 9,
+  "max_sum_difference_from_CRT_mt": 2.842170943040401e-14,
+  "max_CRT_ANGA_cell_difference_kt": 1.0771003644549637e-08,
+  "archive_sha256": "dc7893664331e0747d23c3a800b812df624c3c2ad8032c300bfc34dfde75cddb",
+  "notation_counts": [
+    {
+      "code": "3.A",
+      "gas": "Carbon dioxide",
+      "notation": "None",
+      "count": 35
+    },
+    {
+      "code": "3.A",
+      "gas": "Nitrous oxide",
+      "notation": "None",
+      "count": 35
+    },
+    {
+      "code": "3.B",
+      "gas": "Carbon dioxide",
+      "notation": "None",
+      "count": 35
+    },
+    {
+      "code": "3.C",
+      "gas": "Carbon dioxide",
+      "notation": "None",
+      "count": 35
+    },
+    {
+      "code": "3.C",
+      "gas": "Nitrous oxide",
+      "notation": "None",
+      "count": 35
+    },
+    {
+      "code": "3.D",
+      "gas": "Carbon dioxide",
+      "notation": "None",
+      "count": 35
+    },
+    {
+      "code": "3.D",
+      "gas": "Methane",
+      "notation": "NE",
+      "count": 35
+    },
+    {
+      "code": "3.F",
+      "gas": "Carbon dioxide",
+      "notation": "None",
+      "count": 35
+    },
+    {
+      "code": "3.G",
+      "gas": "Methane",
+      "notation": "None",
+      "count": 35
+    },
+    {
+      "code": "3.G",
+      "gas": "Nitrous oxide",
+      "notation": "None",
+      "count": 35
+    },
+    {
+      "code": "3.H",
+      "gas": "Methane",
+      "notation": "None",
+      "count": 35
+    },
+    {
+      "code": "3.H",
+      "gas": "Nitrous oxide",
+      "notation": "None",
+      "count": 35
+    }
+  ]
+}

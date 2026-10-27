@@ -1,0 +1,984 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Australia's Agriculture inventory source-to-gas emissions, extracted from 2026 CRT Summary2. Flow thickness uses one fixed Mt CO2-e scale across all 35 financial years.",
+  "width": 760,
+  "height": 540,
+  "padding": {
+    "left": 8,
+    "right": 8,
+    "top": 12,
+    "bottom": 20
+  },
+  "background": "white",
+  "title": {
+    "text": "Where Do Australia's Agricultural Emissions Come From?",
+    "subtitle": "How farming activities contribute to methane, nitrous oxide and carbon dioxide emissions, 1989–90 to 2023–24.",
+    "anchor": "middle",
+    "font": "Lato",
+    "fontSize": 28,
+    "fontWeight": 900,
+    "subtitleFont": "Lato",
+    "subtitleFontSize": 16
+  },
+  "signals": [
+    {
+      "name": "selectedYear",
+      "value": 2024
+    },
+    {
+      "name": "yearLabel",
+      "update": "format(selectedYear-1,'d') + '–' + slice(format(selectedYear,'d'),2)"
+    },
+    {
+      "name": "sourceGap",
+      "value": 22
+    },
+    {
+      "name": "gasGap",
+      "value": 35
+    },
+    {
+      "name": "sourceLeft",
+      "value": 205
+    },
+    {
+      "name": "sourceRight",
+      "value": 217
+    },
+    {
+      "name": "gasLeft",
+      "value": 560
+    },
+    {
+      "name": "gasRight",
+      "value": 572
+    },
+    {
+      "name": "curveLeft",
+      "value": 350
+    },
+    {
+      "name": "curveRight",
+      "value": 425
+    },
+    {
+      "name": "pixelsPerMt",
+      "update": "(height - 52 - 6*sourceGap) / data(\"sourceCapacity\")[0].total"
+    },
+    {
+      "name": "hoverSource",
+      "value": "",
+      "on": [
+        {
+          "events": "@sourceNodes:pointerover, @sourceLabels:pointerover",
+          "update": "datum.source"
+        },
+        {
+          "events": "@sourceNodes:pointerout, @sourceLabels:pointerout",
+          "update": "\"\""
+        }
+      ]
+    },
+    {
+      "name": "hoverGas",
+      "value": "",
+      "on": [
+        {
+          "events": "@gasNodes:pointerover, @gasLabels:pointerover",
+          "update": "datum.gas"
+        },
+        {
+          "events": "@gasNodes:pointerout, @gasLabels:pointerout",
+          "update": "\"\""
+        }
+      ]
+    },
+    {
+      "name": "hoverFlow",
+      "value": "",
+      "on": [
+        {
+          "events": "@emissionFlows:pointerover",
+          "update": "datum.link_id"
+        },
+        {
+          "events": "@emissionFlows:pointerout",
+          "update": "\"\""
+        }
+      ]
+    }
+  ],
+  "data": [
+    {
+      "name": "sourceDefs",
+      "values": [
+        {
+          "source": "Enteric fermentation",
+          "sourceOrder": 0,
+          "label": "Livestock digestion"
+        },
+        {
+          "source": "Manure management",
+          "sourceOrder": 1,
+          "label": "Manure management"
+        },
+        {
+          "source": "Agricultural soils",
+          "sourceOrder": 2,
+          "label": "Agricultural soils"
+        },
+        {
+          "source": "Rice cultivation",
+          "sourceOrder": 3,
+          "label": "Rice cultivation"
+        },
+        {
+          "source": "Field burning of agricultural residues",
+          "sourceOrder": 4,
+          "label": "Burning crop residues"
+        },
+        {
+          "source": "Liming",
+          "sourceOrder": 5,
+          "label": "Liming"
+        },
+        {
+          "source": "Urea application",
+          "sourceOrder": 6,
+          "label": "Urea application"
+        }
+      ]
+    },
+    {
+      "name": "gasDefs",
+      "values": [
+        {
+          "gas": "Methane",
+          "gasOrder": 0,
+          "label": "Methane (CH₄)"
+        },
+        {
+          "gas": "Nitrous oxide",
+          "gasOrder": 1,
+          "label": "Nitrous oxide (N₂O)"
+        },
+        {
+          "gas": "Carbon dioxide",
+          "gasOrder": 2,
+          "label": "Carbon dioxide (CO₂)"
+        }
+      ]
+    },
+    {
+      "name": "allFlows",
+      "url": "data/chart10_emissions_sankey.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "year_end": "number",
+          "emissions_mtco2e": "number"
+        }
+      },
+      "transform": [
+        {
+          "type": "lookup",
+          "from": "sourceDefs",
+          "key": "source",
+          "fields": [
+            "source"
+          ],
+          "values": [
+            "sourceOrder"
+          ],
+          "as": [
+            "sourceOrder"
+          ]
+        },
+        {
+          "type": "lookup",
+          "from": "gasDefs",
+          "key": "gas",
+          "fields": [
+            "gas"
+          ],
+          "values": [
+            "gasOrder"
+          ],
+          "as": [
+            "gasOrder"
+          ]
+        },
+        {
+          "type": "formula",
+          "expr": "datum.source + '|' + datum.gas",
+          "as": "link_id"
+        }
+      ]
+    },
+    {
+      "name": "sourceYearTotals",
+      "source": "allFlows",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": [
+            "source",
+            "year_end"
+          ],
+          "fields": [
+            "emissions_mtco2e"
+          ],
+          "ops": [
+            "sum"
+          ],
+          "as": [
+            "total"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "sourceMaxima",
+      "source": "sourceYearTotals",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": [
+            "source"
+          ],
+          "fields": [
+            "total"
+          ],
+          "ops": [
+            "max"
+          ],
+          "as": [
+            "capacity"
+          ]
+        },
+        {
+          "type": "lookup",
+          "from": "sourceDefs",
+          "key": "source",
+          "fields": [
+            "source"
+          ],
+          "values": [
+            "sourceOrder",
+            "label"
+          ],
+          "as": [
+            "sourceOrder",
+            "label"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "sourceCapacity",
+      "source": "sourceMaxima",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": [],
+          "fields": [
+            "capacity"
+          ],
+          "ops": [
+            "sum"
+          ],
+          "as": [
+            "total"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "sourceSlots",
+      "source": "sourceMaxima",
+      "transform": [
+        {
+          "type": "window",
+          "sort": {
+            "field": [
+              "sourceOrder"
+            ],
+            "order": [
+              "ascending"
+            ]
+          },
+          "ops": [
+            "sum"
+          ],
+          "fields": [
+            "capacity"
+          ],
+          "as": [
+            "running_capacity"
+          ],
+          "frame": [
+            null,
+            0
+          ]
+        },
+        {
+          "type": "formula",
+          "expr": "14 + (datum.running_capacity - datum.capacity/2) * pixelsPerMt + datum.sourceOrder * sourceGap",
+          "as": "cy"
+        }
+      ]
+    },
+    {
+      "name": "gasYearTotals",
+      "source": "allFlows",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": [
+            "gas",
+            "year_end"
+          ],
+          "fields": [
+            "emissions_mtco2e"
+          ],
+          "ops": [
+            "sum"
+          ],
+          "as": [
+            "total"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gasMaxima",
+      "source": "gasYearTotals",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": [
+            "gas"
+          ],
+          "fields": [
+            "total"
+          ],
+          "ops": [
+            "max"
+          ],
+          "as": [
+            "capacity"
+          ]
+        },
+        {
+          "type": "lookup",
+          "from": "gasDefs",
+          "key": "gas",
+          "fields": [
+            "gas"
+          ],
+          "values": [
+            "gasOrder",
+            "label"
+          ],
+          "as": [
+            "gasOrder",
+            "label"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gasCapacity",
+      "source": "gasMaxima",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": [],
+          "fields": [
+            "capacity"
+          ],
+          "ops": [
+            "sum"
+          ],
+          "as": [
+            "total"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gasSlots",
+      "source": "gasMaxima",
+      "transform": [
+        {
+          "type": "window",
+          "sort": {
+            "field": [
+              "gasOrder"
+            ],
+            "order": [
+              "ascending"
+            ]
+          },
+          "ops": [
+            "sum"
+          ],
+          "fields": [
+            "capacity"
+          ],
+          "as": [
+            "running_capacity"
+          ],
+          "frame": [
+            null,
+            0
+          ]
+        },
+        {
+          "type": "formula",
+          "expr": "14 + (datum.running_capacity - datum.capacity/2)*pixelsPerMt + datum.gasOrder*gasGap",
+          "as": "cy"
+        }
+      ]
+    },
+    {
+      "name": "selectedFlows",
+      "source": "allFlows",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.year_end == selectedYear"
+        }
+      ]
+    },
+    {
+      "name": "selectedTotal",
+      "source": "selectedFlows",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": [],
+          "fields": [
+            "emissions_mtco2e"
+          ],
+          "ops": [
+            "sum"
+          ],
+          "as": [
+            "total"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "sourceNodeData",
+      "source": "selectedFlows",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": [
+            "source"
+          ],
+          "fields": [
+            "emissions_mtco2e"
+          ],
+          "ops": [
+            "sum"
+          ],
+          "as": [
+            "total"
+          ]
+        },
+        {
+          "type": "lookup",
+          "from": "sourceSlots",
+          "key": "source",
+          "fields": [
+            "source"
+          ],
+          "values": [
+            "cy",
+            "label",
+            "sourceOrder"
+          ],
+          "as": [
+            "cy",
+            "label",
+            "sourceOrder"
+          ]
+        },
+        {
+          "type": "formula",
+          "expr": "datum.cy - datum.total*pixelsPerMt/2",
+          "as": "nodeTop"
+        },
+        {
+          "type": "formula",
+          "expr": "datum.cy + datum.total*pixelsPerMt/2",
+          "as": "nodeBottom"
+        },
+        {
+          "type": "joinaggregate",
+          "fields": [
+            "nodeTop"
+          ],
+          "ops": [
+            "min"
+          ],
+          "as": [
+            "columnTop"
+          ]
+        },
+        {
+          "type": "formula",
+          "expr": "datum.cy - datum.columnTop + 14",
+          "as": "cy"
+        },
+        {
+          "type": "formula",
+          "expr": "datum.nodeTop - datum.columnTop + 14",
+          "as": "nodeTop"
+        },
+        {
+          "type": "formula",
+          "expr": "datum.nodeBottom - datum.columnTop + 14",
+          "as": "nodeBottom"
+        }
+      ]
+    },
+    {
+      "name": "gasNodeData",
+      "source": "selectedFlows",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": [
+            "gas"
+          ],
+          "fields": [
+            "emissions_mtco2e"
+          ],
+          "ops": [
+            "sum"
+          ],
+          "as": [
+            "total"
+          ]
+        },
+        {
+          "type": "lookup",
+          "from": "gasSlots",
+          "key": "gas",
+          "fields": [
+            "gas"
+          ],
+          "values": [
+            "cy",
+            "label",
+            "gasOrder"
+          ],
+          "as": [
+            "cy",
+            "label",
+            "gasOrder"
+          ]
+        },
+        {
+          "type": "formula",
+          "expr": "datum.cy - datum.total*pixelsPerMt/2",
+          "as": "nodeTop"
+        },
+        {
+          "type": "formula",
+          "expr": "datum.cy + datum.total*pixelsPerMt/2",
+          "as": "nodeBottom"
+        },
+        {
+          "type": "joinaggregate",
+          "fields": [
+            "nodeTop"
+          ],
+          "ops": [
+            "min"
+          ],
+          "as": [
+            "columnTop"
+          ]
+        },
+        {
+          "type": "formula",
+          "expr": "datum.cy - datum.columnTop + 14",
+          "as": "cy"
+        },
+        {
+          "type": "formula",
+          "expr": "datum.nodeTop - datum.columnTop + 14",
+          "as": "nodeTop"
+        },
+        {
+          "type": "formula",
+          "expr": "datum.nodeBottom - datum.columnTop + 14",
+          "as": "nodeBottom"
+        }
+      ]
+    },
+    {
+      "name": "ribbons",
+      "source": "selectedFlows",
+      "transform": [
+        {
+          "type": "lookup",
+          "from": "sourceNodeData",
+          "key": "source",
+          "fields": [
+            "source"
+          ],
+          "values": [
+            "nodeTop"
+          ],
+          "as": [
+            "sourceTop"
+          ]
+        },
+        {
+          "type": "lookup",
+          "from": "gasNodeData",
+          "key": "gas",
+          "fields": [
+            "gas"
+          ],
+          "values": [
+            "nodeTop"
+          ],
+          "as": [
+            "gasTop"
+          ]
+        },
+        {
+          "type": "stack",
+          "groupby": [
+            "source"
+          ],
+          "field": "emissions_mtco2e",
+          "sort": {
+            "field": [
+              "gasOrder"
+            ],
+            "order": [
+              "ascending"
+            ]
+          },
+          "as": [
+            "sourceOffset0",
+            "sourceOffset1"
+          ],
+          "offset": "zero"
+        },
+        {
+          "type": "stack",
+          "groupby": [
+            "gas"
+          ],
+          "field": "emissions_mtco2e",
+          "sort": {
+            "field": [
+              "sourceOrder"
+            ],
+            "order": [
+              "ascending"
+            ]
+          },
+          "as": [
+            "gasOffset0",
+            "gasOffset1"
+          ],
+          "offset": "zero"
+        },
+        {
+          "type": "formula",
+          "expr": "datum.sourceTop + datum.sourceOffset0*pixelsPerMt",
+          "as": "sy0"
+        },
+        {
+          "type": "formula",
+          "expr": "datum.sourceTop + datum.sourceOffset1*pixelsPerMt",
+          "as": "sy1"
+        },
+        {
+          "type": "formula",
+          "expr": "datum.gasTop + datum.gasOffset0*pixelsPerMt",
+          "as": "ty0"
+        },
+        {
+          "type": "formula",
+          "expr": "datum.gasTop + datum.gasOffset1*pixelsPerMt",
+          "as": "ty1"
+        },
+        {
+          "type": "formula",
+          "expr": "'M'+sourceRight+','+datum.sy0+'C'+curveLeft+','+datum.sy0+' '+curveRight+','+datum.ty0+' '+gasLeft+','+datum.ty0+'L'+gasLeft+','+datum.ty1+'C'+curveRight+','+datum.ty1+' '+curveLeft+','+datum.sy1+' '+sourceRight+','+datum.sy1+'Z'",
+          "as": "path"
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "gasColor",
+      "type": "ordinal",
+      "domain": [
+        "Methane",
+        "Nitrous oxide",
+        "Carbon dioxide"
+      ],
+      "range": [
+        "#287D70",
+        "#E69F00",
+        "#4C78A8"
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "type": "text",
+      "encode": {
+        "enter": {
+          "x": {
+            "value": 100
+          },
+          "y": {
+            "value": 2
+          },
+          "text": {
+            "value": "Agricultural activities"
+          },
+          "font": {
+            "value": "Lato"
+          },
+          "fontSize": {
+            "value": 15
+          },
+          "fontWeight": {
+            "value": 700
+          },
+          "align": {
+            "value": "center"
+          },
+          "fill": {
+            "value": "#303A35"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "encode": {
+        "enter": {
+          "x": {
+            "value": 650
+          },
+          "y": {
+            "value": 2
+          },
+          "text": {
+            "value": "Greenhouse gases"
+          },
+          "font": {
+            "value": "Lato"
+          },
+          "fontSize": {
+            "value": 15
+          },
+          "fontWeight": {
+            "value": 700
+          },
+          "align": {
+            "value": "center"
+          },
+          "fill": {
+            "value": "#303A35"
+          }
+        }
+      }
+    },
+    {
+      "name": "emissionFlows",
+      "type": "path",
+      "from": {
+        "data": "ribbons"
+      },
+      "encode": {
+        "update": {
+          "path": {
+            "field": "path"
+          },
+          "fill": {
+            "scale": "gasColor",
+            "field": "gas"
+          },
+          "fillOpacity": {
+            "signal": "(hoverSource === '' && hoverGas === '' && hoverFlow === '') || datum.source === hoverSource || datum.gas === hoverGas || datum.link_id === hoverFlow ? 0.76 : 0.16"
+          },
+          "tooltip": {
+            "signal": "{'Activity':datum.source,'Greenhouse gas':datum.gas,'Financial year':yearLabel,'Emissions':format(datum.emissions_mtco2e,'.3f')+' Mt CO₂-e','Share of agricultural emissions':format(datum.emissions_mtco2e/data('selectedTotal')[0].total,'.1%')}"
+          },
+          "stroke": {
+            "value": "transparent"
+          },
+          "strokeWidth": {
+            "signal": "datum.sy1 - datum.sy0 < 4 ? 8 : 0"
+          }
+        }
+      },
+      "sort": {
+        "field": "datum.emissions_mtco2e",
+        "order": "descending"
+      }
+    },
+    {
+      "name": "sourceNodes",
+      "type": "rect",
+      "from": {
+        "data": "sourceNodeData"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "sourceLeft"
+          },
+          "x2": {
+            "signal": "sourceRight"
+          },
+          "y": {
+            "field": "nodeTop"
+          },
+          "y2": {
+            "field": "nodeBottom"
+          },
+          "fill": {
+            "value": "#365E50"
+          },
+          "tooltip": {
+            "signal": "{'Activity':datum.source,'Financial year':yearLabel,'Emissions represented':format(datum.total,'.3f')+' Mt CO₂-e','Share of agricultural emissions':format(datum.total/data('selectedTotal')[0].total,'.1%')}"
+          }
+        }
+      }
+    },
+    {
+      "name": "gasNodes",
+      "type": "rect",
+      "from": {
+        "data": "gasNodeData"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "gasLeft"
+          },
+          "x2": {
+            "signal": "gasRight"
+          },
+          "y": {
+            "field": "nodeTop"
+          },
+          "y2": {
+            "field": "nodeBottom"
+          },
+          "fill": {
+            "scale": "gasColor",
+            "field": "gas"
+          },
+          "tooltip": {
+            "signal": "{'Greenhouse gas':datum.gas,'Financial year':yearLabel,'Emissions represented':format(datum.total,'.3f')+' Mt CO₂-e','Share of agricultural emissions':format(datum.total/data('selectedTotal')[0].total,'.1%')}"
+          }
+        }
+      }
+    },
+    {
+      "name": "sourceLabels",
+      "type": "text",
+      "from": {
+        "data": "sourceNodeData"
+      },
+      "encode": {
+        "enter": {
+          "font": {
+            "value": "Lato"
+          },
+          "fontSize": {
+            "value": 14
+          },
+          "lineHeight": {
+            "value": 16
+          },
+          "align": {
+            "value": "right"
+          },
+          "baseline": {
+            "value": "middle"
+          },
+          "fill": {
+            "value": "#303A35"
+          }
+        },
+        "update": {
+          "x": {
+            "signal": "sourceLeft-10"
+          },
+          "y": {
+            "field": "cy"
+          },
+          "text": {
+            "field": "label"
+          },
+          "tooltip": {
+            "signal": "{'Activity':datum.source,'Financial year':yearLabel,'Emissions represented':format(datum.total,'.3f')+' Mt CO₂-e','Share of agricultural emissions':format(datum.total/data('selectedTotal')[0].total,'.1%')}"
+          }
+        }
+      }
+    },
+    {
+      "name": "gasLabels",
+      "type": "text",
+      "from": {
+        "data": "gasNodeData"
+      },
+      "encode": {
+        "enter": {
+          "font": {
+            "value": "Lato"
+          },
+          "fontSize": {
+            "value": 14
+          },
+          "fontWeight": {
+            "value": 700
+          },
+          "align": {
+            "value": "left"
+          },
+          "baseline": {
+            "value": "middle"
+          },
+          "fill": {
+            "value": "#303A35"
+          }
+        },
+        "update": {
+          "x": {
+            "signal": "gasRight+10"
+          },
+          "y": {
+            "field": "cy"
+          },
+          "text": {
+            "field": "label"
+          },
+          "tooltip": {
+            "signal": "{'Greenhouse gas':datum.gas,'Financial year':yearLabel,'Emissions represented':format(datum.total,'.3f')+' Mt CO₂-e','Share of agricultural emissions':format(datum.total/data('selectedTotal')[0].total,'.1%')}"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,552 +1,1619 @@
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Growing Tomorrow: Sustainable Farming in Australia</title>
-
   <link rel="stylesheet" href="styles.css">
 
+  <!-- Vega libraries -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-
-  <!-- Styling for the explanatory note beside the last chart -->
-  <style>
-    .barrier-definition-note {
-      margin-top: 18px;
-      padding: 14px 16px;
-      border-radius: 10px;
-      background-color: #f3eef8;
-      color: #45404b;
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    .barrier-definition-note p {
-      margin: 8px 0 0;
-    }
-
-    .barrier-definition-note .definition-caution {
-      font-size: 12px;
-      color: #62596b;
-    }
-  </style>
+  <script src="js/chart10_sankey.js"></script>
 </head>
 
 <body>
+
+  <!-- MAIN WEBPAGE HEADER -->
   <header id="page-header">
     <h1>Growing Tomorrow: Sustainable Farming in Australia</h1>
-
     <p>
-      Explore how Australian farms use water, manage soil and address
-      greenhouse gas emissions, and how these practices are changing
-      over time.
+      Explore Australia's changing land use, water and soil management, and agricultural emissions.<br>
+      Discover the practices, environmental trends and challenges shaping farmers' next steps towards sustainability.
     </p>
   </header>
 
-  <!-- SECTION 1: Australia's Farming Landscape -->
-  <section class="agriculture-section">
-    <h2>Section 1: Australia’s Farming Landscape</h2>
+  <!-- STORYLINE OVERVIEW -->
+  <section class="story-overview">
+    <h2>Explore the Story</h2>
+    <p>Explore four themes shaping Australia's agricultural sustainability.</p>
 
-    <!-- CHART 1: Treemap | Land-use composition -->
+    <div class="story-steps">
+      <a class="story-step" href="#farming-landscape">
+        <span class="story-step-number">01</span>
+        <h3>Farming Landscape</h3>
+        <p>Explore Australia's agricultural land uses and how they changed over a decade.</p>
+      </a>
+
+      <a class="story-step" href="#water-conservation">
+        <span class="story-step-number">02</span>
+        <h3>Water Conservation</h3>
+        <p>Compare irrigation use and water-management practices, and see how the amounts of water obtained from different sources changed over time.</p>
+      </a>
+
+      <a class="story-step" href="#soil-management">
+        <span class="story-step-number">03</span>
+        <h3>Soil Management</h3>
+        <p>Compare soil-management practices across farming industries and explore how soil carbon changed over time.</p>
+      </a>
+
+      <a class="story-step" href="#environmental-sustainability">
+        <span class="story-step-number">04</span>
+        <h3>Environmental Sustainability</h3>
+        <p>Trace emissions over time, identify their sources, and explore farmers' awareness, plans and barriers to action.</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- =========================================
+       SECTION 1: FARMING LANDSCAPE
+       ========================================= -->
+  <section class="agriculture-section" id="farming-landscape">
+    <h2><span class="section-number">01</span><span>Farming Landscape</span></h2>
+
+    <!-- CHART 1: LAND-USE TREEMAP -->
     <div class="agriculture-layout">
       <div class="agriculture-chart">
-        <div class="chart" id="land-use-treemap"></div>
+        <div class="treemap-with-help">
+          <div class="chart" id="land-use-treemap"></div>
+          <details class="land-use-help treemap-legend-help">
+            <summary aria-label="Understanding agricultural land uses">?</summary>
+            <div class="agriculture-definitions">
+              <h4>Understanding agricultural land uses</h4>
+              <ul>
+<li><strong>Native grazing:</strong> Livestock graze naturally occurring vegetation.</li>
+              <li><strong>Modified pastures:</strong> Livestock graze improved or altered pastures.</li>
+              <li><strong>Irrigated pastures:</strong> Pastures receive water through irrigation.</li>
+              <li><strong>Dryland cropping:</strong> Field crops rely on rainfall.</li>
+              <li><strong>Irrigated cropping:</strong> Field crops receive additional irrigation water.</li>
+              <li><strong>Dryland horticulture:</strong> Fruits, vegetables and specialised crops rely on rainfall.</li>
+              <li><strong>Irrigated horticulture:</strong> Horticultural crops receive additional irrigation water.</li>
+              <li><strong>Intensive production:</strong> Concentrated plant or animal production, often in managed facilities.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+
         <p class="chart-error" id="treemap-error" role="status"></p>
 
         <p class="map-label-key">
-          December 2023 compilation; underlying mapping dates vary
-          from 2008–2023 by location. This combines mapping from
-          different years, rather than showing change over time.
-        </p>
-
-        <p class="map-label-key">
-        The two main groups contain their broad land uses.
-        All percentages refer to total mapped area.
-        Small categories are identified in the legend below.
-        Hover over a rectangle to see its category and percentage.
-        </p>
-      </div>
-
-      <aside class="agriculture-insights">
-        <h3>Agriculture’s extensive footprint is largely associated with livestock</h3>
-
-        <p>
-          Agriculture occupies over half of the total mapped area
-          across the 57 NRM regions. Livestock production accounts
-          for most of this agricultural area, including land used
-          for grazing.
-        </p>
-
-        <p>
-          Cropping and horticulture occupy much smaller areas.
-          Their smaller land footprint does not necessarily mean
-          lower water requirements or environmental impacts.
-        </p>
-
-        <p>
-          <strong>Cropping</strong> includes field crops such as
-          wheat and barley. <strong>Horticulture</strong> includes
-          fruit, vegetables, nuts and ornamental plants.
-        </p>
-
-        <p>
-          The next map shows how agriculture’s share of the
-          landscape differs between regions.
-        </p>
-      </aside>
-    </div>
-
-    <!-- CHART 2: Choropleth map | Agricultural land share by NRM region -->
-    <div class="agriculture-layout">
-      <div class="agriculture-chart">
-        <div class="chart" id="agriculture-map"></div>
-        <p class="chart-error" id="map-error" role="status"></p>
-
-        <p class="map-label-key">
-          December 2023 compilation; underlying mapping dates vary
-          from 2008–2023 by location. This combines mapping from
-          different years, rather than showing change over time.
-        </p>
-
-        <p class="map-label-key">
-          WA: Western Australia; NT: Northern Territory;
-          SA: South Australia; QLD: Queensland;
-          NSW: New South Wales; VIC: Victoria;
-          TAS: Tasmania; ACT: Australian Capital Territory.
-          Dark outlines are derived from the mapped NRM regions
-          grouped by state or territory.
-        </p>
-      </div>
-
-      <aside class="agriculture-insights">
-        <h3>Farming occupies different shares of regional landscapes</h3>
-
-        <p>
-          Agriculture occupies a high share of the mapped area in many
-          inland Queensland and New South Wales regions. Lower shares
-          occur in western South Australia, northern Cape York and
-          parts of Tasmania.
-        </p>
-
-        <p>
-          A higher share means more of that region is used for agriculture.
-          It does not indicate more sustainable farming or greater
-          environmental impact.
-        </p>
-      </aside>
-    </div>
-  </section>
-
-  <!-- SECTION 2: Water Use and Conservation -->
-  <section class="agriculture-section">
-    <h2>Section 2: Water Use and Conservation</h2>
-
-    <!-- CHART 3: Proportional symbol map | Irrigation water applied by state -->
-    <div class="agriculture-layout">
-      <div class="agriculture-chart">
-        <div class="chart" id="water-map"></div>
-        <p class="chart-error" id="water-map-error" role="status"></p>
-
-        <p class="map-label-key">
-          Circle area represents irrigation water applied to crops
-          and pastures. GL means gigalitres.
-          One gigalitre equals one billion litres.
-          Symbols are positioned approximately within each state or territory.
-          Values for the Northern Territory and ACT are not published.
-        </p>
-      </div>
-
-      <aside class="agriculture-insights">
-        <h3>Irrigation water supports crops and livestock pastures</h3>
-
-        <p>
-          New South Wales records the largest published volume of
-          irrigation water applied, followed by Queensland and Victoria.
-        </p>
-
-        <p>
-          Irrigation supplies water to crops, horticultural plants
-          and pastures grown for livestock. These figures exclude
-          rainfall and do not represent all water used on farms.
-        </p>
-
-        <p>
-          Higher volumes do not necessarily indicate inefficient water use.
-          They can reflect differences in irrigated area, crop types
-          and weather conditions.
-        </p>
-      </aside>
-    </div>
-
-    <!-- CHART 4: Parallel coordinates plot | Irrigation profiles by activity -->
-    <div class="agriculture-layout">
-      <div class="agriculture-chart">
-        <div class="chart" id="irrigation-parallel"></div>
-        <p
-          class="chart-error"
-          id="irrigation-parallel-error"
-          role="status"
-        ></p>
-
-        <p class="map-label-key">
-          Each line represents a crop or pasture activity.
-          Select an activity to highlight its irrigation profile.
-          Each vertical axis uses its own units and scale.
-          Connecting lines show profiles, not changes over time.
-        </p>
-      </div>
-
-      <aside class="agriculture-insights">
-        <h3>Irrigated area and application rate explain different water use profiles</h3>
-
-        <p>
-          Rice has the highest water application rate among the
-          categories shown. Grazing pastures and cereals have the
-          largest irrigated area and receive the greatest total volume.
-        </p>
-
-        <p>
-          Total irrigation volume depends on both the area watered
-          and the amount applied per hectare. An activity can therefore
-          receive a large total volume without having the highest
-          application rate.
-        </p>
-
-        <p>
-          Application rates alone do not measure sustainability.
-          Crop needs, rainfall and growing conditions also affect
-          irrigation requirements.
-        </p>
-
-        <p>
-          <em>
-            Choose an activity from the dropdown, then hover over
-            its blue points to see the values.
-          </em>
-        </p>
-      </aside>
-    </div>
-
-    <!-- CHART 5: Paired choropleth maps | Water management adoption by state -->
-    <div class="agriculture-layout">
-      <div class="agriculture-chart">
-        <div class="chart" id="water-practices"></div>
-        <p
-          class="chart-error"
-          id="water-practices-error"
-          role="status"
-        ></p>
-
-        <p class="map-label-key">
-          Both maps use the same percentage bands.
-          Darker purple indicates a higher share of farms reporting
-          the practice. Grey indicates no data; ACT has no estimate
-          in this table. Farms can report both practices.
-          Boundaries follow the mapped NRM coverage grouped by state.
-        </p>
-      </div>
-
-      <aside class="agriculture-insights">
-        <h3>Reported water management responses vary across states</h3>
-
-        <p>
-          Western Australia and the Northern Territory have the highest
-          reported adoption of increased water storage. South Australia
-          has the highest reported adoption of water efficient varieties.
-        </p>
-
-        <ul>
-          <li>
-            <strong>Water-efficient varieties (%):</strong> Percentage of farms
-            reporting the use of crop or pasture varieties that
-            require less water or use water more efficiently.
-          </li>
-          <li>
-            <strong>Increased water storage (%):</strong> Percentage of farms
-            reporting that they increased their capacity to store
-            water, such as by expanding dams or installing
-            additional water tanks.
-          </li>
-        </ul>
-
-        <p>
-          These are survey estimates for broadacre and dairy farms,
-          excluding horticulture. Both percentages measure the share of
-          farms reporting each practice, not the amount of water saved
-          or stored. Farms can report both practices.
-        </p>
-      </aside>
-    </div>
-  </section>
-
-  <!-- SECTION 3: Soil Management -->
-  <section class="agriculture-section">
-    <h2>Section 3: Soil Management</h2>
-
-    <!-- CHART 6: Heatmap | Soil management practices by industry -->
-    <div class="agriculture-layout">
-      <div class="agriculture-chart">
-        <div class="chart" id="soil-heatmap"></div>
-        <p
-          class="chart-error"
-          id="soil-heatmap-error"
-          role="status"
-        ></p>
-
-        <p class="map-label-key">
-          Darker cells indicate a higher percentage of farms
-          reporting the practice. Farms may use several practices,
-          so percentages should not be added together.
-          The survey covers broadacre and dairy farms,
-          excluding horticulture.
-        </p>
-      </div>
-
-      <aside class="agriculture-insights">
-        <h3>Soil management practices differ between farming industries</h3>
-
-        <p>
-          Stubble retention is especially common among wheat and
-          other crop farms and mixed livestock and cropping farms.
-          Soil testing is reported widely across the surveyed industries.
-        </p>
-
-        <p>
-          Cover crops and controlled traffic are reported less often
-          than soil testing in every industry shown. These differences
-          can reflect how relevant each practice is to the farming system.
-        </p>
-
-        <p>
-          Adoption does not directly measure soil condition.
-          A lower percentage should not automatically be interpreted
-          as less sustainable farming.
-        </p>
-      </aside>
-    </div>
-  </section>
-
-  <!-- SECTION 4: Emissions and Sustainability -->
-  <section class="agriculture-section">
-    <h2>Section 4: Emissions and Sustainability</h2>
-
-    <!-- CHART 7: Line chart | Agricultural emissions over time -->
-    <div class="agriculture-layout">
-      <div class="agriculture-chart">
-        <div class="chart" id="agricultural-emissions"></div>
-        <p
-          class="chart-error"
-          id="agricultural-emissions-error"
-          role="status"
-        ></p>
-
-        <p class="map-label-key">
-          Mt CO₂-e means million tonnes of carbon dioxide equivalent.
-          Axis years identify the financial year ending. These figures
-          cover the Agriculture inventory sector, rather than the complete
-          carbon footprint of farming.
+          <strong>NOTE:</strong>
+          I independently grouped ABARES's 18 land-use categories
+          into two groups based on their primary land-use definitions.
+          Areas are shown in hectares (ha), thousands of hectares (K ha)
+          or millions of hectares (M ha).
         </p>
 
         <p class="agriculture-source">
-          Source:
-          <a
-            href="https://www.dcceew.gov.au/climate-change/publications/national-greenhouse-accounts/state-and-territory-greenhouse-gas-inventories-data-tables-methodology"
-            target="_blank"
-            rel="noopener noreferrer"
-          >DCCEEW State and Territory Greenhouse Gas Inventories 2024</a>,
-          Australia worksheet, Agriculture total.
+          <strong>Source:</strong>
+          <a href="https://www.agriculture.gov.au/abares/aclump/land-use/land-use-of-australia-2010-11-to-2020-21"
+             target="_blank" rel="noopener noreferrer">ABARES, Land use of Australia 2010–11 to 2020–21, Version 7.1</a>. Australia_PA worksheet, closing stock 2020–21.
         </p>
       </div>
 
-      <aside class="agriculture-insights">
-        <h3>Agricultural emissions are lower than in 1990, but the decline is uneven</h3>
-
+      <aside class="agriculture-insights narrative-editorial">
         <p>
-          Annual agricultural emissions fell from
-          <strong>89.8 Mt CO₂-e in 1989–90</strong> to
-          <strong>75.7 Mt CO₂-e in 2023–24</strong>, a decrease of
-          approximately <strong>15.8%</strong>.
+          In 2020–21, <strong class="story-highlight">agriculture</strong> occupied
+          <strong>54.5%</strong> of Australia's total land, with <strong>native vegetation grazing</strong> accounting for
+          <strong>74.3%</strong> of agricultural land.
         </p>
 
         <p>
-          The decline was not continuous. Emissions reached their lowest
-          level in this series in 2019–20, then increased before falling
-          again in 2023–24.
+          This highlights Australia's extensive grazing-based farming landscape,
+          where livestock feed on
+          <span class="defined-term" tabindex="0"
+                aria-describedby="vegetation-definition">naturally occurring vegetation<span
+                class="term-definition" id="vegetation-definition"
+                role="tooltip">Plants growing naturally in an area, rather than planted pasture or crops.</span></span>.
         </p>
 
         <p>
-          This trend alone cannot establish which farming practices caused
-          the changes. Production levels, livestock numbers and weather
-          also need to be considered.
-        </p>
-
-        <p>
-          The following chart explores barriers farmers report when
-          considering further emissions reductions.
+          With agriculture covering
+          <span class="story-highlight">more than half</span>
+          the country, <strong>sustainable farming practices are essential</strong>
+          for managing land, conserving water and reducing environmental impacts.
         </p>
       </aside>
     </div>
 
-    <!-- CHART 8: Dot plot | Emissions reduction barriers by industry -->
-    <div class="agriculture-layout">
+    <!-- CHART 2: LAND-USE WATERFALL -->
+    <div class="agriculture-layout layout-reverse waterfall-layout">
       <div class="agriculture-chart">
-        <div class="chart" id="emissions-barriers"></div>
-        <p
-          class="chart-error"
-          id="emissions-barriers-error"
-          role="status"
-        ></p>
+        <div class="chart-definition-help">
+          <details class="land-use-help">
+            <summary aria-label="Understanding agricultural land uses">?</summary>
+            <div class="agriculture-definitions">
+              <h4>Understanding agricultural land uses</h4>
+              <ul>
+<li><strong>Native grazing:</strong> Livestock graze naturally occurring vegetation.</li>
+              <li><strong>Modified pastures:</strong> Livestock graze improved or altered pastures.</li>
+              <li><strong>Irrigated pastures:</strong> Pastures receive water through irrigation.</li>
+              <li><strong>Dryland cropping:</strong> Field crops rely on rainfall.</li>
+              <li><strong>Irrigated cropping:</strong> Field crops receive additional irrigation water.</li>
+              <li><strong>Dryland horticulture:</strong> Fruits, vegetables and specialised crops rely on rainfall.</li>
+              <li><strong>Irrigated horticulture:</strong> Horticultural crops receive additional irrigation water.</li>
+              <li><strong>Intensive production:</strong> Concentrated plant or animal production, often in managed facilities.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+
+        <div class="chart" id="land-use-waterfall"></div>
+        <p class="chart-error" id="waterfall-error" role="status"></p>
 
         <p class="map-label-key">
-          Percentages represent farms reporting each barrier.
-          Farms may report several barriers, so percentages
-          should not be added together.
-          The survey covers broadacre and dairy farms,
-          excluding horticulture.
+          <strong>NOTE:</strong>
+          Each bar shows a category's contribution to the overall change.
+          The final bar shows the total net change.
+          Areas are shown in millions of hectares (M ha).
+        </p>
+
+        <p class="agriculture-source">
+          <strong>Source:</strong>
+          <a href="https://www.agriculture.gov.au/abares/aclump/land-use/land-use-of-australia-2010-11-to-2020-21"
+             target="_blank" rel="noopener noreferrer">ABARES, Land use of Australia 2010–11 to 2020–21, Version 7.1</a>. Australia_PA worksheet, opening and closing stocks.
         </p>
       </div>
 
-      <!-- Revised findings and explanatory note -->
-      <aside class="agriculture-insights">
-        <h3>Uncertainty leads the three reported barriers in every industry</h3>
-
+      <aside class="agriculture-insights narrative-editorial">
         <p>
-          Uncertainty is reported more frequently than limited
-          information or lack of knowledge in all six farming
-          industries shown. Dairy farms report the highest
-          proportion, at <strong>69%</strong>.
+          Over a decade, Australia's agricultural <strong class="story-highlight">total footprint</strong>
+          <span class="story-highlight">barely changed</span>.
+          Between 2010–11 and 2020–21,
+          agricultural land increased by just <strong>0.26%</strong>,
+          or <strong>1.092 million hectares</strong>.
         </p>
 
         <p>
-          These percentages describe farmers’ reported concerns.
-          They do not measure the emissions produced by each industry.
+          However, this stability hides major changes.
+          <span class="defined-term" tabindex="0" aria-describedby="dryland-cropping-definition"><strong class="story-highlight">Dryland cropping</strong><span class="term-definition" id="dryland-cropping-definition" role="tooltip">Growing crops using rainfall rather than irrigation.</span></span> expanded by <strong>9.774 million hectares</strong>,
+          while <span class="defined-term" tabindex="0" aria-describedby="modified-pastures-definition"><strong class="story-highlight">modified pastures</strong><span class="term-definition" id="modified-pastures-definition" role="tooltip">Grasslands planted or improved to provide feed for grazing livestock.</span></span> declined by <strong>8.732 million hectares</strong>.
         </p>
 
-        <div class="barrier-definition-note">
-          <strong>Understanding the barriers</strong>
-
-          <p>
-            <strong>Limited information:</strong>
-            difficulty accessing useful information.
-          </p>
-
-          <p>
-            <strong>Lack of knowledge:</strong>
-            not knowing what to do or how to do it.
-          </p>
-
-          <p>
-            <strong>Uncertainty:</strong>
-            being unsure about the outcomes of taking action.
-          </p>
-
-          <p class="definition-caution">
-            These explanations interpret the survey labels;
-            the data table does not provide detailed definitions.
-            Farmers can report more than one barrier.
-          </p>
-        </div>
+        <p>
+          Although these changes largely offset each other, they may have
+          different environmental implications. Expanding cropping can
+          affect soil health and erosion risks, depending on farming methods.
+        </p>
       </aside>
     </div>
   </section>
 
-  <!-- CHART EMBEDDING: Load Charts 1-8 in webpage order -->
+  <!-- =========================================
+       SECTION 2: WATER CONSERVATION
+       ========================================= -->
+  <section class="agriculture-section" id="water-conservation">
+    <h2><span class="section-number">02</span><span>Water Conservation</span></h2>
+
+    <!-- CHART 3: IRRIGATION PROPORTIONAL SYMBOL MAP -->
+    <div class="agriculture-layout">
+      <div class="agriculture-chart water-map-column">
+        <div class="water-map-heading">
+          <h3>Where Does Australia&#x27;s Irrigation Water Go?</h3>
+          <p>Irrigation water applied across Australian states in selected years, 2015–16 to 2020–21</p>
+        </div>
+
+        <!-- Three selected ABS reporting years, not a continuous annual series -->
+        <div class="irrigation-year-control">
+
+          <label for="water-year-slider">
+            <strong>Financial year:</strong>
+            <output id="water-year-label" for="water-year-slider">2020–21</output>
+          </label>
+
+          <input
+            id="water-year-slider"
+            type="range"
+            min="0"
+            max="2"
+            step="1"
+            value="2"
+            aria-label="Select irrigation data financial year"
+            class="water-year-range">
+
+          <div class="water-year-ticks">
+            <span>2015–16</span>
+            <span>2016–17</span>
+            <span>2020–21</span>
+          </div>
+        </div>
+
+        <div class="chart" id="water-map"></div>
+
+        <p class="chart-error" id="water-map-error" role="status"></p>
+
+        <p class="map-label-key">
+          <strong>NOTE:</strong>
+          The slider compares three selected ABS reporting years,
+          not a continuous annual series.
+          Circle areas use a fixed scale across years.
+          One gigalitre (GL) equals one billion litres.
+          Unpublished figures are omitted rather than treated as zero.
+        </p>
+
+        <p class="agriculture-source">
+          <strong>Sources:</strong>
+          <a href="https://www.abs.gov.au/AUSSTATS/abs%40.nsf/allprimarymainfeatures/152A43BEC69B65C2CA258291001AFCFB"
+             target="_blank" rel="noopener noreferrer">ABS, Water Use on Australian Farms, 2015–16</a>;
+          <a href="https://www.abs.gov.au/AUSSTATS/abs%40.nsf/Lookup/4618.0Main%2BFeatures12016-17"
+             target="_blank" rel="noopener noreferrer">2016–17</a>;
+          <a href="https://www.abs.gov.au/statistics/industry/agriculture/water-use-australian-farms/2020-21"
+             target="_blank" rel="noopener noreferrer">2020–21</a>. State irrigation volumes converted from megalitres to gigalitres.
+        </p>
+      </div>
+
+      <aside class="agriculture-insights narrative-editorial">
+        <p>
+          While Australia's agricultural footprint changed little over the decade, <span class="defined-term irrigation-term" tabindex="0"
+                aria-describedby="irrigation-definition"><strong>irrigation water</strong><span
+                class="term-definition irrigation-definition"
+                id="irrigation-definition" role="tooltip">
+              <span>Irrigation water covers the following agricultural activities, but excludes rainfall:</span>
+              <span class="term-activity"><strong>Pastures:</strong> Grass and fodder for livestock, including hay and silage.</span>
+              <span class="term-activity"><strong>Cropping:</strong> Cereals, rice, cotton, sugar cane and other crops.</span>
+              <span class="term-activity"><strong>Horticulture:</strong> Vegetables, fruits, nuts and grapevines.</span>
+            </span></span> use varied considerably across states and years.
+        </p>
+
+        <p>
+          <strong class="story-highlight">New South Wales</strong>, <strong class="story-highlight">Queensland</strong> and <strong class="story-highlight">Victoria</strong> consistently recorded the highest irrigation volumes across all three selected years, together accounting for approximately <strong>81% of Australia's irrigation volume in 2020–21</strong>.
+        </p>
+
+        <p>
+          However, water use fluctuated. <strong>New South Wales</strong> recorded <strong>3,815 GL</strong> in 2016–17, compared with <strong>2,707 GL</strong> in 2020–21.
+        </p>
+
+        <p>
+          These patterns <strong class="story-highlight">highlight the importance of sustainable water management</strong> as water availability and farming activities change.
+        </p>
+
+      </aside>
+    </div>
+
+    <!-- CHART 4: IRRIGATION PARALLEL COORDINATES -->
+    <div class="agriculture-layout layout-reverse">
+      <div class="agriculture-chart">
+        <div class="chart" id="irrigation-parallel"></div>
+        <p class="chart-error" id="irrigation-parallel-error" role="status"></p>
+
+        <p class="map-label-key">
+          <strong>NOTE:</strong>
+          Axes range from 0–500,000 hectares (ha),
+          0–12 megalitres per hectare (ML/ha)
+          and 0–1,500 gigalitres (GL).
+          One megalitre (ML) equals one million litres.
+          Each measure is divided by its axis maximum
+          to place it on the same normalised 0–1 scale.
+        </p>
+
+        <p class="agriculture-source">
+          <strong>Source:</strong>
+          <a href="https://www.abs.gov.au/statistics/industry/agriculture/water-use-australian-farms/2020-21"
+             target="_blank" rel="noopener noreferrer">Australian Bureau of Statistics,
+            Water Use on Australian Farms, 2020–21</a>. Table 1, Australian totals by activity. Water volume was converted from ML to GL.
+        </p>
+      </div>
+
+      <aside class="agriculture-insights narrative-editorial">
+        <p>
+          Across Australia, <strong>irrigation patterns</strong> also differ considerably between <strong>farming activities</strong>.
+        </p>
+
+        <p>
+          In 2020–21,
+          <span class="defined-term" tabindex="0"
+                aria-describedby="grazing-pastures-definition">
+            <strong class="story-highlight">grazing pastures</strong><span
+            class="term-definition"
+            id="grazing-pastures-definition"
+            role="tooltip">Irrigated grasslands used to feed livestock.</span>
+          </span>
+          covered the largest irrigated area (<strong>495,779 ha</strong>)
+          and received the most irrigation water overall
+          (<strong>1,429 GL</strong>).
+        </p>
+
+        <p>
+          In contrast, <strong class="story-highlight">rice</strong> had the highest application rate
+          (<strong>11.94 ML/ha</strong>) despite covering a much smaller area.
+          This may partly reflect traditional rice cultivation,
+          which often involves flooded fields.
+        </p>
+
+        <p>
+          These differences <strong class="story-highlight">highlight why sustainable irrigation requires
+          different water-management approaches</strong>
+          across <strong>different farming activities</strong>.
+        </p>
+      </aside>
+    </div>
+
+    <!-- CHART 5: WATER-MANAGEMENT PRACTICES -->
+    <div class="agriculture-layout">
+      <div class="agriculture-chart">
+        <div class="water-practices-heading">
+          <h3>Where Are Australian Farms Adopting Water-Management Practices?</h3>
+          <p>Estimated percentage of farms adopting two water-management practices by state, 2021</p>
+        </div>
+
+        <div class="chart" id="water-practices"></div>
+        <p class="chart-error" id="water-practices-error" role="status"></p>
+
+        <p class="map-label-key">
+          <strong>NOTE:</strong>
+          Percentages are weighted estimates of farms reporting each practice, not water saved.
+          Farms may report both practices. ACT has no estimate.
+        </p>
+
+        <p class="agriculture-source">
+          <strong>Source:</strong>
+          <a href="https://www.agriculture.gov.au/abares/research-topics/surveys/nrm-drought-resilience"
+             target="_blank" rel="noopener noreferrer">ABARES, Natural Resource Management and Drought Resilience
+            — Survey of Farm Practices (2021)</a>. Table 1, "All" industries by state.
+        </p>
+
+        <p class="agriculture-source">
+          <strong>Sample sizes and estimated eligible populations:</strong>
+          the source website's methodology table, "All" industries.
+          These counts describe each state's whole survey,
+          not practice-specific respondents.
+        </p>
+
+        <p class="agriculture-source">
+          <strong>State boundaries:</strong>
+          <a href="https://github.com/tonywr71/GeoJson-Data"
+             target="_blank" rel="noopener noreferrer">Australian states GeoJSON</a>.
+        </p>
+      </div>
+
+      <aside class="agriculture-insights narrative-editorial">
+        <p>
+          Managing water goes beyond how much farms use. It also depends on the practices they adopt.
+        </p>
+
+        <p>
+          In 2021, <span class="defined-term water-practice-term" tabindex="0" aria-describedby="water-storage-definition"><strong>increasing on-farm water storage</strong><span class="term-definition" id="water-storage-definition" role="tooltip">Expanding water-storage capacity for farming, particularly during dry periods.</span></span> was more common among Australian farms (<span class="story-highlight">54%</span>) than using <span class="defined-term water-practice-term" tabindex="0" aria-describedby="water-varieties-definition"><strong>water-efficient crop or pasture varieties</strong><span class="term-definition" id="water-varieties-definition" role="tooltip">Varieties selected to better manage water needs.</span></span> (<span class="story-highlight">40%</span>).
+        </p>
+
+        <p>
+          <strong>Western Australia</strong> (<strong>65%</strong>) and <strong>New South Wales</strong> (<strong>63%</strong>) recorded the highest adoption of increased water storage, while <strong>New South Wales and Victoria</strong> (<strong>43% each</strong>) led in water-efficient varieties.
+        </p>
+
+        <p>
+          These practices can help farms manage water availability during dry periods and better meet crop water needs, supporting more sustainable farming.
+        </p>
+
+      </aside>
+    </div>
+
+    <!-- CHART 6: AGRICULTURAL WATER SOURCES -->
+    <div class="agriculture-layout layout-reverse chart6-layout" id="chart6-section">
+      <div class="agriculture-chart">
+        <div class="water-sources-with-help">
+          <div class="chart" id="water-sources-chart"></div>
+          <details class="land-use-help water-source-legend-help">
+            <summary aria-label="Definitions of water sources">?</summary>
+            <div class="agriculture-definitions">
+              <h4>Understanding Water Sources</h4>
+              <ul>
+              <li><strong>Irrigation channels or pipelines:</strong> Water delivered through irrigation supply networks.</li>
+              <li><strong>Rivers, creeks or lakes:</strong> Water taken directly from these surface-water sources.</li>
+              <li><strong>Groundwater:</strong> Underground water accessed through bores or wells.</li>
+              <li><strong>On-farm dams or tanks:</strong> Water drawn from storage located on the farm.</li>
+              <li><strong>Recycled or reused water:</strong> Previously used water supplied for use again.</li>
+              <li><strong>Reticulated mains supply:</strong> Water delivered through the local water-supply pipes, like town tap water.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+        <p class="chart-error" id="water-sources-chart-error" role="status"></p>
+        <p class="map-label-key">
+          <strong>NOTE:</strong>
+          Figures show water sourced by farms, not water saved or stored.
+          Changes can reflect rainfall, drought and water availability.
+          One gigalitre (GL) equals one billion litres.
+        </p>
+        <p class="agriculture-source">
+          <strong>Source:</strong>
+          <a href="https://www.abs.gov.au/statistics/industry/agriculture/water-use-australian-farms"
+             target="_blank" rel="noopener noreferrer">ABS, Water Use on Australian Farms</a>, 2015–16 to 2020–21. Volumes converted to GL and rounded.
+        </p>
+
+        <p class="agriculture-source">
+          <strong>Drought context:</strong> Australian Bureau of Meteorology,
+          <a href="https://www.bom.gov.au/climate/updates/articles/a034.shtml"
+             target="_blank" rel="noopener noreferrer">Climate of the 2018–19 financial year</a> and
+          <a href="https://www.bom.gov.au/climate/current/annual/aus/2019/"
+             target="_blank" rel="noopener noreferrer">Annual climate statement 2019</a>.
+        </p>
+      </div>
+      <aside class="agriculture-insights narrative-editorial">
+        <p>
+          While many Australian farms reported increasing their water-storage capacity, <strong>on-farm dams and tanks</strong> were only one of several water sources supporting agriculture.
+        </p>
+
+        <p>
+          Water sourced from <strong class="story-highlight">irrigation channels and rivers</strong> <strong>fell sharply</strong> during the severe 2017–2019 drought, before recovering in 2020–21 as rainfall improved. During this period, <strong class="story-highlight">groundwater</strong> <strong>remained an important supporting source</strong>, suggesting that farms relied on multiple water sources when surface water was less available.
+        </p>
+
+        <p>
+          Even so, <strong>irrigation channels, rivers and groundwater</strong> remained the dominant sources, while <strong>recycled water</strong> contributed relatively little. This suggests that Australian farming still depended mainly on conventional water supplies.
+        </p>
+
+        <p>
+          Overall, the pattern shows that water-storage practices may help farms prepare for dry conditions, but sustainable farming also depends on <span class="story-highlight">managing different water sources carefully as water availability changes</span>.
+        </p>
+
+      </aside>
+    </div>
+  </section>
+
+  <!-- =========================================
+       SECTION 3: SOIL MANAGEMENT
+       ========================================= -->
+  <section class="agriculture-section" id="soil-management">
+    <h2><span class="section-number">03</span><span>Soil Management</span></h2>
+
+
+
+    <!-- CHART 7: SOIL MANAGEMENT HEATMAP -->
+    <div class="agriculture-layout chart7-layout">
+      <div class="agriculture-chart">
+        <div class="soil-heatmap-with-help">
+          <div class="chart" id="soil-heatmap"></div>
+          <details class="land-use-help soil-legend-help">
+            <summary aria-label="Understanding Soil Management">?</summary>
+            <div class="agriculture-definitions">
+              <h4>Understanding Soil Management</h4>
+              <h5>Farming Industries</h5>
+              <ul>
+                <li><strong>Wheat and other crops:</strong> Farms mainly growing crops such as wheat and barley.</li>
+                <li><strong>Mixed livestock and cropping:</strong> Farms growing crops and raising livestock.</li>
+                <li><strong>Dairy:</strong> Farms raising cows mainly for milk production.</li>
+                <li><strong>Beef:</strong> Farms raising cattle mainly for meat production.</li>
+                <li><strong>Sheep:</strong> Farms raising sheep for wool or meat.</li>
+                <li><strong>Sheep and beef:</strong> Farms raising both sheep and cattle.</li>
+              </ul>
+              <h5>Soil-Management Practices</h5>
+              <ul>
+                <li><strong>Soil testing:</strong> Checking soil nutrients and condition to guide farming decisions.</li>
+                <li><strong>Ground cover:</strong> Keeping vegetation or plant material on soil to reduce erosion.</li>
+                <li><strong>Stubble retention:</strong> Leaving crop stalks and residues on the ground after harvesting.</li>
+                <li><strong>Cover crops:</strong> Growing plants mainly to protect or improve soil between crops.</li>
+                <li><strong>Incorporated organic matter:</strong> Mixing compost, manure or plant material into soil.</li>
+                <li><strong>Controlled traffic:</strong> Keeping farm machinery on designated tracks to reduce soil compaction.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+        <p class="chart-error" id="soil-heatmap-error" role="status"></p>
+
+        <p class="map-label-key">
+          <strong>NOTE:</strong>
+          Percentages are survey estimates of farms reporting each practice during the three years to 2023–24.
+          Farms may report multiple practices. Higher adoption does not necessarily mean healthier soil.
+        </p>
+
+        <p class="agriculture-source">
+          <strong>Source:</strong>
+          <a href="https://www.agriculture.gov.au/abares/research-topics/surveys/emissions-nrm"
+             target="_blank" rel="noopener noreferrer">ABARES, A Survey of Emissions and Natural Resource Management
+            Practices in Australia, 2023–24</a>. NRM practices worksheet; national observations by industry.
+        </p>
+      </div>
+
+      <aside class="agriculture-insights narrative-editorial">
+        <p>
+          Beyond conserving water, <strong>maintaining healthy soil</strong> is essential for sustainable farming, helping retain moisture, support crop growth and reduce erosion.
+        </p>
+
+        <p>
+          <span class="defined-term" tabindex="0"><strong class="story-highlight">Soil testing</strong><span class="term-definition" role="tooltip">Checking soil nutrients and condition to guide farming decisions.</span></span> was the leading practice in three of the six farming industries and was widely reported across most industries, highlighting its relevance to soil and nutrient management.
+        </p>
+
+        <p>
+          In contrast, <span class="defined-term" tabindex="0"><strong class="story-highlight">stubble retention</strong><span class="term-definition" role="tooltip">Leaving crop stalks and residues on the ground after harvesting.</span></span> was particularly common among crop-producing farms, reaching <strong>97%</strong> in <strong>wheat and other crop farms</strong> and <strong>82%</strong> in <strong>mixed livestock and cropping farms</strong>.
+        </p>
+
+        <p>
+          These patterns show that <span class="story-highlight">sustainable soil management is not one-size-fits-all</span>, as different farming activities benefit from different soil-management practices.
+        </p>
+      </aside>
+    </div>
+
+    <!-- CHART 8: SOIL ORGANIC CARBON -->
+    <section id="soil-carbon-section" class="agriculture-section">
+      <div class="agriculture-layout layout-reverse">
+
+        <div class="chart8-chart-column">
+          <div class="chart8-map-frame">
+            <div id="chart8-soil-carbon"></div>
+            <div class="chart8-map-controls" aria-label="Soil carbon map controls">
+              <div class="chart8-year-row"></div>
+              <div class="chart8-navigation">
+                <label>Explore region:
+                  <select id="chart8-region">
+                  <option value="All Australia">All Australia</option>
+                  <option value="Western Australia">Western Australia (WA)</option>
+                  <option value="Northern Territory">Northern Territory (NT)</option>
+                  <option value="South Australia">South Australia (SA)</option>
+                  <option value="Queensland">Queensland (QLD)</option>
+                  <option value="New South Wales">New South Wales (NSW)</option>
+                  <option value="Victoria">Victoria (VIC)</option>
+                  <option value="Tasmania">Tasmania (TAS)</option>
+                  <option value="Australian Capital Territory">Australian Capital Territory (ACT)</option>
+                  </select>
+                </label>
+                <label for="chart8-zoom">Map zoom</label>
+                <input id="chart8-zoom" type="range" min="1" max="8" step="0.1" value="1" aria-describedby="chart8-pan-hint">
+                <output id="chart8-zoom-value" for="chart8-zoom">1.0×</output>
+                <button id="chart8-reset" type="button">Reset</button>
+              </div>
+              <span id="chart8-pan-hint">Drag the map to pan when zoomed in.</span>
+            </div>
+            <details class="land-use-help chart8-carbon-help">
+              <summary aria-label="Understanding Soil Organic Carbon">?</summary>
+              <div class="agriculture-definitions">
+                <h4>Understanding Soil Organic Carbon</h4>
+                <ul>
+                  <li><strong>Soil organic carbon (SOC):</strong> Carbon stored in organic material within the soil.</li>
+                  <li><strong>Tonnes of carbon per hectare (t C/ha):</strong> The amount of carbon stored per hectare of land.</li>
+                  <li><strong>Increase (blue):</strong> Estimated soil carbon increased relative to 2010.</li>
+                  <li><strong>Decrease (orange):</strong> Estimated soil carbon decreased relative to 2010.</li>
+                  <li><strong>Blank areas:</strong> Locations outside the mapped agricultural coverage or without valid estimates.</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+          <p class="chart-error" id="chart8-soil-carbon-error" role="status"></p>
+
+          <p class="chart8-note">
+            <strong>NOTE:</strong> Soil organic carbon values are modelled estimates for the top 30 cm of soil. Agricultural land is based on ABARES 2020–21 classifications, and changes are compared with 2010. Blank areas indicate no qualifying data. Changes cannot be attributed solely to farming practices.
+          </p>
+
+          <p class="chart8-note">
+          <strong>Sources:</strong>
+            <a href="https://zenodo.org/records/5040380"
+              target="_blank">Zhao et al. (2021)</a>;
+            <a href="https://www.agriculture.gov.au/abares/aclump/land-use/land-use-of-australia-2010-11-to-2020-21"
+              target="_blank">ABARES Land Use v7.1</a>.
+        </p>
+        </div>
+
+        <div class="chart8-insights">
+          <p><strong>Soil organic carbon</strong> supports sustainable farming by helping retain moisture, maintain soil fertility and support plant growth.</p>
+          <p>Between 2010 and 2018, Australia's agricultural land showed a <strong>slight overall increase</strong> in modelled soil organic carbon, <strong class="story-highlight">one indicator relevant to soil health</strong>.</p>
+          <p>However, <strong>regional differences</strong> remain, with some areas gaining soil carbon while others experienced declines, showing that improvements were not uniform across the country.</p>
+          <p>Overall, these findings suggest that <span class="story-highlight">maintaining and improving soil carbon is important for sustainable farming</span>, while continued attention to local soil conditions remains essential.</p>
+        </div>
+
+      </div>
+    </section>
+
+
+  <!-- =========================================
+       SECTION 4: ENVIRONMENTAL SUSTAINABILITY
+       ========================================= -->
+  <section class="agriculture-section" id="environmental-sustainability">
+    <h2>
+      <span class="section-number">04</span>
+      <span>Agricultural Greenhouse Gas Emissions</span>
+    </h2>
+
+    <!-- CHART 9: AGRICULTURAL GREENHOUSE GAS EMISSIONS -->
+    <div class="agriculture-layout chart9-layout">
+      <div class="agriculture-chart">
+        <div class="chart9-heading">
+          <h3>How Have Australia's Agricultural<br>Greenhouse Gas Emissions Changed?</h3>
+          <p>Annual agricultural greenhouse gas emissions by gas type,<br>1989–90 to 2023–24.</p>
+        </div>
+        <div class="chart" id="chart9-agricultural-emissions"></div>
+        <p class="chart-error" id="chart9-agricultural-emissions-error" role="status">Loading agricultural emissions data…</p>
+        <p class="map-label-key"><strong>NOTE:</strong> Emissions are measured in million tonnes of carbon dioxide equivalent (Mt CO₂-e), allowing different greenhouse gases to be compared. Figures cover Australia's Agriculture sector, as defined in the national greenhouse gas inventory, and exclude emissions reported under other sectors.</p>
+        <p class="agriculture-source">
+          <strong>Sources:</strong> <a href="https://www.greenhouseaccounts.climatechange.gov.au/" target="_blank" rel="noopener noreferrer">Australian National Greenhouse Accounts</a>; <a href="https://www.dcceew.gov.au/climate-change/publications/national-inventory-report-2024" target="_blank" rel="noopener noreferrer">National Inventory Report 2024</a> (Agriculture sector, 1989–90 to 2023–24).
+        </p>
+      </div>
+      <aside class="agriculture-insights narrative-editorial">
+        <p>Beyond conserving water and protecting soil, <strong>reducing greenhouse gas emissions</strong> is another important part of sustainable farming.</p>
+        <p>Australia's agricultural emissions fell by <strong>15.8%</strong> between 1989–90 and 2023–24, although the decline was uneven, with several periods of increase.</p>
+        <p>Despite this reduction, <strong class="story-highlight">methane</strong> accounted for <strong>83.3%</strong> of agricultural emissions in 2023–24, largely associated with livestock digestion and manure management.</p>
+        <p>These findings show that targeting major emission sources, particularly livestock-related methane is important for making Australian farming more sustainable.</p>
+      </aside>
+    </div>
+
+    <!-- CHART 10: AGRICULTURAL EMISSIONS SOURCE-TO-GAS SANKEY -->
+    <div class="agriculture-layout layout-reverse chart10-layout">
+      <div class="agriculture-chart">
+        <div class="chart10-heading">
+          <h3>Where Do Australia's Agricultural<br>Emissions Come From?</h3>
+          <p>How farming activities contribute to methane, nitrous oxide<br>and carbon dioxide emissions, 1989–90 to 2023–24.</p>
+        </div>
+        <div class="chart10-year-control">
+          <label for="chart10-year">Financial year:</label>
+          <div class="chart10-year-track">
+            <input id="chart10-year" type="range" min="1990" max="2024" step="1" value="2024" aria-valuetext="2023–24">
+            <div class="chart10-year-endpoints" aria-hidden="true"><span>1989–90</span><span>2023–24</span></div>
+          </div>
+          <output id="chart10-year-value" for="chart10-year">2023–24</output>
+
+        </div>
+        <div class="chart10-map-with-help">
+          <details class="land-use-help chart10-help">
+            <summary aria-label="Understanding Agricultural Emission Sources">?</summary>
+            <div class="agriculture-definitions">
+              <h4>Understanding Agricultural Emission Sources</h4>
+              <ul>
+                <li><strong>Livestock digestion:</strong> Cattle and sheep release methane when digesting food.</li>
+                <li><strong>Manure management:</strong> Stored or handled animal waste releases methane and nitrous oxide. Nitrous oxide from grazing waste is counted under soils.</li>
+                <li><strong>Agricultural soils:</strong> Nitrogen from fertilisers, animal waste and plant residues can release nitrous oxide.</li>
+                <li><strong>Rice cultivation:</strong> Plant material decomposing in flooded rice fields releases methane.</li>
+                <li><strong>Burning crop residues:</strong> Burning crop leftovers releases methane and nitrous oxide.</li>
+                <li><strong>Liming and urea application:</strong> Applying lime to reduce soil acidity or urea fertiliser releases carbon dioxide.</li>
+              </ul>
+            </div>
+          </details>
+        <div class="chart" id="chart10-emissions-sankey"></div>
+        </div>
+        <p class="chart-error" id="chart10-emissions-sankey-error" role="status">Loading agricultural emission sources…</p>
+        <p class="map-label-key"><strong>NOTE:</strong> Flow thickness shows million tonnes of carbon dioxide equivalent (Mt CO₂-e), using a fixed scale across years. The diagram covers Australia's Agriculture inventory sector for the selected financial year. Unreported source–gas combinations are omitted, not assumed to be zero.</p>
+        <p class="agriculture-source"><strong>Source:</strong> <a href="https://unfccc.int/documents/656438" target="_blank" rel="noopener noreferrer">Australia's 2026 Common Reporting Tables</a>, Summary 2 and Agriculture Table 3, 1989–90 to 2023–24. Cross-checked against the <a href="https://www.greenhouseaccounts.climatechange.gov.au/" target="_blank" rel="noopener noreferrer">Australian National Greenhouse Accounts</a>; supporting report: <a href="https://www.dcceew.gov.au/climate-change/publications/national-inventory-report-2024" target="_blank" rel="noopener noreferrer">National Inventory Report 2024</a>.</p>
+      </div>
+      <aside class="agriculture-insights narrative-editorial">
+        <p>The previous chart showed that <strong>methane</strong> has consistently dominated Australia's agricultural emissions over time. But which farming activities are responsible?</p>
+        <p>Throughout the years, <strong class="story-highlight">livestock digestion</strong> has remained a major contributor to agricultural emissions. In 2023–24, it was the largest emissions source (<strong>77.7%</strong>), mainly releasing <strong>methane</strong> through the digestive processes of cattle and sheep. Meanwhile, <strong class="story-highlight">agricultural soils</strong> were the main contributor to <strong>nitrous oxide</strong> emissions, while <strong class="story-highlight">liming and urea application</strong> contributed to <strong>carbon dioxide</strong> emissions.</p>
+        <p>These findings highlight the need for targeted emissions-reduction strategies, particularly addressing livestock-related methane and soil-related nitrous oxide, rather than relying on a single approach.</p>
+      </aside>
+    </div>
+
+    <!-- CHART 11: EMISSIONS AWARENESS AND ACTION -->
+    <div class="agriculture-layout chart11-layout">
+      <div class="agriculture-chart">
+        <div class="chart11-heading">
+          <h3>Do Australian Farmers Know Their<br>Greenhouse Gas Emissions?</h3>
+          <p>Emissions awareness and management plans among<br>broadacre (mainly crop and livestock) and dairy farms, 2023–24</p>
+        </div>
+        <div class="chart11-with-help">
+          <div class="chart" id="emissions-awareness"></div>
+          <details class="land-use-help chart11-axis-help">
+            <summary aria-label="What these responses mean">?</summary>
+            <div class="agriculture-definitions">
+              <h4>What these responses mean</h4>
+              <ul>
+                <li><strong>Knew net emissions:</strong> Knew the farm's emissions after accounting for carbon absorbed and stored in trees or soil.</li>
+                <li><strong>Wanted to know emissions:</strong> Wanted to find out the farm's greenhouse gas emissions.</li>
+                <li><strong>Planned a new NRM/emissions activity:</strong> Planned action within two years to manage land, water or net emissions. Plans do not mean emissions have fallen.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+        <p class="chart-error" id="emissions-awareness-error" role="status"></p>
+        <p class="map-label-key"><strong>NOTE:</strong> Percentages are separate national survey estimates for Australian broadacre and dairy farms in 2023–24 and should not be added together. Planned activities may involve natural-resource management rather than emissions reduction.</p>
+        <p class="agriculture-source"><strong>Source:</strong> <a href="https://www.agriculture.gov.au/abares/research-topics/surveys/emissions-nrm" target="_blank" rel="noopener noreferrer">ABARES, A Survey of Emissions and Natural Resource Management Practices in Australia, 2023–24</a>. Awareness: national estimates in the Emissions attitudes worksheet; planned activity: Survey results overview.</p>
+      </div>
+      <aside class="agriculture-insights narrative-editorial">
+        <p>After identifying the major sources of agricultural emissions, the next question is <strong>whether farmers know how much their own farms emit.</strong></p>
+        <p>In 2023–24, only <strong>7%</strong> of broadacre and dairy farms knew their net emissions, while <strong>12%</strong> wanted to know, revealing a <strong class="story-highlight">significant gap in emissions awareness.</strong></p>
+        <p>Although <strong>18% planned a new natural-resource or emissions-management activity</strong>, these intentions do not guarantee lower emissions. Greater awareness could be an important first step towards managing them.</p>
+      </aside>
+    </div>
+
+    <!-- CHART 12: BARRIERS TO EMISSIONS REDUCTION -->
+    <div class="agriculture-layout layout-reverse chart12-layout">
+      <div class="agriculture-chart">
+        <div class="chart12-heading">
+          <h3>What Challenges Do Australian Farmers<br>Face in Reducing Emissions?</h3>
+          <p>Reported barriers among Australian broadacre and dairy farms, 2023–24</p>
+        </div>
+        <div class="chart12-industry-control">
+          <label for="chart12-industry">Farming population:</label>
+          <select id="chart12-industry">
+            <option value="All broadacre and dairy">All broadacre and dairy farms (national)</option>
+            <option>Wheat and other crops</option>
+            <option>Mixed livestock and cropping</option>
+            <option>Dairy</option>
+            <option>Beef</option>
+            <option>Sheep</option>
+            <option>Sheep and beef</option>
+          </select>
+          <details class="land-use-help chart12-help">
+            <summary aria-label="Understanding barriers to reducing emissions">?</summary>
+            <div class="agriculture-definitions">
+              <h4>Understanding the barriers</h4>
+              <ul>
+                <li><strong>Uncertainty:</strong> Being unsure about reducing farm emissions. The survey does not specify which aspects farmers were uncertain about.</li>
+                <li><strong>Limited information:</strong> Not having enough information about emissions-reduction options to decide what changes to make on the farm.</li>
+                <li><strong>Lack of knowledge:</strong> Not having enough understanding of emissions-reduction practices or how to put them into use on the farm.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+        <div class="chart12-waffle-key" aria-label="Waffle chart legend">
+          <span><span class="chart12-reported-key" aria-hidden="true"><i></i><i></i><i></i></span>Reported barrier</span>
+          <span><span class="chart12-remaining-key" aria-hidden="true"></span>Remaining share</span>
+        </div>
+        <div class="chart" id="emissions-barriers-chart12"></div>
+
+        <p class="chart-error" id="emissions-barriers-chart12-error" role="status"></p>
+        <p class="map-label-key"><strong>NOTE:</strong> Each waffle represents 100% of the selected farming population. Percentages are weighted survey estimates, not actual farm counts. Farms may report multiple barriers. One square represents one percentage point.</p>
+        <p class="agriculture-source"><strong>Source:</strong> <a href="https://www.agriculture.gov.au/abares/research-topics/surveys/emissions-nrm" target="_blank" rel="noopener noreferrer">ABARES, A Survey of Emissions and Natural Resource Management Practices in Australia, 2023–24</a>. Emissions barriers worksheet; national and industry estimates.</p>
+      </div>
+      <aside class="agriculture-insights narrative-editorial">
+        <p>While some farmers intend to manage their emissions, <strong>turning intentions into action can be challenging.</strong></p>
+        <p>In 2023–24, <strong class="story-highlight">uncertainty was the most commonly reported barrier (59%)</strong> among Australian broadacre and dairy farms, followed by <strong>limited information and lack of knowledge (47% each)</strong>. Uncertainty also ranked highest across all six farming industries.</p>
+        <p>These findings highlight that <strong>clearer information and practical guidance are important</strong> in helping farmers make informed decisions towards reducing agricultural emissions.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Conclusion: bring the four themes together without overstating outcomes. -->
+  <section class="agriculture-section" id="conclusion">
+    <h2>Conclusion: Sustainable farming needs action and evidence</h2>
+    <div class="closing-card conclusion-columns">
+      <div class="conclusion-column">
+        <p>
+          <span class="conclusion-line">Australia&#x27;s farming footprint changed little over a decade,</span>
+          <span class="conclusion-line">but the balance of agricultural land uses shifted.</span>
+        </p>
+        <p>
+          <span class="conclusion-line">Water use varied across states, activities and years.</span>
+          <span class="conclusion-line">Soil practices also differed between farming industries.</span>
+          <span class="conclusion-line">Together, these comparisons show why sustainable farming</span>
+          <span class="conclusion-line">requires approaches suited to local conditions.</span>
+        </p>
+        <p>
+          <span class="conclusion-line">Conserving water and maintaining healthy soil remain essential.</span>
+          <span class="conclusion-line">Soil carbon increased slightly overall, but regional differences</span>
+          <span class="conclusion-line">show that improvements were not shared everywhere.</span>
+        </p>
+      </div>
+      <div class="conclusion-column">
+        <p>
+          <span class="conclusion-line">Agricultural emissions declined over the longer term,</span>
+          <span class="conclusion-line">although progress was uneven and methane remained dominant.</span>
+          <span class="conclusion-line">Livestock digestion and agricultural soils identify important</span>
+          <span class="conclusion-line">areas for focused emissions-management efforts.</span>
+        </p>
+        <p>
+          <span class="conclusion-line">Low emissions awareness and widespread uncertainty reveal</span>
+          <span class="conclusion-line">further challenges in turning intentions into action.</span>
+          <span class="conclusion-line">Clear information and practical guidance can support decisions,</span>
+          <span class="conclusion-line">but planned activities do not prove environmental improvements.</span>
+        </p>
+        <p>
+          <span class="conclusion-line"><strong>Australia&#x27;s path towards sustainable farming requires suitable practices,</strong></span>
+          <span class="conclusion-line"><strong>informed farmers and evidence of lasting environmental benefits.</strong></span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sources, references and authorship -->
+  <footer class="agriculture-section completion-footer">
+    <h2>Sources and Authorship</h2>
+    <h3>References</h3>
+    <div class="reference-list">
+      <p>anthwri. (n.d.). <em>GeoJson-Data</em> [Data set]. GitHub. <a href="https://github.com/anthwri/GeoJson-Data" target="_blank" rel="noopener noreferrer">https://github.com/anthwri/GeoJson-Data</a></p>
+      <p>Australia. (2026). <em>Australia: 2026 common reporting table (CRT)</em> [Data set]. United Nations Framework Convention on Climate Change. <a href="https://unfccc.int/documents/656438" target="_blank" rel="noopener noreferrer">https://unfccc.int/documents/656438</a></p>
+      <p>Australian Bureau of Agricultural and Resource Economics and Sciences. (n.d.). <em>Natural resource management and drought resilience—Survey of farm practices</em>. <a href="https://www.agriculture.gov.au/abares/research-topics/surveys/nrm-drought-resilience" target="_blank" rel="noopener noreferrer">https://www.agriculture.gov.au/abares/research-topics/surveys/nrm-drought-resilience</a></p>
+      <p>Australian Bureau of Agricultural and Resource Economics and Sciences. (2026). <em>Land use of Australia 2010–11 to 2020–21</em> (Version 7.1) [Data set]. <a href="https://doi.org/10.25814/n0z4-5y98" target="_blank" rel="noopener noreferrer">https://doi.org/10.25814/n0z4-5y98</a></p>
+      <p>Australian Bureau of Statistics. (2017). <em>Water use on Australian farms, 2015–16</em> [Data set]. <a href="https://www.abs.gov.au/AUSSTATS/abs@.nsf/allprimarymainfeatures/152A43BEC69B65C2CA258291001AFCFB" target="_blank" rel="noopener noreferrer">https://www.abs.gov.au/AUSSTATS/abs@.nsf/allprimarymainfeatures/152A43BEC69B65C2CA258291001AFCFB</a></p>
+      <p>Australian Bureau of Statistics. (2018). <em>Water use on Australian farms, 2016–17</em> [Data set]. <a href="https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/4618.0Main%2BFeatures12016-17" target="_blank" rel="noopener noreferrer">https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/4618.0Main%2BFeatures12016-17</a></p>
+      <p>Australian Bureau of Statistics. (2019). <em>Water use on Australian farms, 2017–18</em> [Data set]. <a href="https://www.abs.gov.au/statistics/industry/agriculture/water-use-australian-farms/2017-18" target="_blank" rel="noopener noreferrer">https://www.abs.gov.au/statistics/industry/agriculture/water-use-australian-farms/2017-18</a></p>
+      <p>Australian Bureau of Statistics. (2020). <em>Water use on Australian farms, 2018–19</em> [Data set]. <a href="https://www.abs.gov.au/statistics/industry/agriculture/water-use-australian-farms/2018-19" target="_blank" rel="noopener noreferrer">https://www.abs.gov.au/statistics/industry/agriculture/water-use-australian-farms/2018-19</a></p>
+      <p>Australian Bureau of Statistics. (2021). <em>Water use on Australian farms, 2019–20</em> [Data set]. <a href="https://www.abs.gov.au/statistics/industry/agriculture/water-use-australian-farms/2019-20" target="_blank" rel="noopener noreferrer">https://www.abs.gov.au/statistics/industry/agriculture/water-use-australian-farms/2019-20</a></p>
+      <p>Australian Bureau of Statistics. (2022). <em>Water use on Australian farms, 2020–21</em> [Data set]. <a href="https://www.abs.gov.au/statistics/industry/agriculture/water-use-australian-farms/2020-21" target="_blank" rel="noopener noreferrer">https://www.abs.gov.au/statistics/industry/agriculture/water-use-australian-farms/2020-21</a></p>
+      <p>Bureau of Meteorology. (2019, July). <em>Climate of the 2018 to 2019 financial year</em>. <a href="https://www.bom.gov.au/climate/updates/articles/a034.shtml" target="_blank" rel="noopener noreferrer">https://www.bom.gov.au/climate/updates/articles/a034.shtml</a></p>
+      <p>Bureau of Meteorology. (2020, January 9). <em>Annual climate statement 2019</em>. <a href="https://www.bom.gov.au/climate/current/annual/aus/2019/" target="_blank" rel="noopener noreferrer">https://www.bom.gov.au/climate/current/annual/aus/2019/</a></p>
+      <p>Department of Climate Change, Energy, the Environment and Water. (n.d.). <em>Australian National Greenhouse Accounts</em> [Data portal]. Retrieved October 28, 2026, from <a href="https://www.greenhouseaccounts.climatechange.gov.au/" target="_blank" rel="noopener noreferrer">https://www.greenhouseaccounts.climatechange.gov.au/</a></p>
+      <p>Department of Climate Change, Energy, the Environment and Water. (2026). <em>National inventory report 2024</em>. <a href="https://www.dcceew.gov.au/climate-change/publications/national-inventory-report-2024" target="_blank" rel="noopener noreferrer">https://www.dcceew.gov.au/climate-change/publications/national-inventory-report-2024</a></p>
+      <p>rowanhogan. (n.d.). <em>Australian-states</em> [Data set]. GitHub. <a href="https://github.com/rowanhogan/australian-states" target="_blank" rel="noopener noreferrer">https://github.com/rowanhogan/australian-states</a></p>
+      <p>Ryder, J., &amp; Kingsmill, C.. (2025). <em>A survey of emissions and natural resource management practices in Australia, 2023–24</em>. Australian Bureau of Agricultural and Resource Economics and Sciences. <a href="https://doi.org/10.25814/199t-ch57" target="_blank" rel="noopener noreferrer">https://doi.org/10.25814/199t-ch57</a></p>
+      <p>Zhao, Y., Xie, E., Zhang, X., &amp; Peng, Y.. (2021). <em>Global topsoil SOC stock from 1981 to 2018 estimated by combining process-based model and space-for-time digital soil mapping</em> (Version 1.0) [Data set]. Zenodo. <a href="https://doi.org/10.5281/zenodo.5040380" target="_blank" rel="noopener noreferrer">https://doi.org/10.5281/zenodo.5040380</a></p>
+    </div>
+
+    <h3 class="authorship-heading">Authorship</h3>
+    <dl class="authorship-details">
+      <dt>Author:</dt><dd>Sheron Tan Mei Yi</dd>
+      <dt>ID:</dt><dd>35395842</dd>
+      <dt>Unit:</dt><dd>FIT3179 Data Visualisation, Monash University</dd>
+      <dt>Studio Session:</dt><dd>Thursday, 4PM - 6PM</dd>
+      <dt>Updated Date:</dt><dd><time datetime="2026-10-28">28 October 2026</time></dd>
+    </dl>
+    <p><strong>AI acknowledgement:</strong> OpenAI Codex assisted with data extraction, chart code, verification, wording and reference formatting. The visualisations use Vega and Vega-Lite.</p>
+  </footer>
+
+  <!-- =========================================
+       VEGA / VEGA-LITE EMBEDDING
+       ========================================= -->
   <script>
+
     function displayChart(container, specification, errorContainer) {
+
       const element = document.querySelector(container);
       const errorElement = document.querySelector(errorContainer);
 
-      function showError(error) {
+      // Stack Chart 12's waffles on narrow screens while keeping one shared view.
+      if (container === "#emissions-barriers-chart12" && typeof specification === "string") {
+        fetch(specification).then(response => {
+          if (!response.ok) throw new Error("Unable to load Chart 12 specification");
+          return response.json();
+        }).then(spec => {
+          if (window.matchMedia("(max-width: 600px)").matches) {
+            spec.vconcat = spec.hconcat;
+            delete spec.hconcat;
+          }
+          displayChart(container, spec, errorContainer);
+        }).catch(error => { errorElement.textContent = error.message; });
+        return;
+      }
+
+      vegaEmbed(element, specification, {
+        actions: false,
+        renderer: "svg",
+        patch: function(chart) {
+          // Keep Chart 5's heading outside the scaled map SVG.
+          if (container === "#emissions-barriers-chart12" || container === "#emissions-awareness" || container === "#water-practices" || container === "#chart9-agricultural-emissions" || container === "#chart10-emissions-sankey") delete chart.title;
+          return chart;
+        }
+      }).then(function(result) {
+
+        if (container === "#emissions-barriers-chart12") {
+          const control = document.querySelector("#chart12-industry");
+          function alignWaffleControls() {
+            const square = element.querySelector(".mark-rect.role-mark path");
+            if (!square) return;
+            const column = element.closest(".agriculture-chart");
+            const bounds = column.getBoundingClientRect();
+            const scale = bounds.width / column.offsetWidth;
+            const inset = Math.max(0, (square.getBoundingClientRect().left - bounds.left) / scale);
+            column.querySelectorAll(".chart12-industry-control, .chart12-waffle-key").forEach(row => {
+              row.style.marginLeft = inset + "px";
+            });
+          }
+          new ResizeObserver(alignWaffleControls).observe(element);
+          document.fonts.ready.then(alignWaffleControls);
+          alignWaffleControls();
+          const help = element.closest(".chart12-layout").querySelector(".chart12-help");
+          const panel = help.querySelector(".agriculture-definitions");
+          function positionBarrierHelp() {
+            const icon = help.getBoundingClientRect();
+            const scale = icon.width / help.offsetWidth;
+            const width = Math.min(320 * scale, innerWidth - 32);
+            panel.style.width = width / scale + "px";
+            panel.style.left = (Math.max(16, Math.min(icon.left, innerWidth - width - 16)) - icon.left) / scale + "px";
+            const above = icon.top - 24;
+            const below = innerHeight - icon.bottom - 24;
+            const openAbove = below < 200 && above > below;
+            panel.style.top = openAbove ? "auto" : "26px";
+            panel.style.bottom = openAbove ? "26px" : "auto";
+            panel.style.maxHeight = Math.max(80, Math.min(400, openAbove ? above : below)) / scale + "px";
+          }
+          help.addEventListener("pointerenter", positionBarrierHelp);
+          help.addEventListener("focusin", positionBarrierHelp);
+          help.addEventListener("toggle", positionBarrierHelp);
+          help.addEventListener("keydown", event => {
+            if (event.key === "Escape") { help.open = false; help.querySelector("summary").blur(); }
+          });
+          window.addEventListener("resize", positionBarrierHelp);
+          window.addEventListener("scroll", positionBarrierHelp, { passive: true });
+          control.onchange = function() {
+            result.view.signal("barrierIndustry", control.value).runAsync();
+          };
+          result.view.signal("barrierIndustry", control.value).runAsync();
+        }
+
+        if (container === "#emissions-awareness") {
+          const help = element.closest(".chart11-layout").querySelector(".chart11-axis-help");
+          const panel = help.querySelector(".agriculture-definitions");
+          function positionAwarenessHelp() {
+            const label = Array.from(element.querySelectorAll("svg text")).find(t => t.textContent === "What farmers reported");
+            if (!label) return;
+            const base = help.parentElement.getBoundingClientRect();
+            const scale = base.width / help.parentElement.offsetWidth;
+            const box = label.getBoundingClientRect();
+            help.style.left = ((box.right - base.left) / scale + 8) + "px";
+            help.style.top = ((box.top + box.height / 2 - base.top) / scale - 10) + "px";
+            help.style.visibility = "visible";
+            const icon = help.getBoundingClientRect();
+            const width = Math.min(350 * scale, innerWidth - 32);
+            panel.style.width = width / scale + "px";
+            panel.style.left = (Math.max(16, Math.min(icon.left, innerWidth - width - 16)) - icon.left) / scale + "px";
+            panel.style.maxHeight = Math.max(100, Math.min(420, innerHeight - icon.bottom - 32)) / scale + "px";
+          }
+          new ResizeObserver(positionAwarenessHelp).observe(element);
+          document.fonts.ready.then(positionAwarenessHelp);
+          help.addEventListener("pointerenter", positionAwarenessHelp);
+          help.addEventListener("focusin", positionAwarenessHelp);
+          help.addEventListener("toggle", positionAwarenessHelp);
+          help.addEventListener("keydown", e => { if (e.key === "Escape") { help.open = false; help.querySelector("summary").blur(); } });
+        }
+
+        if (container === "#chart10-emissions-sankey") {
+          setupChart10Sankey(element, result);
+          errorElement.textContent = "";
+        }
+
+        if (container === "#chart9-agricultural-emissions") {
+          errorElement.textContent = "";
+          const records = result.view.data("agricultural_emissions");
+          const annualTotals = new Map();
+          const recordByGasYear = new Map();
+          for (const row of records) {
+            const year = Number(row.year_end);
+            annualTotals.set(year, (annualTotals.get(year) || 0) + Number(row.emissions_mtco2e));
+            recordByGasYear.set(row.gas + "|" + year, row);
+          }
+          // Keep areas continuous; resolve the actual year beneath the pointer.
+          const tooltip = document.createElement("div");
+          tooltip.className = "chart9-tooltip";
+          tooltip.setAttribute("role", "tooltip");
+          tooltip.hidden = true;
+          const tooltipTitle = document.createElement("div");
+          tooltipTitle.className = "chart9-tooltip-title";
+          tooltip.appendChild(tooltipTitle);
+          const tooltipValues = {};
+          for (const [key, label] of [["emissions", "Emissions"], ["share", "Share of agricultural emissions"], ["total", "Total agricultural emissions"]]) {
+            const row = document.createElement("div");
+            row.className = "chart9-tooltip-row";
+            const name = document.createElement("span");
+            name.textContent = label + ":";
+            const value = document.createElement("span");
+            tooltipValues[key] = value;
+            row.append(name, value);
+            tooltip.appendChild(row);
+          }
+          document.body.appendChild(tooltip);
+          function showEmissionsTooltip(view, event, item, value) {
+            if (!value) { tooltip.hidden = true; return; }
+            tooltipTitle.textContent = value.title;
+            for (const key of ["emissions", "share", "total"]) tooltipValues[key].textContent = value[key];
+            tooltip.hidden = false;
+            const bounds = tooltip.getBoundingClientRect();
+            const left = event.clientX + 14 + bounds.width > window.innerWidth - 12 ? event.clientX - bounds.width - 14 : event.clientX + 14;
+            const top = event.clientY + 14 + bounds.height > window.innerHeight - 12 ? event.clientY - bounds.height - 14 : event.clientY + 14;
+            tooltip.style.left = Math.max(12, Math.min(left, window.innerWidth - bounds.width - 12)) + "px";
+            tooltip.style.top = Math.max(12, Math.min(top, window.innerHeight - bounds.height - 12)) + "px";
+          }
+          let activeHoverYear = 0;
+          const referenceArea = element.querySelector(".mark-area path");
+          element.addEventListener("pointermove", function(event) {
+            const point = referenceArea.ownerSVGElement.createSVGPoint();
+            point.x = event.clientX; point.y = event.clientY;
+            const local = point.matrixTransform(referenceArea.parentElement.getScreenCTM().inverse());
+            const xRange = result.view.scale("x").range();
+            const yRange = result.view.scale("y").range();
+            const inPlot = local.x >= Math.min(...xRange) && local.x <= Math.max(...xRange) && local.y >= Math.min(...yRange) && local.y <= Math.max(...yRange);
+            const year = inPlot ? Math.max(1990, Math.min(2024, Math.round(result.view.scale("x").invert(local.x)))) : 0;
+            if (year !== activeHoverYear) {
+              activeHoverYear = year;
+              result.view.signal("hoverYear", year).runAsync();
+            }
+            const path = event.target.closest(".mark-area path");
+            if (!path || !inPlot) { showEmissionsTooltip(null, event, null, null); return; }
+            const row = recordByGasYear.get(path.__data__.datum.gas + "|" + year);
+            if (!row) return;
+            const gasLabels = { Methane: "Methane (CH\u2084)", "Nitrous oxide": "Nitrous oxide (N\u2082O)", "Carbon dioxide": "Carbon dioxide (CO\u2082)" };
+            showEmissionsTooltip(null, event, path.__data__, {
+              title: row.year.replace("-", "\u2013") + " \u00b7 " + gasLabels[row.gas],
+              emissions: Number(row.emissions_mtco2e).toFixed(2) + " Mt CO\u2082-e",
+              share: (100 * Number(row.emissions_mtco2e) / annualTotals.get(year)).toFixed(1) + "%",
+              total: annualTotals.get(year).toFixed(2) + " Mt CO\u2082-e"
+            });
+          });
+          element.addEventListener("pointerleave", function(event) {
+            activeHoverYear = 0;
+            result.view.signal("hoverYear", 0).runAsync();
+            showEmissionsTooltip(null, event, null, null);
+          });
+          element.addEventListener("click", function(event) {
+            const path = event.target.closest(".mark-area path");
+            if (!path) return;
+            const gas = path.__data__.datum.gas;
+            const selected = result.view.signal("gasFocus_gas_legend");
+            result.view.signal("gasFocus_gas_legend", selected === gas ? null : gas).runAsync();
+          });
+          matchOpeningCardHeights();
+          element.querySelectorAll(".role-legend-label text").forEach(function(label) {
+            label.setAttribute("tabindex", "0");
+            label.setAttribute("role", "button");
+            label.setAttribute("aria-label", "Highlight " + label.textContent);
+            label.addEventListener("keydown", function(event) {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                result.view.signal("gasFocus_gas_legend", label.__data__.datum.value).runAsync();
+              }
+            });
+          });
+        }
+
+        if (container === "#chart8-soil-carbon") {
+          const frame = element.closest(".chart8-map-frame");
+          const controls = frame.querySelector(".chart8-map-controls");
+          const binding = element.querySelector(".vega-bindings");
+          frame.querySelector(".chart8-year-row").appendChild(binding);
+          const comparisonSlider = binding.querySelector('input[type="range"]');
+          // Vega already creates a live value label; use our styled output only.
+          binding.querySelectorAll(".vega-bind label > span:not(.vega-bind-name):not(.chart8-year-track)").forEach(function(value) {
+            value.hidden = true;
+            value.style.display = "none";
+          });
+          comparisonSlider.id = "chart8-comparison-year";
+          comparisonSlider.setAttribute("aria-label", "Compare with 2010: selected year");
+          const yearTrack = document.createElement("span");
+          yearTrack.className = "chart8-year-track";
+          comparisonSlider.parentElement.insertBefore(yearTrack, comparisonSlider);
+          yearTrack.appendChild(comparisonSlider);
+          const endpoints = document.createElement("span");
+          endpoints.className = "chart8-year-endpoints";
+          endpoints.setAttribute("aria-hidden", "true");
+          endpoints.innerHTML = "<span>2011</span><span>2018</span>";
+          yearTrack.appendChild(endpoints);
+          const comparisonOutput = document.createElement("output");
+          comparisonOutput.className = "chart8-selected-year";
+          comparisonOutput.htmlFor = comparisonSlider.id;
+          comparisonOutput.textContent = "2018";
+          yearTrack.parentElement.appendChild(comparisonOutput);
+          result.view.addSignalListener("selectedYear", function(name, year) {
+            comparisonOutput.textContent = year;
+            comparisonSlider.setAttribute("aria-valuetext", String(year));
+          });
+          const region = frame.querySelector("#chart8-region");
+          const slider = frame.querySelector("#chart8-zoom");
+          const output = frame.querySelector("#chart8-zoom-value");
+          const help = frame.querySelector(".chart8-carbon-help");
+          const panel = help.querySelector(".agriculture-definitions");
+          const svg = element.querySelector("svg");
+          const mapContent = element.querySelector(".soilCarbonHexes_marks").parentElement;
+          const originalTransform = mapContent.getAttribute("transform") || "";
+          const namespace = "http://www.w3.org/2000/svg";
+          const plotWidth = 620, plotHeight = 385;
+          let zoom = 1, panX = 0, panY = 0, dragging = null;
+
+          // Transform all geographic layers together; the legend and trend stay fixed.
+          const clip = document.createElementNS(namespace, "clipPath");
+          clip.id = "chart8-map-viewport";
+          const clipRect = document.createElementNS(namespace, "rect");
+          clipRect.setAttribute("width", plotWidth);
+          clipRect.setAttribute("height", plotHeight);
+          clip.appendChild(clipRect);
+          let defs = svg.querySelector("defs");
+          if (!defs) { defs = document.createElementNS(namespace, "defs"); svg.prepend(defs); }
+          defs.appendChild(clip);
+          const viewport = document.createElementNS(namespace, "g");
+          viewport.setAttribute("clip-path", "url(#chart8-map-viewport)");
+          viewport.classList.add("chart8-map-viewport");
+          mapContent.parentElement.insertBefore(viewport, mapContent);
+          const background = clipRect.cloneNode();
+          background.setAttribute("fill", "transparent");
+          viewport.appendChild(background);
+          viewport.appendChild(mapContent);
+          const regionBounds = {};
+          mapContent.querySelectorAll(".soilCarbonBoundaries_marks path").forEach(function(path) {
+            regionBounds[path.__data__.datum.properties.STATE_NAME] = path.getBBox();
+          });
+
+          function applyMapView() {
+            // Vega rebuilds <defs> on year changes; restore our map-only clip.
+            if (!svg.querySelector("#chart8-map-viewport")) {
+              let currentDefs = svg.querySelector("defs");
+              if (!currentDefs) {
+                currentDefs = document.createElementNS(namespace, "defs");
+                svg.prepend(currentDefs);
+              }
+              currentDefs.appendChild(clip);
+            }
+            panX = Math.max(plotWidth * (1 - zoom), Math.min(0, panX));
+            panY = Math.max(plotHeight * (1 - zoom), Math.min(0, panY));
+            mapContent.setAttribute("transform", originalTransform +
+              " translate(" + panX + "," + panY + ") scale(" + zoom + ")");
+            slider.value = zoom.toFixed(1);
+            output.textContent = zoom.toFixed(1) + "\u00d7";
+            slider.setAttribute("aria-valuetext", zoom.toFixed(1) + " times zoom");
+            viewport.style.cursor = zoom > 1 ? "grab" : "default";
+            mapContent.querySelectorAll(".soilCarbonBoundaries_marks path").forEach(function(path) {
+              path.style.strokeWidth = (0.75 / zoom) + "px";
+            });
+            mapContent.querySelectorAll(".soilCarbonHexes_marks path").forEach(function(path) {
+              path.style.strokeWidth = (0.25 / zoom) + "px";
+            });
+            mapContent.querySelectorAll(".soilCarbonLabels_marks text, .soilCarbonLabelHalo_marks text").forEach(function(text) {
+              text.style.fontSize = (12 / zoom) + "px";
+              if (text.closest(".soilCarbonLabelHalo_marks")) text.style.strokeWidth = (3 / zoom) + "px";
+            });
+          }
+          slider.addEventListener("input", function() {
+            const next = Number(slider.value);
+            const centerX = (plotWidth / 2 - panX) / zoom;
+            const centerY = (plotHeight / 2 - panY) / zoom;
+            zoom = next;
+            panX = plotWidth / 2 - centerX * zoom;
+            panY = plotHeight / 2 - centerY * zoom;
+            applyMapView();
+          });
+          function resetMap() {
+            zoom = 1; panX = 0; panY = 0; region.value = "All Australia";
+            applyMapView();
+          }
+          region.addEventListener("change", function() {
+            const bounds = regionBounds[region.value];
+            if (!bounds) { resetMap(); return; }
+            zoom = Math.max(1, Math.min(8, 0.78 * Math.min(plotWidth / bounds.width, plotHeight / bounds.height)));
+            zoom = Math.round(zoom * 10) / 10;
+            panX = plotWidth / 2 - (bounds.x + bounds.width / 2) * zoom;
+            panY = plotHeight / 2 - (bounds.y + bounds.height / 2) * zoom;
+            applyMapView();
+          });
+          frame.querySelector("#chart8-reset").addEventListener("click", resetMap);
+          viewport.addEventListener("pointerdown", function(event) {
+            if (zoom <= 1 || event.button !== 0) return;
+            dragging = { x: event.clientX, y: event.clientY, panX: panX, panY: panY };
+            viewport.setPointerCapture(event.pointerId);
+            viewport.style.cursor = "grabbing";
+            event.preventDefault();
+          });
+          viewport.addEventListener("pointermove", function(event) {
+            if (!dragging) return;
+            const matrix = viewport.getScreenCTM();
+            panX = dragging.panX + (event.clientX - dragging.x) / matrix.a;
+            panY = dragging.panY + (event.clientY - dragging.y) / matrix.d;
+            applyMapView();
+          });
+          function finishPan() { dragging = null; viewport.style.cursor = zoom > 1 ? "grab" : "default"; }
+          viewport.addEventListener("pointerup", finishPan);
+          viewport.addEventListener("pointercancel", finishPan);
+          result.view.addSignalListener("selectedYear", function() {
+            requestAnimationFrame(function() { applyMapView(); positionCarbonControls(); });
+          });
+
+          function positionCarbonControls() {
+            const legend = element.querySelector(".role-legend");
+            const title = element.querySelector(".role-legend-title text");
+            if (!legend || !title) return;
+            const bounds = frame.getBoundingClientRect();
+            const key = legend.getBoundingClientRect();
+            const label = title.getBoundingClientRect();
+            const scale = bounds.width / frame.offsetWidth;
+            const svgScale = Math.abs(viewport.getScreenCTM().a) / scale;
+            controls.style.left = ((key.left - bounds.left) / scale) + "px";
+            controls.style.top = ((key.bottom - bounds.top) / scale + 7) + "px";
+            controls.style.transform = "scale(" + svgScale + ")";
+            help.style.left = ((label.right - bounds.left) / scale + 7) + "px";
+            help.style.top = ((label.top - bounds.top + label.height / 2) / scale - 10) + "px";
+            help.style.visibility = "visible";
+            const icon = help.getBoundingClientRect();
+            const width = Math.min(380 * scale, window.innerWidth - 32);
+            const left = Math.max(16, Math.min(icon.left, window.innerWidth - width - 16));
+            panel.style.width = (width / scale) + "px";
+            panel.style.left = ((left - icon.left) / scale) + "px";
+            const below = window.innerHeight - icon.bottom - 24;
+            const above = icon.top - 24;
+            const useAbove = below < 220 && above > below;
+            panel.style.top = useAbove ? "auto" : "26px";
+            panel.style.bottom = useAbove ? "26px" : "auto";
+            panel.style.maxHeight = (Math.max(80, useAbove ? above : below) / scale) + "px";
+          }
+          help.addEventListener("pointerenter", positionCarbonControls);
+          help.addEventListener("focusin", positionCarbonControls);
+          help.addEventListener("toggle", positionCarbonControls);
+          help.addEventListener("keydown", function(event) {
+            if (event.key === "Escape") { help.open = false; help.querySelector("summary").blur(); }
+          });
+          new ResizeObserver(positionCarbonControls).observe(frame);
+          document.fonts.ready.then(positionCarbonControls);
+          window.addEventListener("scroll", positionCarbonControls, { passive: true });
+          applyMapView();
+          positionCarbonControls();
+        }
+
+        if (container === "#soil-heatmap") {
+          const wrapper = element.parentElement;
+          const help = wrapper.querySelector(".soil-legend-help");
+          const panel = help.querySelector(".agriculture-definitions");
+          function positionSoilHelp() {
+            const label = element.querySelector(".role-legend-title text");
+            if (!label) return;
+            const bounds = wrapper.getBoundingClientRect();
+            const legend = label.getBoundingClientRect();
+            const scale = bounds.width / wrapper.offsetWidth;
+            help.style.left = ((legend.right - bounds.left) / scale + 7) + "px";
+            help.style.top = ((legend.top - bounds.top + legend.height / 2) / scale - 10) + "px";
+            help.style.visibility = "visible";
+            const icon = help.getBoundingClientRect();
+            const width = Math.min(390 * scale, window.innerWidth - 32);
+            const left = Math.max(16, Math.min(icon.left, window.innerWidth - width - 16));
+            panel.style.width = (width / scale) + "px";
+            panel.style.left = ((left - icon.left) / scale) + "px";
+            const below = window.innerHeight - icon.bottom - 24;
+            const above = icon.top - 24;
+            const useAbove = below < 220 && above > below;
+            panel.style.top = useAbove ? "auto" : "26px";
+            panel.style.bottom = useAbove ? "26px" : "auto";
+            panel.style.maxHeight = (Math.max(80, useAbove ? above : below) / scale) + "px";
+          }
+          new ResizeObserver(positionSoilHelp).observe(wrapper);
+          document.fonts.ready.then(positionSoilHelp);
+          help.addEventListener("pointerenter", positionSoilHelp);
+          help.addEventListener("focusin", positionSoilHelp);
+          help.addEventListener("toggle", positionSoilHelp);
+          help.addEventListener("keydown", function(event) {
+            if (event.key === "Escape") { help.open = false; help.querySelector("summary").blur(); }
+          });
+          window.addEventListener("scroll", positionSoilHelp, { passive: true });
+          positionSoilHelp();
+        }
+
+        if (container === "#water-sources-chart") {
+          const wrapper = element.parentElement;
+          const help = wrapper.querySelector(".water-source-legend-help");
+
+          function positionWaterSourceHelp() {
+            const label = element.querySelector(".role-legend-title text");
+            if (!label) return;
+            const bounds = wrapper.getBoundingClientRect();
+            const legend = label.getBoundingClientRect();
+            const scale = bounds.width / wrapper.offsetWidth;
+            const left = (legend.right - bounds.left) / scale + 7;
+            help.style.left = left + "px";
+            help.style.top = ((legend.top - bounds.top + legend.height / 2) / scale - 10) + "px";
+            help.style.setProperty("--source-help-width", Math.min(350, wrapper.clientWidth - left) + "px");
+            help.style.visibility = "visible";
+          }
+
+          new ResizeObserver(positionWaterSourceHelp).observe(wrapper);
+          document.fonts.ready.then(positionWaterSourceHelp);
+          positionWaterSourceHelp();
+        }
+
+        if (container === "#irrigation-parallel") {
+          const showTooltip = result.view.tooltip();
+          element.addEventListener("pointermove", function(event) {
+            const target = event.target.closest(".mark-line path, .mark-symbol path");
+            const item = target && target.__data__;
+            if (item?.tooltip) showTooltip(null, event, item, item.tooltip);
+          });
+          element.addEventListener("pointerleave", function(event) {
+            showTooltip(null, event, null, null);
+          });
+        }
+
+        if (container === "#water-practices") {
+          const marks = Array.from(element.querySelectorAll("svg path, svg text"));
+
+          // Match each state polygon and label within its own map.
+          function stateMark(target) {
+            while (target && target !== element) {
+              if (target.__data__?.datum?.properties?.STATE_NAME) return target;
+              target = target.parentElement;
+            }
+            return null;
+          }
+
+          function mapPanel(mark) {
+            while (mark && mark !== element) {
+              if (/concat_[01]_group/.test(mark.getAttribute("class") || "")) return mark;
+              mark = mark.parentElement;
+            }
+            return null;
+          }
+
+          element.addEventListener("pointermove", function(event) {
+            const target = stateMark(event.target);
+            const state = target?.__data__.datum.properties.STATE_NAME;
+            const panel = target && mapPanel(target);
+            marks.forEach(function(mark) {
+              mark.classList.toggle("state-hovered", Boolean(state && panel
+                && mapPanel(mark) === panel
+                && mark.__data__?.datum?.properties?.STATE_NAME === state));
+            });
+          });
+          element.addEventListener("pointerleave", function() {
+            marks.forEach(mark => mark.classList.remove("state-hovered"));
+          });
+        }
+
+        if (container === "#land-use-treemap") {
+
+          const wrapper = element.parentElement;
+          const help = wrapper.querySelector(".treemap-legend-help");
+
+          // Keep the help button beside the legend as the SVG resizes.
+          function positionLegendHelp() {
+            const label = Array.from(element.querySelectorAll("svg text"))
+              .find(text => text.textContent === "AGRICULTURE");
+
+            if (!label) return;
+
+            const bounds = wrapper.getBoundingClientRect();
+            const legend = label.getBoundingClientRect();
+            const scale = bounds.width / wrapper.offsetWidth;
+            const left = (legend.right - bounds.left) / scale + 8;
+
+            help.style.left = left + "px";
+            help.style.top =
+              ((legend.top - bounds.top + legend.height / 2) / scale - 14) + "px";
+
+            help.style.setProperty(
+              "--help-width",
+              Math.min(360, wrapper.clientWidth - left) + "px"
+            );
+            help.style.visibility = "visible";
+          }
+
+          new ResizeObserver(positionLegendHelp).observe(wrapper);
+          document.fonts.ready.then(positionLegendHelp);
+          positionLegendHelp();
+        }
+
+      }).catch(function(error) {
+
         console.error(error);
 
         errorElement.textContent =
           "Chart could not load: " + error.message;
-      }
 
-      vegaEmbed(element, specification, {
-        actions: false
-      }).then(function(result) {
-        if (container === "#land-use-treemap") {
-          let previousWidth = 0;
+      });
 
-          const observer = new ResizeObserver(function(entries) {
-            const chartWidth =
-              Math.floor(entries[0].contentRect.width);
-
-            if (chartWidth > 0 && chartWidth !== previousWidth) {
-              previousWidth = chartWidth;
-
-              result.view
-                .width(chartWidth)
-                .resize()
-                .runAsync()
-                .catch(showError);
-            }
-          });
-
-          observer.observe(element);
-        }
-      }).catch(showError);
     }
 
-    // Chart 1: Treemap - Land-use composition
+    // Keep the first two landscape cards equally tall on desktop.
+    const firstLandscapeCard =
+      document.querySelector("#farming-landscape .agriculture-layout");
+
+    const secondLandscapeCard =
+      document.querySelector(".waterfall-layout");
+
+    const waterMap = document.querySelector("#water-map");
+    const waterCard = waterMap.closest(".agriculture-layout");
+    const parallelCard = document.querySelector("#irrigation-parallel").closest(".agriculture-layout");
+
+    const practicesCard = document.querySelector("#water-practices").closest(".agriculture-layout");
+    const waterSourcesCard = document.querySelector("#chart6-section");
+    const soilPracticesCard = document.querySelector(".chart7-layout");
+    const agriculturalEmissionsCard = document.querySelector(".chart9-layout");
+    const finalChartCards = document.querySelectorAll(".chart11-layout, .chart12-layout");
+
+    function matchOpeningCardHeights() {
+
+      const height = firstLandscapeCard.offsetHeight;
+      finalChartCards.forEach(function(card) {
+        card.style.minHeight = window.innerWidth > 900 ? height + "px" : "";
+      });
+      parallelCard.style.minHeight = window.innerWidth > 900 ? height + "px" : "";
+      practicesCard.style.minHeight = window.innerWidth > 900 ? height + "px" : "";
+      waterSourcesCard.style.minHeight = window.innerWidth > 900 ? height + "px" : "";
+      soilPracticesCard.style.minHeight = window.innerWidth > 900 ? height + "px" : "";
+      agriculturalEmissionsCard.style.minHeight = window.innerWidth > 900 ? height + "px" : "";
+      const emissionsSvg = agriculturalEmissionsCard.querySelector("svg");
+      if (emissionsSvg) {
+        if (window.innerWidth <= 900) {
+          emissionsSvg.style.maxHeight = "";
+        } else {
+          const style = getComputedStyle(agriculturalEmissionsCard);
+          const column = agriculturalEmissionsCard.querySelector(".agriculture-chart");
+          let supportingHeight = 0;
+          for (const child of column.children) {
+            if (child.id === "chart9-agricultural-emissions") continue;
+            const childStyle = getComputedStyle(child);
+            if (childStyle.display === "none") continue;
+            supportingHeight += child.offsetHeight + parseFloat(childStyle.marginTop) + parseFloat(childStyle.marginBottom);
+          }
+          emissionsSvg.style.maxHeight = Math.max(300, height - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom) - supportingHeight - 8) + "px";
+        }
+      }
+
+      secondLandscapeCard.style.setProperty(
+        "--landscape-card-height",
+        height + "px"
+      );
+
+      const svg = waterMap.querySelector("svg");
+
+      if (!svg) return;
+
+      if (window.innerWidth <= 900) {
+        waterCard.style.minHeight = "";
+        svg.style.maxHeight = "";
+        return;
+      }
+
+      waterCard.style.minHeight = height + "px";
+
+      const cardStyle = getComputedStyle(waterCard);
+      let notesHeight = 0;
+
+      for (const child of waterMap.parentElement.children) {
+        if (child === waterMap) continue;
+
+        const style = getComputedStyle(child);
+        if (style.display === "none" || style.position === "absolute") continue;
+
+        notesHeight += child.offsetHeight
+          + parseFloat(style.marginTop)
+          + parseFloat(style.marginBottom);
+      }
+
+      svg.style.maxHeight = Math.max(
+        200,
+        height
+        - parseFloat(cardStyle.paddingTop)
+        - parseFloat(cardStyle.paddingBottom)
+        - notesHeight
+        - 10
+      ) + "px";
+    }
+
+    const openingCardObserver =
+      new ResizeObserver(matchOpeningCardHeights);
+
+    openingCardObserver.observe(firstLandscapeCard);
+    openingCardObserver.observe(waterMap);
+
+    window.addEventListener("resize", matchOpeningCardHeights);
+
+    // Chart 1: Land-use treemap
     displayChart(
       "#land-use-treemap",
       "js/chart1_land_use_treemap.vg.json",
       "#treemap-error"
     );
 
-    // Chart 2: Choropleth map - Agricultural land share by NRM region
+    // Chart 2: Land-use waterfall
     displayChart(
-      "#agriculture-map",
-      "js/chart2_agriculture_map.vl.json",
-      "#map-error"
+      "#land-use-waterfall",
+      "js/chart2_land_use_waterfall.vg.json",
+      "#waterfall-error"
     );
 
-    // Chart 3: Proportional symbol map - Irrigation water applied by state
-    displayChart(
+    // Chart 3: Proportional symbol map with year slider
+    vegaEmbed(
       "#water-map",
-      "js/chart3_water_map.vl.json",
-      "#water-map-error"
-    );
+      "js/chart3_irrigation_water_map.vl.json",
+      {
+        actions: false,
+        renderer: "svg",
+        // The heading is shown in HTML so the slider sits below it.
+        patch: function(specification) {
+          delete specification.title;
+          return specification;
+        }
+      }
+    ).then(function(result) {
 
-    // Chart 4: Parallel coordinates plot - Irrigation profiles by activity
+      const slider = document.getElementById("water-year-slider");
+      const yearLabel = document.getElementById("water-year-label");
+
+      const years = [
+        "2015–16",
+        "2016–17",
+        "2020–21"
+      ];
+
+      function updateWaterYear() {
+        const yearIndex = Number(slider.value);
+
+        yearLabel.textContent = years[yearIndex];
+        slider.setAttribute("aria-valuetext", years[yearIndex]);
+        document.querySelectorAll(".water-year-ticks span").forEach(function(tick, index) {
+          tick.classList.toggle("selected-year", index === yearIndex);
+        });
+
+        result.view
+          .signal("yearChoice", yearIndex)
+          .runAsync()
+          .catch(console.error);
+      }
+
+      // Only circles and state labels activate map tooltips.
+      const mapElement = document.querySelector("#water-map");
+      const showWaterTooltip = result.view.tooltip();
+      mapElement.addEventListener("pointermove", function(event) {
+        const target = event.target.closest(".mark-symbol path, .mark-text text");
+        const item = target && target.__data__;
+        const state = item?.datum?.state;
+        mapElement.querySelectorAll(".mark-symbol path").forEach(function(circle) {
+          circle.classList.toggle("water-hovered", Boolean(state
+            && circle.__data__?.datum?.state === state));
+        });
+        showWaterTooltip(null, event, item, state ? item.tooltip : null);
+      });
+      mapElement.addEventListener("pointerleave", function(event) {
+        mapElement.querySelectorAll(".water-hovered").forEach(function(circle) {
+          circle.classList.remove("water-hovered");
+        });
+        showWaterTooltip(null, event, null, null);
+      });
+
+      slider.addEventListener("input", updateWaterYear);
+
+      updateWaterYear();
+
+    }).catch(function(error) {
+
+      console.error(error);
+
+      document.getElementById("water-map-error").textContent =
+        "Chart could not load: " + error.message;
+
+    });
+
+    // Chart 4: Irrigation parallel coordinates
     displayChart(
       "#irrigation-parallel",
-      "js/chart4_irrigation_parallel.vl.json",
+      "js/chart4_irrigation_activity_parallel_coordinates.vl.json",
       "#irrigation-parallel-error"
     );
 
-    // Chart 5: Paired choropleth maps - Water management adoption by state
+    // Chart 5: Water-management practices
     displayChart(
       "#water-practices",
       "js/chart5_water_practices.vl.json",
       "#water-practices-error"
     );
 
-    // Chart 6: Heatmap - Soil management practices by industry
+    // Chart 6: Changes in agricultural water sources
+    displayChart(
+      "#water-sources-chart",
+      "js/chart6_water_sources.vl.json",
+      "#water-sources-chart-error"
+    );
+
+    // Chart 7: Soil management heatmap
     displayChart(
       "#soil-heatmap",
-      "js/chart6_soil_heatmap.vl.json",
+      "js/chart7_soil_management_heatmap.vl.json",
       "#soil-heatmap-error"
     );
 
-    // Chart 7: Line chart - Agricultural emissions over time
+    // Chart 8: Soil organic carbon
     displayChart(
-      "#agricultural-emissions",
-      "js/chart7_agricultural_emissions.vl.json",
-      "#agricultural-emissions-error"
+      "#chart8-soil-carbon",
+      "js/chart8_soil_carbon.vl.json",
+      "#chart8-soil-carbon-error"
     );
 
-    // Chart 8: Dot plot - Emissions reduction barriers by industry
+    // Chart 9: Agriculture-sector greenhouse gas emissions by gas
     displayChart(
-      "#emissions-barriers",
-      "js/chart8_emissions_barriers.vl.json",
-      "#emissions-barriers-error"
+      "#chart9-agricultural-emissions",
+      "js/chart9_agricultural_emissions_trend.vl.json",
+      "#chart9-agricultural-emissions-error"
     );
+
+    // Chart 10: Agricultural activities linked to greenhouse gases
+    displayChart(
+      "#chart10-emissions-sankey",
+      "js/chart10_emissions_sankey.vg.json",
+      "#chart10-emissions-sankey-error"
+    );
+
+    // Chart 11: Emissions awareness and action
+    displayChart(
+      "#emissions-awareness",
+      "js/chart11_emissions_awareness.vl.json",
+      "#emissions-awareness-error"
+    );
+
+    // Chart 12: Emissions barriers dot plot
+    displayChart(
+      "#emissions-barriers-chart12",
+      "js/chart12_emissions_barriers.vl.json",
+      "#emissions-barriers-chart12-error"
+    );
+
   </script>
+
 </body>
 </html>

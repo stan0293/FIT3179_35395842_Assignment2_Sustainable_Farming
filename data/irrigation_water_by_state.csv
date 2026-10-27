@@ -1,9 +1,0 @@
-state,state_code,year,irrigation_water_applied_ml,irrigation_water_applied_gl,data_status,longitude,latitude
-New South Wales,NSW,2020-21,2707354.57,2707.35457,Published,147,-32
-Victoria,VIC,2020-21,1642701.44,1642.70144,Published,144.5,-37
-Queensland,QLD,2020-21,1966711.1,1966.7111,Published,145,-23
-South Australia,SA,2020-21,762311.24,762.31124,Published,135,-30
-Western Australia,WA,2020-21,324941.45,324.94145000000003,Published,121,-25
-Tasmania,TAS,2020-21,337851.22,337.85121999999996,Published,146.5,-42
-Northern Territory,NT,2020-21,,,Not published,133,-20
-Australian Capital Territory,ACT,2020-21,,,Not published,149.13,-35.3
