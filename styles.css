@@ -2032,10 +2032,15 @@ li {
   visibility: visible;
   opacity: 1;
 }
-/* Reserve space for the rail on desktops and small laptops. */
+/* Balance the navigation gutter so the page stays centred. */
 @media (min-width: 901px) {
   body {
     padding-left: 56px;
+    padding-right: 56px;
+  }
+  #page-header {
+    margin-left: -56px;
+    margin-right: -56px;
   }
 }
 /* Keep the navigation compact and clear of the content on narrow screens. */
