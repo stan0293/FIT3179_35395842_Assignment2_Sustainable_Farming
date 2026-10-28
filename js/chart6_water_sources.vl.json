@@ -1,10 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": [
-      "How Have Australia's Farm Water Sources",
-      "Changed Over Time?"
-    ],
+    "text": ["How Have Australia's Farm Water Sources", "Changed Over Time?"],
     "subtitle": [
       "Volume of water obtained by Australian farms from different sources,",
       "2015–16 to 2020–21"
@@ -41,14 +38,7 @@
     "x": {
       "field": "year",
       "type": "ordinal",
-      "sort": [
-        "2015-16",
-        "2016-17",
-        "2017-18",
-        "2018-19",
-        "2019-20",
-        "2020-21"
-      ],
+      "sort": ["2015-16", "2016-17", "2017-18", "2018-19", "2019-20", "2020-21"],
       "axis": {
         "title": "Financial year",
         "labelAngle": 0,
@@ -91,14 +81,7 @@
           "Recycled or reused water",
           "Reticulated mains supply"
         ],
-        "range": [
-          "#295B97",
-          "#E17632",
-          "#5F8B5E",
-          "#8B6AB1",
-          "#D04A79",
-          "#8C8C8C"
-        ]
+        "range": ["#295B97", "#E17632", "#5F8B5E", "#8B6AB1", "#D04A79", "#8C8C8C"]
       },
       "legend": {
         "title": "Water source",
@@ -142,9 +125,7 @@
     {
       "name": "droughtPeriod",
       "data": {
-        "values": [
-          {}
-        ]
+        "values": [{}]
       },
       "mark": {
         "type": "rect",
@@ -179,16 +160,11 @@
     {
       "name": "droughtLeader",
       "data": {
-        "values": [
-          {}
-        ]
+        "values": [{}]
       },
       "mark": {
         "type": "rule",
-        "strokeDash": [
-          2,
-          4
-        ],
+        "strokeDash": [2, 4],
         "strokeWidth": 1,
         "tooltip": false,
         "aria": false
@@ -218,9 +194,7 @@
     {
       "name": "droughtLabel",
       "data": {
-        "values": [
-          {}
-        ]
+        "values": [{}]
       },
       "mark": {
         "type": "text",
@@ -272,17 +246,12 @@
               "as": "rows"
             }
           ],
-          "groupby": [
-            "year"
-          ]
+          "groupby": ["year"]
         }
       ],
       "mark": {
         "type": "rule",
-        "strokeDash": [
-          5,
-          4
-        ],
+        "strokeDash": [5, 4],
         "strokeWidth": 1.5
       },
       "encoding": {
@@ -318,9 +287,7 @@
           "name": "waterSourceYear",
           "select": {
             "type": "point",
-            "fields": [
-              "year"
-            ],
+            "fields": ["year"],
             "nearest": true,
             "on": "pointerover",
             "clear": "pointerout"

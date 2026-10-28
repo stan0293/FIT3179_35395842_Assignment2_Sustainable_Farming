@@ -7,15 +7,8 @@
   "padding": 10,
   "projection": {
     "type": "conicEqualArea",
-    "parallels": [
-      -18,
-      -36
-    ],
-    "rotate": [
-      -134,
-      0,
-      0
-    ]
+    "parallels": [-18, -36],
+    "rotate": [-134, 0, 0]
   },
   "params": [
     {
@@ -83,14 +76,8 @@
           "title": "Irrigation water applied (GL)",
           "scale": {
             "type": "sqrt",
-            "domain": [
-              0,
-              4000
-            ],
-            "range": [
-              0,
-              18000
-            ]
+            "domain": [0, 4000],
+            "range": [0, 18000]
           },
           "legend": {
             "orient": "right",

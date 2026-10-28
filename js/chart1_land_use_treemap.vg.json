@@ -16,9 +16,7 @@
   "background": "white",
   "title": {
     "text": "How Much of Australia's Land Is Shaped by Farming?",
-    "subtitle": [
-      "Explore Australia's agricultural and other land uses in 2020–21"
-    ],
+    "subtitle": ["Explore Australia's agricultural and other land uses in 2020–21"],
     "anchor": "middle",
     "subtitleAnchor": "middle",
     "font": "Lato",
@@ -158,12 +156,8 @@
         },
         {
           "type": "window",
-          "ops": [
-            "row_number"
-          ],
-          "as": [
-            "legend_index"
-          ]
+          "ops": ["row_number"],
+          "as": ["legend_index"]
         }
       ]
     },
@@ -184,12 +178,8 @@
         },
         {
           "type": "window",
-          "ops": [
-            "row_number"
-          ],
-          "as": [
-            "legend_index"
-          ]
+          "ops": ["row_number"],
+          "as": ["legend_index"]
         }
       ]
     }

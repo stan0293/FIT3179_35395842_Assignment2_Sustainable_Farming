@@ -5,10 +5,7 @@
   "height": 260,
   "padding": 10,
   "title": {
-    "text": [
-      "Do Australian Farmers Know Their",
-      "Greenhouse Gas Emissions?"
-    ],
+    "text": ["Do Australian Farmers Know Their", "Greenhouse Gas Emissions?"],
     "subtitle": [
       "Emissions awareness and management plans among",
       "broadacre (mainly crop and livestock) and dairy farms, 2023–24"
@@ -60,22 +57,12 @@
       "field": "percentage",
       "type": "quantitative",
       "scale": {
-        "domain": [
-          0,
-          100
-        ],
+        "domain": [0, 100],
         "nice": false
       },
       "axis": {
         "title": "Farms (%)",
-        "values": [
-          0,
-          20,
-          40,
-          60,
-          80,
-          100
-        ],
+        "values": [0, 20, 40, 60, 80, 100],
         "labelExpr": "datum.value + '%'",
         "titleFontSize": 16,
         "titlePadding": 16

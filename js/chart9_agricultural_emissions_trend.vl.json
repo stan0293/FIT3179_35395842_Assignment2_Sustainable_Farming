@@ -5,10 +5,7 @@
   "background": "white",
   "padding": 10,
   "title": {
-    "text": [
-      "How Have Australia's Agricultural",
-      "Greenhouse Gas Emissions Changed?"
-    ],
+    "text": ["How Have Australia's Agricultural", "Greenhouse Gas Emissions Changed?"],
     "subtitle": [
       "Annual agricultural greenhouse gas emissions by gas type,",
       "1989–90 to 2023–24."
@@ -49,9 +46,7 @@
           "as": "annual_total"
         }
       ],
-      "groupby": [
-        "year_end"
-      ]
+      "groupby": ["year_end"]
     },
     {
       "calculate": "datum.emissions_mtco2e / datum.annual_total",
@@ -67,19 +62,14 @@
     },
     {
       "stack": "emissions_mtco2e",
-      "groupby": [
-        "year_end"
-      ],
+      "groupby": ["year_end"],
       "sort": [
         {
           "field": "gas_order",
           "order": "ascending"
         }
       ],
-      "as": [
-        "stack_low",
-        "stack_high"
-      ],
+      "as": ["stack_low", "stack_high"],
       "offset": "zero"
     }
   ],
@@ -100,23 +90,11 @@
           "type": "quantitative",
           "title": "Financial year",
           "scale": {
-            "domain": [
-              1990,
-              2024
-            ],
+            "domain": [1990, 2024],
             "nice": false
           },
           "axis": {
-            "values": [
-              1990,
-              1995,
-              2000,
-              2005,
-              2010,
-              2015,
-              2020,
-              2024
-            ],
+            "values": [1990, 1995, 2000, 2005, 2010, 2015, 2020, 2024],
             "labelExpr": "format(datum.value - 1, 'd') + '–' + slice(format(datum.value, 'd'), 2)",
             "labelAngle": 0,
             "grid": false,
@@ -131,10 +109,7 @@
           "type": "quantitative",
           "title": "Agricultural emissions (Mt CO₂-e)",
           "scale": {
-            "domain": [
-              0,
-              100
-            ],
+            "domain": [0, 100],
             "zero": true
           },
           "axis": {
@@ -148,16 +123,8 @@
           "field": "gas",
           "type": "nominal",
           "scale": {
-            "domain": [
-              "Methane",
-              "Nitrous oxide",
-              "Carbon dioxide"
-            ],
-            "range": [
-              "#287D70",
-              "#E69F00",
-              "#4C78A8"
-            ]
+            "domain": ["Methane", "Nitrous oxide", "Carbon dioxide"],
+            "range": ["#287D70", "#E69F00", "#4C78A8"]
           },
           "legend": {
             "title": "Greenhouse gas",
@@ -195,9 +162,7 @@
           "name": "gasFocus",
           "select": {
             "type": "point",
-            "fields": [
-              "gas"
-            ]
+            "fields": ["gas"]
           },
           "bind": "legend"
         }
@@ -214,9 +179,7 @@
               "as": "total"
             }
           ],
-          "groupby": [
-            "year_end"
-          ]
+          "groupby": ["year_end"]
         },
         {
           "filter": "datum.year_end == hoverYear"
@@ -225,10 +188,7 @@
       "mark": {
         "type": "rule",
         "stroke": "#52665B",
-        "strokeDash": [
-          5,
-          4
-        ],
+        "strokeDash": [5, 4],
         "strokeWidth": 1.2,
         "tooltip": false,
         "aria": false

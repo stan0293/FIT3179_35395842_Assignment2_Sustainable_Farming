@@ -89,10 +89,7 @@
     "x": {
       "type": "quantitative",
       "scale": {
-        "domain": [
-          -0.75,
-          2.75
-        ],
+        "domain": [-0.75, 2.75],
         "nice": false
       },
       "axis": null
@@ -100,10 +97,7 @@
     "y": {
       "type": "quantitative",
       "scale": {
-        "domain": [
-          -0.12,
-          1.13
-        ],
+        "domain": [-0.12, 1.13],
         "nice": false
       },
       "axis": null
@@ -250,15 +244,8 @@
     {
       "transform": [
         {
-          "fold": [
-            "area_norm",
-            "rate_norm",
-            "volume_norm"
-          ],
-          "as": [
-            "metric",
-            "level"
-          ]
+          "fold": ["area_norm", "rate_norm", "volume_norm"],
+          "as": ["metric", "level"]
         },
         {
           "calculate": "datum.metric === 'area_norm' ? 0 : datum.metric === 'rate_norm' ? 1 : 2",
@@ -337,15 +324,8 @@
     {
       "transform": [
         {
-          "fold": [
-            "area_norm",
-            "rate_norm",
-            "volume_norm"
-          ],
-          "as": [
-            "metric",
-            "level"
-          ]
+          "fold": ["area_norm", "rate_norm", "volume_norm"],
+          "as": ["metric", "level"]
         },
         {
           "calculate": "datum.metric === 'area_norm' ? 0 : datum.metric === 'rate_norm' ? 1 : 2",

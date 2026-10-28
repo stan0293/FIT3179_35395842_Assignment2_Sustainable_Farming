@@ -32,7 +32,7 @@
   "validation": {
     "annual_rows": 105,
     "financial_years": 35,
-    "sum_vs_api_total_tolerance_kt": 1e-07,
+    "sum_vs_api_total_tolerance_kt": 1e-7,
     "sum_vs_existing_official_workbook_totals_tolerance_mt": 1e-10,
     "max_difference_from_official_workbook_totals_mt": 8.526512829121202e-14
   },
@@ -55,10 +55,7 @@
   "extraction_script": "scripts/build_chart9.py",
   "livestock_methane_support": {
     "source_url": "https://www.greenhouseaccounts.climatechange.gov.au/api/OutputTimeSeries?urlencodedsectorlist=682%2C735&locationid=3&fuelid=1&gasid=108&datatypeid=13",
-    "sectors": [
-      "3.A Enteric Fermentation",
-      "3.B Manure Management"
-    ],
+    "sectors": ["3.A Enteric Fermentation", "3.B Manure Management"],
     "share_of_agriculture_methane_2023_24_percent": 99.19975449983863
   }
 }

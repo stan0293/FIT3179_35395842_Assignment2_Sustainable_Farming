@@ -3,13 +3,8 @@
   "background": "white",
   "padding": 8,
   "title": {
-    "text": [
-      "What Challenges Do Australian Farmers",
-      "Face in Reducing Emissions?"
-    ],
-    "subtitle": [
-      "Reported barriers among Australian broadacre and dairy farms, 2023–24"
-    ],
+    "text": ["What Challenges Do Australian Farmers", "Face in Reducing Emissions?"],
+    "subtitle": ["Reported barriers among Australian broadacre and dairy farms, 2023–24"],
     "font": "Lato",
     "fontSize": 28,
     "fontWeight": 900,
@@ -70,12 +65,8 @@
               "as": "cells"
             },
             {
-              "flatten": [
-                "cells"
-              ],
-              "as": [
-                "cell"
-              ]
+              "flatten": ["cells"],
+              "as": ["cell"]
             },
             {
               "calculate": "datum.cell % 10",
@@ -120,14 +111,8 @@
               "field": "square_status",
               "type": "nominal",
               "scale": {
-                "domain": [
-                  "Reported barrier",
-                  "Remaining share"
-                ],
-                "range": [
-                  "#D978A0",
-                  "#B8BFBC"
-                ]
+                "domain": ["Reported barrier", "Remaining share"],
+                "range": ["#D978A0", "#B8BFBC"]
               },
               "legend": null
             },
@@ -216,12 +201,8 @@
               "as": "cells"
             },
             {
-              "flatten": [
-                "cells"
-              ],
-              "as": [
-                "cell"
-              ]
+              "flatten": ["cells"],
+              "as": ["cell"]
             },
             {
               "calculate": "datum.cell % 10",
@@ -266,14 +247,8 @@
               "field": "square_status",
               "type": "nominal",
               "scale": {
-                "domain": [
-                  "Reported barrier",
-                  "Remaining share"
-                ],
-                "range": [
-                  "#9B8BC7",
-                  "#B8BFBC"
-                ]
+                "domain": ["Reported barrier", "Remaining share"],
+                "range": ["#9B8BC7", "#B8BFBC"]
               },
               "legend": null
             },
@@ -362,12 +337,8 @@
               "as": "cells"
             },
             {
-              "flatten": [
-                "cells"
-              ],
-              "as": [
-                "cell"
-              ]
+              "flatten": ["cells"],
+              "as": ["cell"]
             },
             {
               "calculate": "datum.cell % 10",
@@ -412,14 +383,8 @@
               "field": "square_status",
               "type": "nominal",
               "scale": {
-                "domain": [
-                  "Reported barrier",
-                  "Remaining share"
-                ],
-                "range": [
-                  "#65A9A4",
-                  "#B8BFBC"
-                ]
+                "domain": ["Reported barrier", "Remaining share"],
+                "range": ["#65A9A4", "#B8BFBC"]
               },
               "legend": null
             },

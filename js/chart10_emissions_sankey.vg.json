@@ -184,29 +184,17 @@
           "type": "lookup",
           "from": "sourceDefs",
           "key": "source",
-          "fields": [
-            "source"
-          ],
-          "values": [
-            "sourceOrder"
-          ],
-          "as": [
-            "sourceOrder"
-          ]
+          "fields": ["source"],
+          "values": ["sourceOrder"],
+          "as": ["sourceOrder"]
         },
         {
           "type": "lookup",
           "from": "gasDefs",
           "key": "gas",
-          "fields": [
-            "gas"
-          ],
-          "values": [
-            "gasOrder"
-          ],
-          "as": [
-            "gasOrder"
-          ]
+          "fields": ["gas"],
+          "values": ["gasOrder"],
+          "as": ["gasOrder"]
         },
         {
           "type": "formula",
@@ -221,19 +209,10 @@
       "transform": [
         {
           "type": "aggregate",
-          "groupby": [
-            "source",
-            "year_end"
-          ],
-          "fields": [
-            "emissions_mtco2e"
-          ],
-          "ops": [
-            "sum"
-          ],
-          "as": [
-            "total"
-          ]
+          "groupby": ["source", "year_end"],
+          "fields": ["emissions_mtco2e"],
+          "ops": ["sum"],
+          "as": ["total"]
         }
       ]
     },
@@ -243,34 +222,18 @@
       "transform": [
         {
           "type": "aggregate",
-          "groupby": [
-            "source"
-          ],
-          "fields": [
-            "total"
-          ],
-          "ops": [
-            "max"
-          ],
-          "as": [
-            "capacity"
-          ]
+          "groupby": ["source"],
+          "fields": ["total"],
+          "ops": ["max"],
+          "as": ["capacity"]
         },
         {
           "type": "lookup",
           "from": "sourceDefs",
           "key": "source",
-          "fields": [
-            "source"
-          ],
-          "values": [
-            "sourceOrder",
-            "label"
-          ],
-          "as": [
-            "sourceOrder",
-            "label"
-          ]
+          "fields": ["source"],
+          "values": ["sourceOrder", "label"],
+          "as": ["sourceOrder", "label"]
         }
       ]
     },
@@ -281,15 +244,9 @@
         {
           "type": "aggregate",
           "groupby": [],
-          "fields": [
-            "capacity"
-          ],
-          "ops": [
-            "sum"
-          ],
-          "as": [
-            "total"
-          ]
+          "fields": ["capacity"],
+          "ops": ["sum"],
+          "as": ["total"]
         }
       ]
     },
@@ -300,26 +257,13 @@
         {
           "type": "window",
           "sort": {
-            "field": [
-              "sourceOrder"
-            ],
-            "order": [
-              "ascending"
-            ]
+            "field": ["sourceOrder"],
+            "order": ["ascending"]
           },
-          "ops": [
-            "sum"
-          ],
-          "fields": [
-            "capacity"
-          ],
-          "as": [
-            "running_capacity"
-          ],
-          "frame": [
-            null,
-            0
-          ]
+          "ops": ["sum"],
+          "fields": ["capacity"],
+          "as": ["running_capacity"],
+          "frame": [null, 0]
         },
         {
           "type": "formula",
@@ -334,19 +278,10 @@
       "transform": [
         {
           "type": "aggregate",
-          "groupby": [
-            "gas",
-            "year_end"
-          ],
-          "fields": [
-            "emissions_mtco2e"
-          ],
-          "ops": [
-            "sum"
-          ],
-          "as": [
-            "total"
-          ]
+          "groupby": ["gas", "year_end"],
+          "fields": ["emissions_mtco2e"],
+          "ops": ["sum"],
+          "as": ["total"]
         }
       ]
     },
@@ -356,34 +291,18 @@
       "transform": [
         {
           "type": "aggregate",
-          "groupby": [
-            "gas"
-          ],
-          "fields": [
-            "total"
-          ],
-          "ops": [
-            "max"
-          ],
-          "as": [
-            "capacity"
-          ]
+          "groupby": ["gas"],
+          "fields": ["total"],
+          "ops": ["max"],
+          "as": ["capacity"]
         },
         {
           "type": "lookup",
           "from": "gasDefs",
           "key": "gas",
-          "fields": [
-            "gas"
-          ],
-          "values": [
-            "gasOrder",
-            "label"
-          ],
-          "as": [
-            "gasOrder",
-            "label"
-          ]
+          "fields": ["gas"],
+          "values": ["gasOrder", "label"],
+          "as": ["gasOrder", "label"]
         }
       ]
     },
@@ -394,15 +313,9 @@
         {
           "type": "aggregate",
           "groupby": [],
-          "fields": [
-            "capacity"
-          ],
-          "ops": [
-            "sum"
-          ],
-          "as": [
-            "total"
-          ]
+          "fields": ["capacity"],
+          "ops": ["sum"],
+          "as": ["total"]
         }
       ]
     },
@@ -413,26 +326,13 @@
         {
           "type": "window",
           "sort": {
-            "field": [
-              "gasOrder"
-            ],
-            "order": [
-              "ascending"
-            ]
+            "field": ["gasOrder"],
+            "order": ["ascending"]
           },
-          "ops": [
-            "sum"
-          ],
-          "fields": [
-            "capacity"
-          ],
-          "as": [
-            "running_capacity"
-          ],
-          "frame": [
-            null,
-            0
-          ]
+          "ops": ["sum"],
+          "fields": ["capacity"],
+          "as": ["running_capacity"],
+          "frame": [null, 0]
         },
         {
           "type": "formula",
@@ -458,15 +358,9 @@
         {
           "type": "aggregate",
           "groupby": [],
-          "fields": [
-            "emissions_mtco2e"
-          ],
-          "ops": [
-            "sum"
-          ],
-          "as": [
-            "total"
-          ]
+          "fields": ["emissions_mtco2e"],
+          "ops": ["sum"],
+          "as": ["total"]
         }
       ]
     },
@@ -476,36 +370,18 @@
       "transform": [
         {
           "type": "aggregate",
-          "groupby": [
-            "source"
-          ],
-          "fields": [
-            "emissions_mtco2e"
-          ],
-          "ops": [
-            "sum"
-          ],
-          "as": [
-            "total"
-          ]
+          "groupby": ["source"],
+          "fields": ["emissions_mtco2e"],
+          "ops": ["sum"],
+          "as": ["total"]
         },
         {
           "type": "lookup",
           "from": "sourceSlots",
           "key": "source",
-          "fields": [
-            "source"
-          ],
-          "values": [
-            "cy",
-            "label",
-            "sourceOrder"
-          ],
-          "as": [
-            "cy",
-            "label",
-            "sourceOrder"
-          ]
+          "fields": ["source"],
+          "values": ["cy", "label", "sourceOrder"],
+          "as": ["cy", "label", "sourceOrder"]
         },
         {
           "type": "formula",
@@ -519,15 +395,9 @@
         },
         {
           "type": "joinaggregate",
-          "fields": [
-            "nodeTop"
-          ],
-          "ops": [
-            "min"
-          ],
-          "as": [
-            "columnTop"
-          ]
+          "fields": ["nodeTop"],
+          "ops": ["min"],
+          "as": ["columnTop"]
         },
         {
           "type": "formula",
@@ -552,36 +422,18 @@
       "transform": [
         {
           "type": "aggregate",
-          "groupby": [
-            "gas"
-          ],
-          "fields": [
-            "emissions_mtco2e"
-          ],
-          "ops": [
-            "sum"
-          ],
-          "as": [
-            "total"
-          ]
+          "groupby": ["gas"],
+          "fields": ["emissions_mtco2e"],
+          "ops": ["sum"],
+          "as": ["total"]
         },
         {
           "type": "lookup",
           "from": "gasSlots",
           "key": "gas",
-          "fields": [
-            "gas"
-          ],
-          "values": [
-            "cy",
-            "label",
-            "gasOrder"
-          ],
-          "as": [
-            "cy",
-            "label",
-            "gasOrder"
-          ]
+          "fields": ["gas"],
+          "values": ["cy", "label", "gasOrder"],
+          "as": ["cy", "label", "gasOrder"]
         },
         {
           "type": "formula",
@@ -595,15 +447,9 @@
         },
         {
           "type": "joinaggregate",
-          "fields": [
-            "nodeTop"
-          ],
-          "ops": [
-            "min"
-          ],
-          "as": [
-            "columnTop"
-          ]
+          "fields": ["nodeTop"],
+          "ops": ["min"],
+          "as": ["columnTop"]
         },
         {
           "type": "formula",
@@ -630,68 +476,38 @@
           "type": "lookup",
           "from": "sourceNodeData",
           "key": "source",
-          "fields": [
-            "source"
-          ],
-          "values": [
-            "nodeTop"
-          ],
-          "as": [
-            "sourceTop"
-          ]
+          "fields": ["source"],
+          "values": ["nodeTop"],
+          "as": ["sourceTop"]
         },
         {
           "type": "lookup",
           "from": "gasNodeData",
           "key": "gas",
-          "fields": [
-            "gas"
-          ],
-          "values": [
-            "nodeTop"
-          ],
-          "as": [
-            "gasTop"
-          ]
+          "fields": ["gas"],
+          "values": ["nodeTop"],
+          "as": ["gasTop"]
         },
         {
           "type": "stack",
-          "groupby": [
-            "source"
-          ],
+          "groupby": ["source"],
           "field": "emissions_mtco2e",
           "sort": {
-            "field": [
-              "gasOrder"
-            ],
-            "order": [
-              "ascending"
-            ]
+            "field": ["gasOrder"],
+            "order": ["ascending"]
           },
-          "as": [
-            "sourceOffset0",
-            "sourceOffset1"
-          ],
+          "as": ["sourceOffset0", "sourceOffset1"],
           "offset": "zero"
         },
         {
           "type": "stack",
-          "groupby": [
-            "gas"
-          ],
+          "groupby": ["gas"],
           "field": "emissions_mtco2e",
           "sort": {
-            "field": [
-              "sourceOrder"
-            ],
-            "order": [
-              "ascending"
-            ]
+            "field": ["sourceOrder"],
+            "order": ["ascending"]
           },
-          "as": [
-            "gasOffset0",
-            "gasOffset1"
-          ],
+          "as": ["gasOffset0", "gasOffset1"],
           "offset": "zero"
         },
         {
@@ -726,16 +542,8 @@
     {
       "name": "gasColor",
       "type": "ordinal",
-      "domain": [
-        "Methane",
-        "Nitrous oxide",
-        "Carbon dioxide"
-      ],
-      "range": [
-        "#287D70",
-        "#E69F00",
-        "#4C78A8"
-      ]
+      "domain": ["Methane", "Nitrous oxide", "Carbon dioxide"],
+      "range": ["#287D70", "#E69F00", "#4C78A8"]
     }
   ],
   "marks": [

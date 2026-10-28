@@ -66,19 +66,10 @@
         },
         {
           "type": "window",
-          "ops": [
-            "lead"
-          ],
-          "fields": [
-            "label"
-          ],
-          "as": [
-            "next_label"
-          ],
-          "frame": [
-            null,
-            null
-          ]
+          "ops": ["lead"],
+          "fields": ["label"],
+          "as": ["next_label"],
+          "frame": [null, null]
         },
         {
           "type": "filter",
@@ -107,10 +98,7 @@
     {
       "name": "y",
       "type": "linear",
-      "domain": [
-        -0.4,
-        11.5
-      ],
+      "domain": [-0.4, 11.5],
       "range": "height",
       "zero": false,
       "nice": false
@@ -118,16 +106,8 @@
     {
       "name": "colors",
       "type": "ordinal",
-      "domain": [
-        "Increase",
-        "Decrease",
-        "Net"
-      ],
-      "range": [
-        "#397E83",
-        "#D18B46",
-        "#06402B"
-      ]
+      "domain": ["Increase", "Decrease", "Net"],
+      "range": ["#397E83", "#D18B46", "#06402B"]
     }
   ],
   "axes": [
@@ -135,14 +115,7 @@
       "orient": "left",
       "scale": "y",
       "grid": true,
-      "values": [
-        0,
-        2,
-        4,
-        6,
-        8,
-        10
-      ],
+      "values": [0, 2, 4, 6, 8, 10],
       "gridColor": "#E8ECE7",
       "gridWidth": 1,
       "domain": false,
@@ -357,10 +330,7 @@
             "value": 1
           },
           "strokeDash": {
-            "value": [
-              5,
-              4
-            ]
+            "value": [5, 4]
           }
         }
       }
@@ -378,10 +348,7 @@
             "value": 85
           },
           "text": {
-            "value": [
-              "2010–11 starting area",
-              "418.393 million hectares"
-            ]
+            "value": ["2010–11 starting area", "418.393 million hectares"]
           },
           "align": {
             "value": "center"

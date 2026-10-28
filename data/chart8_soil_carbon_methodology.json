@@ -1,112 +1,20 @@
 {
-  "years": [
-    2010,
-    2011,
-    2012,
-    2013,
-    2014,
-    2015,
-    2016,
-    2017,
-    2018
-  ],
+  "years": [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018],
   "source_soc": "https://doi.org/10.5281/zenodo.5040380",
   "source_land": "https://doi.org/10.25814/n0z4-5y98",
   "land_period": "2020-21 (fixed mask)",
   "land_codes": {
-    "Native grazing": [
-      200,
-      210
-    ],
-    "Modified pastures": [
-      300,
-      320,
-      321,
-      322,
-      323,
-      324,
-      325
-    ],
-    "Dryland cropping": [
-      330,
-      331,
-      332,
-      333,
-      334,
-      335,
-      336,
-      337,
-      338
-    ],
-    "Dryland horticulture": [
-      340,
-      341,
-      342,
-      343,
-      344,
-      345,
-      346,
-      347,
-      348,
-      349,
-      350,
-      351,
-      352,
-      353
-    ],
-    "Irrigated pastures": [
-      400,
-      420,
-      421,
-      422,
-      423,
-      424
-    ],
-    "Irrigated cropping": [
-      430,
-      431,
-      432,
-      433,
-      434,
-      435,
-      436,
-      437,
-      438,
-      439
-    ],
+    "Native grazing": [200, 210],
+    "Modified pastures": [300, 320, 321, 322, 323, 324, 325],
+    "Dryland cropping": [330, 331, 332, 333, 334, 335, 336, 337, 338],
+    "Dryland horticulture": [340, 341, 342, 343, 344, 345, 346, 347, 348, 349, 350, 351, 352, 353],
+    "Irrigated pastures": [400, 420, 421, 422, 423, 424],
+    "Irrigated cropping": [430, 431, 432, 433, 434, 435, 436, 437, 438, 439],
     "Irrigated horticulture": [
-      440,
-      441,
-      442,
-      443,
-      444,
-      445,
-      446,
-      447,
-      448,
-      449,
-      450,
-      451,
-      452,
-      453,
-      454
+      440, 441, 442, 443, 444, 445, 446, 447, 448, 449, 450, 451, 452, 453, 454
     ],
     "Intensive production": [
-      510,
-      511,
-      512,
-      513,
-      514,
-      515,
-      520,
-      521,
-      522,
-      523,
-      524,
-      525,
-      526,
-      527,
-      528
+      510, 511, 512, 513, 514, 515, 520, 521, 522, 523, 524, 525, 526, 527, 528
     ]
   },
   "source_urls": {
@@ -134,10 +42,7 @@
   "common_valid_soc_cells": 249913,
   "map_agricultural_area_km2": 4133425.497871165,
   "soc_grid_crs": "EPSG:4326",
-  "soc_source_pixel_degrees": [
-    0.041666667000000004,
-    0.041666667000000004
-  ],
+  "soc_source_pixel_degrees": [0.041666667000000004, 0.041666667000000004],
   "notes": [
     "Approximate agricultural overlap from averaging a high-resolution binary mask",
     "Historical trends refer to land classified as agricultural in 2020-21",

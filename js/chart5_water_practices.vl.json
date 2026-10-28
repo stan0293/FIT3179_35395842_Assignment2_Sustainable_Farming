@@ -81,15 +81,8 @@
       ],
       "projection": {
         "type": "conicEqualArea",
-        "parallels": [
-          -18,
-          -36
-        ],
-        "rotate": [
-          -134,
-          0,
-          0
-        ]
+        "parallels": [-18, -36],
+        "rotate": [-134, 0, 0]
       },
       "layer": [
         {
@@ -104,20 +97,8 @@
               "type": "ordinal",
               "title": "Farms adopting (%)",
               "scale": {
-                "domain": [
-                  "0–<20%",
-                  "20–<40%",
-                  "40–<60%",
-                  "60–<80%",
-                  "80–100%"
-                ],
-                "range": [
-                  "#f2e5f5",
-                  "#d3b6e2",
-                  "#ae80c8",
-                  "#8050a7",
-                  "#542078"
-                ]
+                "domain": ["0–<20%", "20–<40%", "40–<60%", "60–<80%", "80–100%"],
+                "range": ["#f2e5f5", "#d3b6e2", "#ae80c8", "#8050a7", "#542078"]
               },
               "legend": {
                 "orient": "top",
@@ -277,10 +258,7 @@
                 },
                 "longitude": 121.4,
                 "latitude": -25.7,
-                "state_label": [
-                  "Western",
-                  "Australia"
-                ]
+                "state_label": ["Western", "Australia"]
               },
               {
                 "properties": {
@@ -288,10 +266,7 @@
                 },
                 "longitude": 133.6,
                 "latitude": -19,
-                "state_label": [
-                  "Northern",
-                  "Territory"
-                ]
+                "state_label": ["Northern", "Territory"]
               },
               {
                 "properties": {
@@ -299,9 +274,7 @@
                 },
                 "longitude": 145,
                 "latitude": -22.3,
-                "state_label": [
-                  "Queensland"
-                ]
+                "state_label": ["Queensland"]
               },
               {
                 "properties": {
@@ -309,10 +282,7 @@
                 },
                 "longitude": 135,
                 "latitude": -30.2,
-                "state_label": [
-                  "South",
-                  "Australia"
-                ]
+                "state_label": ["South", "Australia"]
               },
               {
                 "properties": {
@@ -320,10 +290,7 @@
                 },
                 "longitude": 147.1,
                 "latitude": -32.4,
-                "state_label": [
-                  "New South",
-                  "Wales"
-                ]
+                "state_label": ["New South", "Wales"]
               },
               {
                 "properties": {
@@ -331,9 +298,7 @@
                 },
                 "longitude": 144.7,
                 "latitude": -36.7,
-                "state_label": [
-                  "Victoria"
-                ]
+                "state_label": ["Victoria"]
               },
               {
                 "properties": {
@@ -341,9 +306,7 @@
                 },
                 "longitude": 146.7,
                 "latitude": -42,
-                "state_label": [
-                  "Tasmania"
-                ]
+                "state_label": ["Tasmania"]
               }
             ]
           },
@@ -485,11 +448,7 @@
                 },
                 "longitude": 154,
                 "latitude": -38.5,
-                "label": [
-                  "Australian Capital",
-                  "Territory",
-                  "(no estimate)"
-                ],
+                "label": ["Australian Capital", "Territory", "(no estimate)"],
                 "adoption_label": "No estimate"
               }
             ]
@@ -624,15 +583,8 @@
       ],
       "projection": {
         "type": "conicEqualArea",
-        "parallels": [
-          -18,
-          -36
-        ],
-        "rotate": [
-          -134,
-          0,
-          0
-        ]
+        "parallels": [-18, -36],
+        "rotate": [-134, 0, 0]
       },
       "layer": [
         {
@@ -647,20 +599,8 @@
               "type": "ordinal",
               "title": "Farms adopting (%)",
               "scale": {
-                "domain": [
-                  "0–<20%",
-                  "20–<40%",
-                  "40–<60%",
-                  "60–<80%",
-                  "80–100%"
-                ],
-                "range": [
-                  "#f2e5f5",
-                  "#d3b6e2",
-                  "#ae80c8",
-                  "#8050a7",
-                  "#542078"
-                ]
+                "domain": ["0–<20%", "20–<40%", "40–<60%", "60–<80%", "80–100%"],
+                "range": ["#f2e5f5", "#d3b6e2", "#ae80c8", "#8050a7", "#542078"]
               },
               "legend": {
                 "orient": "top",
@@ -820,10 +760,7 @@
                 },
                 "longitude": 121.4,
                 "latitude": -25.7,
-                "state_label": [
-                  "Western",
-                  "Australia"
-                ]
+                "state_label": ["Western", "Australia"]
               },
               {
                 "properties": {
@@ -831,10 +768,7 @@
                 },
                 "longitude": 133.6,
                 "latitude": -19,
-                "state_label": [
-                  "Northern",
-                  "Territory"
-                ]
+                "state_label": ["Northern", "Territory"]
               },
               {
                 "properties": {
@@ -842,9 +776,7 @@
                 },
                 "longitude": 145,
                 "latitude": -22.3,
-                "state_label": [
-                  "Queensland"
-                ]
+                "state_label": ["Queensland"]
               },
               {
                 "properties": {
@@ -852,10 +784,7 @@
                 },
                 "longitude": 135,
                 "latitude": -30.2,
-                "state_label": [
-                  "South",
-                  "Australia"
-                ]
+                "state_label": ["South", "Australia"]
               },
               {
                 "properties": {
@@ -863,10 +792,7 @@
                 },
                 "longitude": 147.1,
                 "latitude": -32.4,
-                "state_label": [
-                  "New South",
-                  "Wales"
-                ]
+                "state_label": ["New South", "Wales"]
               },
               {
                 "properties": {
@@ -874,9 +800,7 @@
                 },
                 "longitude": 144.7,
                 "latitude": -36.7,
-                "state_label": [
-                  "Victoria"
-                ]
+                "state_label": ["Victoria"]
               },
               {
                 "properties": {
@@ -884,9 +808,7 @@
                 },
                 "longitude": 146.7,
                 "latitude": -42,
-                "state_label": [
-                  "Tasmania"
-                ]
+                "state_label": ["Tasmania"]
               }
             ]
           },
@@ -1028,11 +950,7 @@
                 },
                 "longitude": 154,
                 "latitude": -38.5,
-                "label": [
-                  "Australian Capital",
-                  "Territory",
-                  "(no estimate)"
-                ],
+                "label": ["Australian Capital", "Territory", "(no estimate)"],
                 "adoption_label": "No estimate"
               }
             ]
