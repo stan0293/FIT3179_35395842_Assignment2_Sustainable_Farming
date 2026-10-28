@@ -55,7 +55,7 @@
   "data": [
     {
       "name": "raw",
-      "url": "data/chart1_land_use_2020_21.csv",
+      "url": "data/chart01_land_use_2020_21.csv",
       "format": {
         "type": "csv",
         "parse": {

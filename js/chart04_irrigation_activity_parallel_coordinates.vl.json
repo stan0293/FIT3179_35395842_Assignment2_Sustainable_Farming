@@ -33,7 +33,7 @@
     "lineHeight": 34
   },
   "data": {
-    "url": "data/chart4_irrigation_by_activity_2020_21.csv",
+    "url": "data/chart04_irrigation_by_activity_2020_21.csv",
     "format": {
       "type": "csv",
       "parse": {

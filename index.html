@@ -2277,17 +2277,17 @@
       window.addEventListener("resize", matchOpeningCardHeights);
 
       // Chart 1: Land-use treemap
-      displayChart("#land-use-treemap", "js/chart1_land_use_treemap.vg.json", "#treemap-error");
+      displayChart("#land-use-treemap", "js/chart01_land_use_treemap.vg.json", "#treemap-error");
 
       // Chart 2: Land-use waterfall
       displayChart(
         "#land-use-waterfall",
-        "js/chart2_land_use_waterfall.vg.json",
+        "js/chart02_land_use_waterfall.vg.json",
         "#waterfall-error",
       );
 
       // Chart 3: Proportional symbol map with year slider
-      vegaEmbed("#water-map", "js/chart3_irrigation_water_map.vl.json", {
+      vegaEmbed("#water-map", "js/chart03_irrigation_water_map.vl.json", {
         actions: false,
         renderer: "svg",
         // The heading is shown in HTML so the slider sits below it.
@@ -2350,42 +2350,42 @@
       // Chart 4: Irrigation parallel coordinates
       displayChart(
         "#irrigation-parallel",
-        "js/chart4_irrigation_activity_parallel_coordinates.vl.json",
+        "js/chart04_irrigation_activity_parallel_coordinates.vl.json",
         "#irrigation-parallel-error",
       );
 
       // Chart 5: Water-management practices
       displayChart(
         "#water-practices",
-        "js/chart5_water_practices.vl.json",
+        "js/chart05_water_practices.vl.json",
         "#water-practices-error",
       );
 
       // Chart 6: Changes in agricultural water sources
       displayChart(
         "#water-sources-chart",
-        "js/chart6_water_sources.vl.json",
+        "js/chart06_water_sources.vl.json",
         "#water-sources-chart-error",
       );
 
       // Chart 7: Soil management heatmap
       displayChart(
         "#soil-heatmap",
-        "js/chart7_soil_management_heatmap.vl.json",
+        "js/chart07_soil_management_heatmap.vl.json",
         "#soil-heatmap-error",
       );
 
       // Chart 8: Soil organic carbon
       displayChart(
         "#chart8-soil-carbon",
-        "js/chart8_soil_carbon.vl.json",
+        "js/chart08_soil_carbon.vl.json",
         "#chart8-soil-carbon-error",
       );
 
       // Chart 9: Agriculture-sector greenhouse gas emissions by gas
       displayChart(
         "#chart9-agricultural-emissions",
-        "js/chart9_agricultural_emissions_trend.vl.json",
+        "js/chart09_agricultural_emissions_trend.vl.json",
         "#chart9-agricultural-emissions-error",
       );
 

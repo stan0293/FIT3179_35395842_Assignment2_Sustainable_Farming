@@ -45,7 +45,7 @@
           "lookup": "properties.STATE_NAME",
           "from": {
             "data": {
-              "url": "data/chart5_water_practices_state_2021.csv",
+              "url": "data/chart05_water_practices_state_2021.csv",
               "format": {
                 "type": "csv",
                 "parse": {
@@ -372,7 +372,7 @@
               "lookup": "properties.STATE_NAME",
               "from": {
                 "data": {
-                  "url": "data/chart5_water_practices_state_2021.csv",
+                  "url": "data/chart05_water_practices_state_2021.csv",
                   "format": {
                     "type": "csv",
                     "parse": {
@@ -498,7 +498,7 @@
               "lookup": "properties.STATE_NAME",
               "from": {
                 "data": {
-                  "url": "data/chart5_water_practices_state_2021.csv",
+                  "url": "data/chart05_water_practices_state_2021.csv",
                   "format": {
                     "type": "csv",
                     "parse": {
@@ -547,7 +547,7 @@
           "lookup": "properties.STATE_NAME",
           "from": {
             "data": {
-              "url": "data/chart5_water_practices_state_2021.csv",
+              "url": "data/chart05_water_practices_state_2021.csv",
               "format": {
                 "type": "csv",
                 "parse": {
@@ -874,7 +874,7 @@
               "lookup": "properties.STATE_NAME",
               "from": {
                 "data": {
-                  "url": "data/chart5_water_practices_state_2021.csv",
+                  "url": "data/chart05_water_practices_state_2021.csv",
                   "format": {
                     "type": "csv",
                     "parse": {
@@ -1000,7 +1000,7 @@
               "lookup": "properties.STATE_NAME",
               "from": {
                 "data": {
-                  "url": "data/chart5_water_practices_state_2021.csv",
+                  "url": "data/chart05_water_practices_state_2021.csv",
                   "format": {
                     "type": "csv",
                     "parse": {

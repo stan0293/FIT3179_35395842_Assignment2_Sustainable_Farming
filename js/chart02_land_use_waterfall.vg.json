@@ -37,7 +37,7 @@
   "data": [
     {
       "name": "changes",
-      "url": "data/chart2_land_use_changes.csv",
+      "url": "data/chart02_land_use_changes.csv",
       "format": {
         "type": "csv",
         "parse": {

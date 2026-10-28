@@ -26,7 +26,7 @@
   "height": 255,
   "background": "white",
   "data": {
-    "url": "data/chart6_water_sources.csv",
+    "url": "data/chart06_water_sources.csv",
     "format": {
       "type": "csv",
       "parse": {

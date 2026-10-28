@@ -27,7 +27,7 @@
     "subtitleLineHeight": 20
   },
   "data": {
-    "url": "data/chart9_agricultural_emissions_by_gas.csv",
+    "url": "data/chart09_agricultural_emissions_by_gas.csv",
     "name": "agricultural_emissions",
     "format": {
       "type": "csv",

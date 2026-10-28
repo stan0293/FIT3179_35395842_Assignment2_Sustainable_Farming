@@ -27,7 +27,7 @@
     "subtitleLineHeight": 20
   },
   "data": {
-    "url": "data/chart7_soil_management_by_industry_2023_24.csv",
+    "url": "data/chart07_soil_management_by_industry_2023_24.csv",
     "format": {
       "type": "csv",
       "parse": {

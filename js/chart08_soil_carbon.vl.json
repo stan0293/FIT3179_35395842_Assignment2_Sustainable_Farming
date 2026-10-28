@@ -27,7 +27,7 @@
       "layer": [
         {
           "data": {
-            "url": "data/chart8_soil_carbon_hexagons.geojson",
+            "url": "data/chart08_soil_carbon_hexagons.geojson",
             "format": {
               "type": "json",
               "property": "features"
@@ -57,7 +57,7 @@
               "lookup": "properties.hex_id",
               "from": {
                 "data": {
-                  "url": "data/chart8_soil_carbon_hex_state_lookup.csv"
+                  "url": "data/chart08_soil_carbon_hex_state_lookup.csv"
                 },
                 "key": "hex_id",
                 "fields": ["state_names"]
@@ -131,7 +131,7 @@
         },
         {
           "data": {
-            "url": "data/chart8_soil_carbon_state_boundaries.geojson",
+            "url": "data/chart08_soil_carbon_state_boundaries.geojson",
             "format": {
               "type": "json",
               "property": "features"
@@ -297,7 +297,7 @@
         "subtitlePadding": 6
       },
       "data": {
-        "url": "data/chart8_national_soil_carbon_trend.csv"
+        "url": "data/chart08_national_soil_carbon_trend.csv"
       },
       "layer": [
         {

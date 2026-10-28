@@ -21,15 +21,15 @@ The conclusion brings these findings together. The page distinguishes reported p
 
 | No. | Subject | Visualisation | Specification |
 | --- | --- | --- | --- |
-| 1 | Australia's agricultural land footprint | Treemap | [chart1_land_use_treemap.vg.json](js/chart1_land_use_treemap.vg.json) |
-| 2 | Changes in agricultural land use | Waterfall chart | [chart2_land_use_waterfall.vg.json](js/chart2_land_use_waterfall.vg.json) |
-| 3 | Irrigation water use by state | Proportional-symbol map | [chart3_irrigation_water_map.vl.json](js/chart3_irrigation_water_map.vl.json) |
-| 4 | Irrigation across farming activities | Parallel coordinates | [chart4_irrigation_activity_parallel_coordinates.vl.json](js/chart4_irrigation_activity_parallel_coordinates.vl.json) |
-| 5 | Adoption of water-management practices | Paired choropleth maps | [chart5_water_practices.vl.json](js/chart5_water_practices.vl.json) |
-| 6 | Water obtained from different sources | Multi-line chart | [chart6_water_sources.vl.json](js/chart6_water_sources.vl.json) |
-| 7 | Soil-management practices by industry | Heatmap | [chart7_soil_management_heatmap.vl.json](js/chart7_soil_management_heatmap.vl.json) |
-| 8 | Changes in agricultural soil carbon | Hexagonal map and linked national trend | [chart8_soil_carbon.vl.json](js/chart8_soil_carbon.vl.json) |
-| 9 | Agricultural emissions by greenhouse gas | Stacked area chart | [chart9_agricultural_emissions_trend.vl.json](js/chart9_agricultural_emissions_trend.vl.json) |
+| 1 | Australia's agricultural land footprint | Treemap | [chart01_land_use_treemap.vg.json](js/chart01_land_use_treemap.vg.json) |
+| 2 | Changes in agricultural land use | Waterfall chart | [chart02_land_use_waterfall.vg.json](js/chart02_land_use_waterfall.vg.json) |
+| 3 | Irrigation water use by state | Proportional-symbol map | [chart03_irrigation_water_map.vl.json](js/chart03_irrigation_water_map.vl.json) |
+| 4 | Irrigation across farming activities | Parallel coordinates | [chart04_irrigation_activity_parallel_coordinates.vl.json](js/chart04_irrigation_activity_parallel_coordinates.vl.json) |
+| 5 | Adoption of water-management practices | Paired choropleth maps | [chart05_water_practices.vl.json](js/chart05_water_practices.vl.json) |
+| 6 | Water obtained from different sources | Multi-line chart | [chart06_water_sources.vl.json](js/chart06_water_sources.vl.json) |
+| 7 | Soil-management practices by industry | Heatmap | [chart07_soil_management_heatmap.vl.json](js/chart07_soil_management_heatmap.vl.json) |
+| 8 | Changes in agricultural soil carbon | Hexagonal map and linked national trend | [chart08_soil_carbon.vl.json](js/chart08_soil_carbon.vl.json) |
+| 9 | Agricultural emissions by greenhouse gas | Stacked area chart | [chart09_agricultural_emissions_trend.vl.json](js/chart09_agricultural_emissions_trend.vl.json) |
 | 10 | Farming activities contributing to emissions | Sankey diagram | [chart10_emissions_sankey.vg.json](js/chart10_emissions_sankey.vg.json) |
 | 11 | Emissions awareness and management intentions | Horizontal lollipop chart | [chart11_emissions_awareness.vl.json](js/chart11_emissions_awareness.vl.json) |
 | 12 | Reported barriers to reducing emissions | Three interactive waffle charts | [chart12_emissions_barriers.vl.json](js/chart12_emissions_barriers.vl.json) |

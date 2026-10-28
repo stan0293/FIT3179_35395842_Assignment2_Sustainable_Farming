@@ -35,7 +35,7 @@
     },
     {
       "data": {
-        "url": "data/chart3_irrigation_water_by_state.csv",
+        "url": "data/chart03_irrigation_water_by_state.csv",
         "format": {
           "type": "csv",
           "parse": {
@@ -147,7 +147,7 @@
     },
     {
       "data": {
-        "url": "data/chart3_irrigation_water_by_state.csv",
+        "url": "data/chart03_irrigation_water_by_state.csv",
         "format": {
           "type": "csv",
           "parse": {
